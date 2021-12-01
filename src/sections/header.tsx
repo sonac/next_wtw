@@ -1,6 +1,7 @@
 import { HamburgerIcon } from "@chakra-ui/icons";
 import {
   HStack,
+  VStack,
   Text,
   IconButton,
   Drawer,
@@ -12,6 +13,7 @@ import {
   DrawerCloseButton,
   useDisclosure
 } from '@chakra-ui/react'
+import Link from 'next/link'
 import * as React from 'react'
 
 const Header = () => {
@@ -40,8 +42,12 @@ const Header = () => {
       <DrawerContent>
         <DrawerCloseButton />
         <DrawerHeader>Navigate</DrawerHeader>
-        <DrawerBody>
-          <Text>Some content</Text>
+        <DrawerBody paddingTop="10vh">
+          <VStack s={20}>
+            <Text fontSize="2xl"><Link href="/movies/asd">Movies</Link></Text>
+            <Text fontSize="2xl">Netflix Movies</Text>
+            <Text fontSize="2xl">My List</Text>
+          </VStack>
         </DrawerBody>
         <DrawerFooter>
           <Text>Footer content</Text>

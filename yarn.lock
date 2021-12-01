@@ -263,7 +263,7 @@
     "@chakra-ui/icon" "1.2.1"
     "@types/react" "^17.0.15"
 
-"@chakra-ui/image@1.1.1":
+"@chakra-ui/image@1.1.1", "@chakra-ui/image@^1.1.1":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@chakra-ui/image/-/image-1.1.1.tgz#39ecb77155e9e1fbbc68e825eb46405808805a8c"
   integrity sha512-bz1pn08XlXcO3r1KnpdjQgN3R2soiTx10sG2d5Pw9BdGdySf7Y73wiLh+Tan1xJHp6p2KH1hz4f7uKXXDn7Qmw==

@@ -1,6 +1,12 @@
+import { VStack, Heading, Text } from '@chakra-ui/react';
+
 const body = () => {
   return (
-    <div>body</div>
+    <VStack>
+      <Heading fontSize="6xl">Welcome to WTW</Heading>
+      <Text fontSize='4xl'>Don't know what to watch?</Text>
+      <Text fontSize='4xl'>Don't worry, we got you covered.</Text>
+    </VStack>
   )
 }
 
