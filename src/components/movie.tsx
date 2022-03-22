@@ -19,7 +19,7 @@ const Movie: React.FC<MovieProps> = ({ movie }: MovieProps) => {
   return (
       <Box>
         <Image
-          src={`https://image.tmdb.org/t/p/w500/${movie.posterPath}`}
+          src={`${movie.posterPath}`}
           alt={movie.title}
           size="100%"
         />

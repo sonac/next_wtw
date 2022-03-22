@@ -10,9 +10,41 @@ const TestMovies: MovieInterface[] = [
     title: 'The Shawshank Redemption',
     releaseYear: 1994,
     rating: 9.3,
-    posterPath: 'https://m.media-amazon.com/images/M/MV5BODU4MjU4NjIwNl5BMl5BanBnXkFtZTgwMDU2MjEyMDE@._V1_SX300.jpg',
+    posterPath: 'https://m.media-amazon.com/images/M/MV5BN2I1ZjA5YjQtYmQ0ZS00ZmE1LTk1ZjktNTQ5ODIzY2JiZDdhXkEyXkFqcGdeQXVyNjg2NjQwMDQ@._V1_UX182_CR0,0,182,268_AL_.jpg',
     userRating: 8.9,
-  }
+  },
+  {
+    id: 1,
+    title: 'The Shawshank Redemption',
+    releaseYear: 1994,
+    rating: 9.3,
+    posterPath: 'https://m.media-amazon.com/images/M/MV5BN2I1ZjA5YjQtYmQ0ZS00ZmE1LTk1ZjktNTQ5ODIzY2JiZDdhXkEyXkFqcGdeQXVyNjg2NjQwMDQ@._V1_UX182_CR0,0,182,268_AL_.jpg',
+    userRating: 8.9,
+  },
+  {
+    id: 1,
+    title: 'The Shawshank Redemption',
+    releaseYear: 1994,
+    rating: 9.3,
+    posterPath: 'https://m.media-amazon.com/images/M/MV5BN2I1ZjA5YjQtYmQ0ZS00ZmE1LTk1ZjktNTQ5ODIzY2JiZDdhXkEyXkFqcGdeQXVyNjg2NjQwMDQ@._V1_UX182_CR0,0,182,268_AL_.jpg',
+    userRating: 8.9,
+  },
+  {
+    id: 1,
+    title: 'The Shawshank Redemption',
+    releaseYear: 1994,
+    rating: 9.3,
+    posterPath: 'https://m.media-amazon.com/images/M/MV5BN2I1ZjA5YjQtYmQ0ZS00ZmE1LTk1ZjktNTQ5ODIzY2JiZDdhXkEyXkFqcGdeQXVyNjg2NjQwMDQ@._V1_UX182_CR0,0,182,268_AL_.jpg',
+    userRating: 8.9,
+  },
+  {
+    id: 1,
+    title: 'The Shawshank Redemption',
+    releaseYear: 1994,
+    rating: 9.3,
+    posterPath: 'https://m.media-amazon.com/images/M/MV5BN2I1ZjA5YjQtYmQ0ZS00ZmE1LTk1ZjktNTQ5ODIzY2JiZDdhXkEyXkFqcGdeQXVyNjg2NjQwMDQ@._V1_UX182_CR0,0,182,268_AL_.jpg',
+    userRating: 8.9,
+  },
 ];
 
 const UserMovies = () => {
