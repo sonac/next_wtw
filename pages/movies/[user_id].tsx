@@ -1,8 +1,9 @@
 import { useRouter } from 'next/router';
-import { SimpleGrid, GridItem } from '@chakra-ui/react';
+import { SimpleGrid, GridItem, Container, VStack } from '@chakra-ui/react';
 
 import { MovieInterface } from '../../src/components/movie';
 import Movie from '../../src/components/movie';
+import Header from '../../src/sections/header';
 
 const TestMovies: MovieInterface[] = [
   {
@@ -51,13 +52,21 @@ const UserMovies = () => {
   const router = useRouter();
   const { user_id } = router.query;
   return (
-    <SimpleGrid columns={[1, 2, 3, 4]} spacing={8}>
-      {TestMovies.map((movie) => (
-        <GridItem key={movie.id}>
-          <Movie movie={movie} />
-        </GridItem>
-      ))}
-    </SimpleGrid>
+      <VStack 
+        h={{ base: 'auto', md: '100vh' }} 
+        w={{ base: 'auto', md: '100%' }}
+        p={0}
+        m={0}
+        spacing={8}>
+        <Header />
+      <SimpleGrid columns={[1, 2, 3, 4, 5, 6]} spacing={8}>
+        {TestMovies.map((movie) => (
+          <GridItem key={movie.id}>
+            <Movie movie={movie} />
+          </GridItem>
+        ))}
+      </SimpleGrid>
+      </VStack>
   );
 }
 

@@ -44,6 +44,7 @@ const Header = () => {
         <DrawerHeader>Navigate</DrawerHeader>
         <DrawerBody paddingTop="10vh">
           <VStack s={20}>
+            <Text fontSize="2xl"><Link href="/">Home</Link></Text>
             <Text fontSize="2xl"><Link href="/movies/asd">Movies</Link></Text>
             <Text fontSize="2xl">Netflix Movies</Text>
             <Text fontSize="2xl">My List</Text>
