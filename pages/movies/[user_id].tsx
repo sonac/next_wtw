@@ -1,54 +1,20 @@
 import { useRouter } from 'next/router';
 import { SimpleGrid, GridItem, Container, VStack } from '@chakra-ui/react';
 
-import { MovieInterface } from '../../src/components/movie';
+import { MovieInterface, UserResponse } from '../../src/components/movie';
 import Movie from '../../src/components/movie';
 import Header from '../../src/sections/header';
 
-const TestMovies: MovieInterface[] = [
-  {
-    id: 1,
-    title: 'The Shawshank Redemption',
-    releaseYear: 1994,
-    rating: 9.3,
-    posterPath: 'https://m.media-amazon.com/images/M/MV5BN2I1ZjA5YjQtYmQ0ZS00ZmE1LTk1ZjktNTQ5ODIzY2JiZDdhXkEyXkFqcGdeQXVyNjg2NjQwMDQ@._V1_UX182_CR0,0,182,268_AL_.jpg',
-    userRating: 8.9,
-  },
-  {
-    id: 1,
-    title: 'The Shawshank Redemption',
-    releaseYear: 1994,
-    rating: 9.3,
-    posterPath: 'https://m.media-amazon.com/images/M/MV5BN2I1ZjA5YjQtYmQ0ZS00ZmE1LTk1ZjktNTQ5ODIzY2JiZDdhXkEyXkFqcGdeQXVyNjg2NjQwMDQ@._V1_UX182_CR0,0,182,268_AL_.jpg',
-    userRating: 8.9,
-  },
-  {
-    id: 1,
-    title: 'The Shawshank Redemption',
-    releaseYear: 1994,
-    rating: 9.3,
-    posterPath: 'https://m.media-amazon.com/images/M/MV5BN2I1ZjA5YjQtYmQ0ZS00ZmE1LTk1ZjktNTQ5ODIzY2JiZDdhXkEyXkFqcGdeQXVyNjg2NjQwMDQ@._V1_UX182_CR0,0,182,268_AL_.jpg',
-    userRating: 8.9,
-  },
-  {
-    id: 1,
-    title: 'The Shawshank Redemption',
-    releaseYear: 1994,
-    rating: 9.3,
-    posterPath: 'https://m.media-amazon.com/images/M/MV5BN2I1ZjA5YjQtYmQ0ZS00ZmE1LTk1ZjktNTQ5ODIzY2JiZDdhXkEyXkFqcGdeQXVyNjg2NjQwMDQ@._V1_UX182_CR0,0,182,268_AL_.jpg',
-    userRating: 8.9,
-  },
-  {
-    id: 1,
-    title: 'The Shawshank Redemption',
-    releaseYear: 1994,
-    rating: 9.3,
-    posterPath: 'https://m.media-amazon.com/images/M/MV5BN2I1ZjA5YjQtYmQ0ZS00ZmE1LTk1ZjktNTQ5ODIzY2JiZDdhXkEyXkFqcGdeQXVyNjg2NjQwMDQ@._V1_UX182_CR0,0,182,268_AL_.jpg',
-    userRating: 8.9,
-  },
-];
+//TODO: add getStaticPaths when backend is done
 
-const UserMovies = () => {
+export async function getStaticProps({ params }: any) {
+  const res = await fetch(`http://wtw.triplan.club/movies/${params.user_id}`);
+  const data: UserResponse = await res.json();
+  const movies = data.seenMovies;
+  return {props: { movies }};
+}
+
+function UserMovies({ seenMovies }: UserResponse) {
   const router = useRouter();
   const { user_id } = router.query;
   return (
@@ -60,9 +26,9 @@ const UserMovies = () => {
         spacing={8}>
         <Header />
       <SimpleGrid columns={[1, 2, 3, 4, 5, 6]} spacing={8}>
-        {TestMovies.map((movie) => (
-          <GridItem key={movie.id}>
-            <Movie movie={movie} />
+        {seenMovies.map((sm) => (
+          <GridItem key={sm.movie.imdbId}>
+            <Movie movie={sm.movie} />
           </GridItem>
         ))}
       </SimpleGrid>
