@@ -24,6 +24,7 @@ export interface UserResponse {
 
 interface MovieProps {
   movie: MovieInterface;
+  rating: number;
 }
 
 /*
@@ -44,24 +45,27 @@ interface MovieProps {
   * }
  */
 
-const Movie: React.FC<MovieProps> = ({ movie }: MovieProps) => {
+const Movie: React.FC<MovieProps> = ({ movie, rating }: MovieProps) => {
   return (
       <Box>
         <Image
           src={`${movie.posterLink}`}
           alt={movie.title}
           size="100%"
+          boxSize="100%"
         />
-        <Flex justify="space-between" align="center" p={2}>
-          <Box>
+        <Flex justify="space-between" p={2} flexDir="column">
+          <Flex justifyContent="space-between" flexDirection="row">
             <Heading as="h3" size="md">
               {movie.title}
             </Heading>
             <Text>{movie.year}</Text>
-          </Box>
-          <Box>
-            <Text fontSize="sm">{movie.rating}</Text>
-          </Box>
+            <Text>{movie.rating}</Text>
+          </Flex>
+          <Flex justifyContent="space-between" flexDirection="row">
+            <Text>Your rating: </Text>
+            <Text fontWeight="bold" fontSize="sm">{rating}</Text>
+          </Flex>
         </Flex>
       </Box>
   );

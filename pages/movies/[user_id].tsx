@@ -1,22 +1,23 @@
 import { useRouter } from 'next/router';
-import { SimpleGrid, GridItem, Container, VStack } from '@chakra-ui/react';
+import { SimpleGrid, GridItem, VStack, Image, useDisclosure } from '@chakra-ui/react';
+import useSWR from 'swr';
 
 import { MovieInterface, UserResponse } from '../../src/components/movie';
 import Movie from '../../src/components/movie';
+import MovieSearch from '../../src/components/movie_search'
 import Header from '../../src/sections/header';
+import { useState } from 'react';
 
-//TODO: add getStaticPaths when backend is done
+//@ts-ignore
+const fetcher = (...args: any[]) => fetch(...args).then((res) => res.json())
 
-export async function getStaticProps({ params }: any) {
-  const res = await fetch(`http://wtw.triplan.club/movies/${params.user_id}`);
-  const data: UserResponse = await res.json();
-  const movies = data.seenMovies;
-  return {props: { movies }};
-}
-
-function UserMovies({ seenMovies }: UserResponse) {
+function UserMovies() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter();
-  const { user_id } = router.query;
+  const user_id = router.query.user_id;
+  const { data, error } = useSWR('http://wtw.triplan.club/seen-movies/' + user_id, fetcher)
+  if (error) { return <div>failed to load</div> };
+  if (!data) { return <div>loading...</div> };
   return (
       <VStack 
         h={{ base: 'auto', md: '100vh' }} 
@@ -25,10 +26,23 @@ function UserMovies({ seenMovies }: UserResponse) {
         m={0}
         spacing={8}>
         <Header />
+      <MovieSearch isOpen={isOpen} onClose={onClose} />
       <SimpleGrid columns={[1, 2, 3, 4, 5, 6]} spacing={8}>
-        {seenMovies.map((sm) => (
+        <GridItem key="plus">
+          <Image           
+            src="https://icons.iconarchive.com/icons/icons8/ios7/512/User-Interface-Plus-icon.png"
+            alt="plus"
+            size="100%"
+            boxSize="100%"
+            _hover={{
+              cursor: "pointer"
+            }}
+            onClick={onOpen}
+          />
+        </GridItem>
+        {data.seenMovies.map((sm: any) => (
           <GridItem key={sm.movie.imdbId}>
-            <Movie movie={sm.movie} />
+            <Movie movie={sm.movie} rating={sm.rating}/>
           </GridItem>
         ))}
       </SimpleGrid>

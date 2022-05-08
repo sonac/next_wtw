@@ -19,6 +19,23 @@ const theme = extendTheme({
           bg: 'linear-gradient(169.34deg, #C9D4EA -1.32%, #F0D9CC 92.08%)',
         }
       }
+    },
+    Modal: {
+      baseStyle: {
+        dialog: {
+          maxWidth: '50vw',
+          minWidth: '50vw',
+          fontSize: '2em',
+          bg: 'rgba(86, 86, 86, 0.7)',
+        },
+        header: {
+          fontSize: '1,5em',
+          bg: 'rgba(201, 212, 234, 0.4)'
+        },
+        body: {
+          padding: '0px'
+        }
+      }
     }
   },
 });
