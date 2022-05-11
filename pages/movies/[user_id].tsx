@@ -2,10 +2,10 @@ import { useRouter } from 'next/router';
 import { SimpleGrid, GridItem, VStack, Image, useDisclosure } from '@chakra-ui/react';
 import useSWR from 'swr';
 
-import { MovieInterface, UserResponse } from '../../src/components/movie';
-import Movie from '../../src/components/movie';
+import Movie, { MovieInterface, SeenMovie } from '../../src/components/movie';
 import MovieSearch from '../../src/components/movie_search'
 import Header from '../../src/sections/header';
+import MovieCard from '../../src/components/movie_card';
 import { useState } from 'react';
 
 //@ts-ignore
@@ -13,11 +13,19 @@ const fetcher = (...args: any[]) => fetch(...args).then((res) => res.json())
 
 function UserMovies() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen: movieOpen, onOpen: onMovieOpen, onClose: onMovieClose } = useDisclosure();
+  const [clickedMovie, setClickedMovie] = useState<SeenMovie>();
+  const [clickedRating, setClickedRating] = useState<number>(0);
   const router = useRouter();
   const user_id = router.query.user_id;
   const { data, error } = useSWR('http://wtw.triplan.club/seen-movies/' + user_id, fetcher)
   if (error) { return <div>failed to load</div> };
   if (!data) { return <div>loading...</div> };
+  const clickMovie = (m: SeenMovie) => {
+    setClickedMovie(m);
+    setClickedRating(m.rating)
+    onMovieOpen();
+  }
   return (
       <VStack 
         h={{ base: 'auto', md: '100vh' }} 
@@ -27,6 +35,8 @@ function UserMovies() {
         spacing={8}>
         <Header />
       <MovieSearch isOpen={isOpen} onClose={onClose} />
+      {clickedMovie !== undefined ? <MovieCard isOpen={movieOpen} onClose={onMovieClose} movie={clickedMovie.movie} 
+        isAdded={true} clickedRating={clickedRating} setClickedRating={setClickedRating} /> : <></>}
       <SimpleGrid columns={[1, 2, 3, 4, 5, 6]} spacing={8}>
         <GridItem key="plus">
           <Image           
@@ -41,8 +51,8 @@ function UserMovies() {
           />
         </GridItem>
         {data.seenMovies.map((sm: any) => (
-          <GridItem key={sm.movie.imdbId}>
-            <Movie movie={sm.movie} rating={sm.rating}/>
+          <GridItem key={sm.movie.imdbId} onClick={() => clickMovie(sm)}>
+            <Movie movie={sm.movie} rating={sm.rating} />
           </GridItem>
         ))}
       </SimpleGrid>

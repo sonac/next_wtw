@@ -1,5 +1,5 @@
 import { Image } from '@chakra-ui/image';
-import { Flex, Box, Heading, Text } from '@chakra-ui/react';
+import { Flex, Box, Heading, Text, useDisclosure } from '@chakra-ui/react';
 import React from 'react';
 
 export interface MovieInterface {
@@ -10,6 +10,7 @@ export interface MovieInterface {
   rating: number;
   ratingCount: number;
   isSynced: boolean;
+  description: string;
 }
 
 export interface SeenMovie {
@@ -46,6 +47,7 @@ interface MovieProps {
  */
 
 const Movie: React.FC<MovieProps> = ({ movie, rating }: MovieProps) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
       <Box>
         <Image
@@ -53,6 +55,10 @@ const Movie: React.FC<MovieProps> = ({ movie, rating }: MovieProps) => {
           alt={movie.title}
           size="100%"
           boxSize="100%"
+          _hover={{
+            cursor: "pointer"
+          }}
+          onClick={onOpen}
         />
         <Flex justify="space-between" p={2} flexDir="column">
           <Flex justifyContent="space-between" flexDirection="row">
@@ -64,7 +70,7 @@ const Movie: React.FC<MovieProps> = ({ movie, rating }: MovieProps) => {
           </Flex>
           <Flex justifyContent="space-between" flexDirection="row">
             <Text>Your rating: </Text>
-            <Text fontWeight="bold" fontSize="sm">{rating}</Text>
+            <Text fontWeight="bold" color="blue" fontSize="sm">{rating}</Text>
           </Flex>
         </Flex>
       </Box>

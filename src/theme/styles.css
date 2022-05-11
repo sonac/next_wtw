@@ -1,1 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Marvel&display=swap');
+
+@font-face {
+    font-family: 'Gilroy';
+    src: local(''),
+        url('./Gilroy-Regular.woff')
+}
+
+.rating:hover {
+    cursor: pointer;
+}

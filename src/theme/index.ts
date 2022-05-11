@@ -9,8 +9,8 @@ const theme = extendTheme({
     }
   },
   fonts: {
-    heading: `Marvel, ${base.fonts?.heading}`,
-    body: `Marvel, ${base.fonts?.body}`,
+    heading: `Gilroy, ${base.fonts?.heading}`,
+    body: `Gilroy, ${base.fonts?.body}`,
   },
   components: {
     Drawer: {
@@ -23,8 +23,8 @@ const theme = extendTheme({
     Modal: {
       baseStyle: {
         dialog: {
-          maxWidth: '50vw',
-          minWidth: '50vw',
+          maxWidth: '60vw',
+          minWidth: '60vw',
           fontSize: '2em',
           bg: 'rgba(86, 86, 86, 0.7)',
         },
