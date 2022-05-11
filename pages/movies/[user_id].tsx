@@ -34,9 +34,9 @@ function UserMovies() {
         m={0}
         spacing={8}>
         <Header />
-      <MovieSearch isOpen={isOpen} onClose={onClose} />
+      <MovieSearch isOpen={isOpen} onClose={onClose} setClickedMovie={setClickedMovie} setClickedRating={setClickedRating} onMovieOpen={onMovieOpen} />
       {clickedMovie !== undefined ? <MovieCard isOpen={movieOpen} onClose={onMovieClose} movie={clickedMovie.movie} 
-        isAdded={true} clickedRating={clickedRating} setClickedRating={setClickedRating} /> : <></>}
+        clickedRating={clickedRating} setClickedRating={setClickedRating} /> : <></>}
       <SimpleGrid columns={[1, 2, 3, 4, 5, 6]} spacing={8}>
         <GridItem key="plus">
           <Image           

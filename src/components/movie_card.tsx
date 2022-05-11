@@ -8,7 +8,6 @@ interface CardProps {
     isOpen: boolean;
     onClose: any;
     movie: MovieInterface;
-    isAdded: boolean;
     clickedRating: number;
     setClickedRating: Dispatch<SetStateAction<number>>;
 }
@@ -38,7 +37,7 @@ interface ImdbMovie {
 
 //const movies = ['foo', 'nbar', 'super boring movie', 'Steve Jobs']
 
-const MovieCard: React.FC<CardProps> = ({ isOpen, onClose, movie, isAdded, clickedRating, setClickedRating }: CardProps ) => {
+const MovieCard: React.FC<CardProps> = ({ isOpen, onClose, movie, clickedRating, setClickedRating }: CardProps ) => {
     const [movies, setMovies] = useState([]);
     const [loading, setLoading] = useState(false);
     const [input, setInput] = useState('');
@@ -128,7 +127,7 @@ const MovieCard: React.FC<CardProps> = ({ isOpen, onClose, movie, isAdded, click
                                 <Text align='center'>10</Text>
                             </Box>
                         </Flex>
-                        <Button>{isAdded ? 'Update' : 'Add'}</Button>
+                        <Button>{movie.isSynced ? 'Update' : 'Add'}</Button>
                     </Flex>
                 </Flex>
             </ModalBody>

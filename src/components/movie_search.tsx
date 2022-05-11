@@ -1,10 +1,14 @@
 import { Modal, ModalOverlay, ModalContent, ModalHeader, 
     ModalBody, ModalCloseButton, Input, Text, Spinner } from '@chakra-ui/react'
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
+import { SeenMovie } from './movie';
 
 interface SeachProps {
     isOpen: boolean;
     onClose: any;
+    setClickedMovie: Dispatch<SetStateAction<SeenMovie | undefined>>
+    setClickedRating: Dispatch<SetStateAction<number>>
+    onMovieOpen: any;
 }
 
 /*
@@ -32,8 +36,8 @@ interface ImdbMovie {
 
 //const movies = ['foo', 'nbar', 'super boring movie', 'Steve Jobs']
 
-const MovieSearch: React.FC<SeachProps> = ({ isOpen, onClose }: SeachProps ) => {
-    const [movies, setMovies] = useState([]);
+const MovieSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedMovie, setClickedRating, onMovieOpen }: SeachProps ) => {
+    const [movies, setMovies] = useState<ImdbMovie[]>([]);
     const [loading, setLoading] = useState(false);
     const [input, setInput] = useState('');
 
@@ -52,8 +56,15 @@ const MovieSearch: React.FC<SeachProps> = ({ isOpen, onClose }: SeachProps ) => 
         }
     }
 
+    const clickMovie = (m: ImdbMovie): void => {
+        const seenMovie: SeenMovie = {movie: m, rating: 0, comment: ""};
+        setClickedMovie(seenMovie);
+        setClickedRating(0);
+        onMovieOpen();
+    }
+
     return (
-        <Modal isOpen={isOpen} size={'xl'} onClose={onClose} isCentered>
+        <Modal isOpen={isOpen} size={'xl'} onClose={() => {setMovies([]); onClose();}} isCentered>
             <ModalOverlay />
             <ModalContent>
             <ModalHeader>
@@ -64,7 +75,7 @@ const MovieSearch: React.FC<SeachProps> = ({ isOpen, onClose }: SeachProps ) => 
             </ModalHeader>
             <ModalCloseButton />
             <ModalBody bg="rgba(86, 86, 86, 0.1)">
-                {loading ? <Spinner /> : movies.map(m => <Text 
+                {loading ? <Spinner /> : movies.map(m => <Text onClick={() => clickMovie(m)}
                         _hover={{cursor: 'pointer', bg: 'rgba(86, 86, 86, 1)'}}
                     >{m['year']} {m['title']}</Text>)}
             </ModalBody>
