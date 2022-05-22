@@ -18,7 +18,7 @@ function UserMovies() {
   const [clickedRating, setClickedRating] = useState<number>(0);
   const router = useRouter();
   const user_id = router.query.user_id;
-  const { data, error } = useSWR('http://wtw.triplan.club/seen-movies/' + user_id, fetcher)
+  const { data, error } = useSWR('http://localhost:8080/seen-movies/' + user_id, fetcher)
   if (error) { return <div>failed to load</div> };
   if (!data) { return <div>loading...</div> };
   const clickMovie = (m: SeenMovie) => {

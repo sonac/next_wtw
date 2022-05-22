@@ -24,7 +24,6 @@ const theme = extendTheme({
       baseStyle: {
         dialog: {
           maxWidth: '60vw',
-          minWidth: '60vw',
           fontSize: '2em',
           bg: 'rgba(86, 86, 86, 0.7)',
         },
@@ -35,6 +34,22 @@ const theme = extendTheme({
         body: {
           padding: '0px'
         }
+      },
+      variants: {
+        auth: (props: any) => ({
+          dialog: {
+            bg: 'rgba(86, 86, 86, 0.9)',
+          }
+        }),
+      }
+    },
+    Text: {
+      variants: {
+        button: (props: any) => ({
+          _hover: {
+            cursor: 'pointer',
+          }
+        }),
       }
     }
   },
