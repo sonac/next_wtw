@@ -34,21 +34,21 @@ const Auth: React.FC<AuthProps> = ({ isOpen, onClose }) => {
         const resp = await fetch(url, payload)
         setLoading(false);
         onClose();
+        location.reload()
     }
 
     const logout = () => {
         document.cookie = 'jwtToken=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+        location.reload()
     }
 
-    const isAuthenticated = (data === null || data === undefined);
-
-    console.log(data)
+    const isAuthenticated = !(data === null || data === undefined);
 
     return (
         <Modal isOpen={isOpen} onClose={onClose} size={"md"} isCentered variant={'auth'}>
             <ModalOverlay />
             <ModalContent>
-                {isAuthenticated ?
+                {!isAuthenticated ?
                 <div>
                 <ModalHeader m='0' p='0'>
                     <Flex m={'0'} p={'0'} minHeight={"100%"} justifyContent='space-between' pr={"10%"}>
@@ -63,7 +63,7 @@ const Auth: React.FC<AuthProps> = ({ isOpen, onClose }) => {
                 <ModalBody>
                     <Input type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
                     <Input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)}/>
-                    <Button variantColor="blue" mt={4} onClick={sendAuth} >{loading ? <Spinner/> : action}</Button>
+                    <Button color="blue" mt={4} onClick={sendAuth} >{loading ? <Spinner/> : action}</Button>
                 </ModalBody></div> : (
                 <div>
                     <ModalBody>

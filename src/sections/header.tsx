@@ -27,8 +27,9 @@ const Header = () => {
   const { data, error } = useSWR('auth', userFetcher)
   const isAuthenticated = !(data === null || data === undefined);
 
-  if (error) { return <div>failed to load</div> };
+  //if (error) { return <div>failed to load</div> };
   const btnRef = React.useRef()
+
 
   return (
     <>
