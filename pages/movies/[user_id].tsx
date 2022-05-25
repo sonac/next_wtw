@@ -9,7 +9,7 @@ import MovieCard from '../../src/components/movie_card';
 import { useState } from 'react';
 
 //@ts-ignore
-const moviesFetcher = (userId: string) => fetch('http://localhost:8080/seen-movies/' + userId, {credentials: 'include'}).then((res) => res.json())
+const moviesFetcher = () => fetch('http://localhost:8080/seen-movies', {credentials: 'include'}).then((res) => res.json())
 
 function UserMovies() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -18,8 +18,7 @@ function UserMovies() {
   const [movies, setMovies] = useState<SeenMovie[]>([]);
   const [clickedRating, setClickedRating] = useState<number>(0);
   const router = useRouter();
-  const user_id = router.query.user_id;
-  const { data, error } = useSWR(user_id, moviesFetcher)
+  const { data, error } = useSWR('seenList', moviesFetcher)
   if (error) { return <div>failed to load</div> };
   if (!data) { return <div>loading...</div> };
   //console.log(data)

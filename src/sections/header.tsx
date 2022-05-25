@@ -62,8 +62,6 @@ const Header = () => {
           <VStack s={20}>
             <Text fontSize="2xl"><Link href="/">Home</Link></Text>
             <Text fontSize="2xl"><Link href={`/movies/${tobase64(data || '')}`}>Movies</Link></Text>
-            <Text fontSize="2xl">Netflix Movies</Text>
-            <Text fontSize="2xl">My List</Text>
           </VStack>
         </DrawerBody>
         <DrawerFooter>
