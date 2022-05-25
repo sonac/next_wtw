@@ -2,7 +2,7 @@
 import { Modal, ModalOverlay, ModalContent, ModalHeader, 
     ModalBody, Flex, Image, Text, Grid, Heading, GridItem, Box, Button } from '@chakra-ui/react'
 import { Dispatch, SetStateAction, useState } from 'react';
-import { MovieInterface } from './movie';
+import { MovieInterface, SeenMovie } from './movie';
 
 interface CardProps {
     isOpen: boolean;
@@ -10,19 +10,9 @@ interface CardProps {
     movie: MovieInterface;
     clickedRating: number;
     setClickedRating: Dispatch<SetStateAction<number>>;
+    setMovies: Dispatch<SetStateAction<SeenMovie[]>>;
+    movies: SeenMovie[];
 }
-
-/*
-{
-        "title": "Crashing",
-        "imdbId": "tt5295524",
-        "posterLink": "https://m.media-amazon.com/images/M/MV5BM2MyODZlOGMtMzFiNy00N2ExLTg1OGYtOWQ5YjU5YmVlMTAwXkEyXkFqcGdeQXVyMjYwMjMwMzk@._V1_.jpg",
-        "year": 2017,
-        "rating": 7.7,
-        "ratingCount": 19633,
-        "isSynced": false
-    }
-*/
 
 interface ImdbMovie {
     title: string;
@@ -35,18 +25,36 @@ interface ImdbMovie {
     description: string;
 }
 
-//const movies = ['foo', 'nbar', 'super boring movie', 'Steve Jobs']
-
-const MovieCard: React.FC<CardProps> = ({ isOpen, onClose, movie, clickedRating, setClickedRating }: CardProps ) => {
-    const [movies, setMovies] = useState([]);
+const MovieCard: React.FC<CardProps> = ({ isOpen, onClose, movie, clickedRating, setClickedRating, setMovies, movies }: CardProps ) => {
     const [loading, setLoading] = useState(false);
     const [input, setInput] = useState('');
+
     const getBg = (rtng: number): string => {
         if (rtng == clickedRating) {
             return 'rgba(120, 116, 171, 0.52)'
         }
         return 'transparent'
     }
+
+    const clickMovie = async () => {
+        const resp = await fetch(`http://localhost:8080/movie`, {
+            method: 'POST',
+            body: JSON.stringify(movie),
+            credentials: 'include'
+        })
+        if (resp.status === 200) {
+            const newMovie: SeenMovie = {
+                movie: movie,
+                rating: clickedRating,
+                comment: ''
+            }
+            setMovies([newMovie])
+        } else {
+            console.error(resp)
+        }
+    }
+
+
     return (
         <Modal isOpen={isOpen} size={'xl'} onClose={onClose} isCentered>
             <ModalOverlay />
@@ -127,7 +135,7 @@ const MovieCard: React.FC<CardProps> = ({ isOpen, onClose, movie, clickedRating,
                                 <Text align='center'>10</Text>
                             </Box>
                         </Flex>
-                        <Button>{movie.isSynced ? 'Update' : 'Add'}</Button>
+                        <Button onClick={clickMovie}>{movie.isSynced ? 'Update' : 'Add'}</Button>
                     </Flex>
                 </Flex>
             </ModalBody>

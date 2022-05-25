@@ -15,12 +15,18 @@ function UserMovies() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { isOpen: movieOpen, onOpen: onMovieOpen, onClose: onMovieClose } = useDisclosure();
   const [clickedMovie, setClickedMovie] = useState<SeenMovie>();
+  const [movies, setMovies] = useState<SeenMovie[]>([]);
   const [clickedRating, setClickedRating] = useState<number>(0);
   const router = useRouter();
   const user_id = router.query.user_id;
   const { data, error } = useSWR(user_id, moviesFetcher)
   if (error) { return <div>failed to load</div> };
   if (!data) { return <div>loading...</div> };
+  //console.log(data)
+  if (data.seenMovies && movies.length === 0) {
+    setMovies(data.seenMovies)
+  }
+  console.log(movies)
   const clickMovie = (m: SeenMovie) => {
     setClickedMovie(m);
     setClickedRating(m.rating)
@@ -36,7 +42,7 @@ function UserMovies() {
         <Header />
       <MovieSearch isOpen={isOpen} onClose={onClose} setClickedMovie={setClickedMovie} setClickedRating={setClickedRating} onMovieOpen={onMovieOpen} />
       {clickedMovie !== undefined ? <MovieCard isOpen={movieOpen} onClose={onMovieClose} movie={clickedMovie.movie} 
-        clickedRating={clickedRating} setClickedRating={setClickedRating} /> : <></>}
+        clickedRating={clickedRating} setClickedRating={setClickedRating} setMovies={setMovies} movies={movies} /> : <></>}
       <SimpleGrid columns={[1, 2, 3, 4, 5, 6]} spacing={8}>
         <GridItem key="plus">
           <Image           
@@ -50,11 +56,11 @@ function UserMovies() {
             onClick={onOpen}
           />
         </GridItem>
-        {data.seenMovies !== null ? data.seenMovies.map((sm: any) => (
+        {movies.map((sm: any) => (
           <GridItem key={sm.movie.imdbId} onClick={() => clickMovie(sm)}>
             <Movie movie={sm.movie} rating={sm.rating} />
           </GridItem>
-        )) : <></>}
+        ))}
       </SimpleGrid>
       </VStack>
   );
