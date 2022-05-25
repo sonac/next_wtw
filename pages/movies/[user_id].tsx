@@ -9,7 +9,7 @@ import MovieCard from '../../src/components/movie_card';
 import { useState } from 'react';
 
 //@ts-ignore
-const fetcher = (...args: any[]) => fetch(...args).then((res) => res.json())
+const moviesFetcher = (userId: string) => fetch('http://localhost:8080/seen-movies/' + userId, {credentials: 'include'}).then((res) => res.json())
 
 function UserMovies() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -18,7 +18,7 @@ function UserMovies() {
   const [clickedRating, setClickedRating] = useState<number>(0);
   const router = useRouter();
   const user_id = router.query.user_id;
-  const { data, error } = useSWR('http://localhost:8080/seen-movies/' + user_id, fetcher)
+  const { data, error } = useSWR(user_id, moviesFetcher)
   if (error) { return <div>failed to load</div> };
   if (!data) { return <div>loading...</div> };
   const clickMovie = (m: SeenMovie) => {
@@ -50,11 +50,11 @@ function UserMovies() {
             onClick={onOpen}
           />
         </GridItem>
-        {data.seenMovies.map((sm: any) => (
+        {data.seenMovies !== null ? data.seenMovies.map((sm: any) => (
           <GridItem key={sm.movie.imdbId} onClick={() => clickMovie(sm)}>
             <Movie movie={sm.movie} rating={sm.rating} />
           </GridItem>
-        ))}
+        )) : <></>}
       </SimpleGrid>
       </VStack>
   );
