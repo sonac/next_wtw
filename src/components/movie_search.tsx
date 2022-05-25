@@ -75,7 +75,7 @@ const MovieSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedMovie, s
             </ModalHeader>
             <ModalCloseButton />
             <ModalBody bg="rgba(86, 86, 86, 0.1)">
-                {loading ? <Spinner /> : movies.map(m => <Text onClick={() => clickMovie(m)}
+                {loading ? <Spinner /> : movies.map(m => <Text key={m.title} onClick={() => clickMovie(m)}
                         _hover={{cursor: 'pointer', bg: 'rgba(86, 86, 86, 1)'}}
                     >{m['year']} {m['title']}</Text>)}
             </ModalBody>

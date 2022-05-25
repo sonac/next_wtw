@@ -19,7 +19,7 @@ const Auth: React.FC<AuthProps> = ({ isOpen, onClose }) => {
     const sendAuth = async () => {
         setLoading(true);
         const ep = action === 'Login' ? 'signin' : 'signup';
-        const url = 'http://localhost:8080/' + ep;
+        const url = `http://${process.env.SERVER}/` + ep;
         console.log(url)
         const payload = {
             method: 'POST',
