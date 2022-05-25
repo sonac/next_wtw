@@ -37,18 +37,20 @@ const MovieCard: React.FC<CardProps> = ({ isOpen, onClose, movie, clickedRating,
     }
 
     const clickMovie = async () => {
+        const newMovie: SeenMovie = {
+            movie: movie,
+            rating: clickedRating,
+            comment: ''
+        }
         const resp = await fetch(`http://localhost:8080/movie`, {
-            method: 'POST',
-            body: JSON.stringify(movie),
+            method: movie.isSynced ? 'PUT' : 'POST',
+            body: JSON.stringify(newMovie),
             credentials: 'include'
         })
         if (resp.status === 200) {
-            const newMovie: SeenMovie = {
-                movie: movie,
-                rating: clickedRating,
-                comment: ''
-            }
-            setMovies([newMovie])
+            setMovies([...movies, newMovie])
+            onClose()
+            location.reload()
         } else {
             console.error(resp)
         }
@@ -56,7 +58,7 @@ const MovieCard: React.FC<CardProps> = ({ isOpen, onClose, movie, clickedRating,
 
 
     return (
-        <Modal isOpen={isOpen} size={'xl'} onClose={onClose} isCentered>
+        <Modal variant={'movie'} isOpen={isOpen} size={'xl'} onClose={onClose} isCentered>
             <ModalOverlay />
             <ModalContent>
             <ModalBody bg="rgba(34, 34, 34, 0.7)" w="60vw">

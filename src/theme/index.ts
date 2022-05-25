@@ -23,7 +23,6 @@ const theme = extendTheme({
     Modal: {
       baseStyle: {
         dialog: {
-          maxWidth: '60vw',
           fontSize: '2em',
           bg: 'rgba(86, 86, 86, 0.7)',
         },
@@ -41,6 +40,14 @@ const theme = extendTheme({
             bg: 'rgba(86, 86, 86, 0.9)',
           }
         }),
+        movie: (props: any) => ({
+          dialog: {
+            minWidth: '28em',
+          },
+          body: {
+            minWidth: '28em',
+          }
+        })
       }
     },
     Text: {

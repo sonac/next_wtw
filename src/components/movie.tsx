@@ -65,8 +65,8 @@ const Movie: React.FC<MovieProps> = ({ movie, rating }: MovieProps) => {
             <Heading as="h3" size="md">
               {movie.title}
             </Heading>
-            <Text>{movie.year}</Text>
-            <Text>{movie.rating}</Text>
+            <Text paddingRight={5}>{movie.year}</Text>
+            <Text >{movie.rating}</Text>
           </Flex>
           <Flex justifyContent="space-between" flexDirection="row">
             <Text>Your rating: </Text>

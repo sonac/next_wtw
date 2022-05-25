@@ -62,8 +62,8 @@ const Auth: React.FC<AuthProps> = ({ isOpen, onClose }) => {
                 </ModalHeader>
                 <ModalBody>
                     <Input type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
-                    <Input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)}/>
-                    <Button color="blue" mt={4} onClick={sendAuth} >{loading ? <Spinner/> : action}</Button>
+                    <Input type="password" placeholder="Password" onKeyDown={(k) => {if (k.key == 'Enter') sendAuth()}} onChange={(e) => setPassword(e.target.value)}/>
+                    <Button color="blue" mt={4} onClick={sendAuth}  >{loading ? <Spinner/> : action}</Button>
                 </ModalBody></div> : (
                 <div>
                     <ModalBody>
