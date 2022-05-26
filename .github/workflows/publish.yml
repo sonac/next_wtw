@@ -13,7 +13,7 @@ jobs:
       - uses: actions/setup-node@v1
       - name: build docker image
         run: |
-          docker build -t ghcr.io/sonac/next_wtw/next_wtw:latest
+          docker build -t ghcr.io/sonac/next_wtw/next_wtw:latest .
       - name: push to github packages
         uses: docker/build-push-action@v1
         with:
