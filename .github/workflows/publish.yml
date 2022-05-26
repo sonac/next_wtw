@@ -13,14 +13,14 @@ jobs:
       - uses: actions/setup-node@v1
       - name: build docker image
         run: |
-          docker build -t ghcr.io/sonac/next-wtw/next-wtw:latest
+          docker build -t ghcr.io/sonac/next_wtw/next_wtw:latest
       - name: push to github packages
         uses: docker/build-push-action@v1
         with:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: ghcr.io
-          repository: sonac/next-wtw/next-wtw
+          repository: sonac/next_wtw/next_wtw
           tag_with_ref: true
       - name: Deploy to DigitalOcean
         uses: appleboy/ssh-action@master
