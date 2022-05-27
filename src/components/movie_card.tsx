@@ -42,7 +42,7 @@ const MovieCard: React.FC<CardProps> = ({ isOpen, onClose, movie, clickedRating,
             rating: clickedRating,
             comment: ''
         }
-        const resp = await fetch(`http://${process.env.SERVER || 'wtw:8080'}/movie`, {
+        const resp = await fetch(`http://server.triplan.club/movie`, {
             method: movie.isSynced ? 'PUT' : 'POST',
             body: JSON.stringify(newMovie),
             credentials: 'include'

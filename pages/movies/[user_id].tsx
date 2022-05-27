@@ -9,7 +9,7 @@ import MovieCard from '../../src/components/movie_card';
 import { useState } from 'react';
 
 //@ts-ignore
-const moviesFetcher = () => fetch(`http://${process.env.SERVER || 'wtw:8080'}/seen-movies`, {credentials: 'include'}).then((res) => res.json())
+const moviesFetcher = () => fetch(`http://server.triplan.club/seen-movies`, {credentials: 'include'}).then((res) => res.json())
 
 function UserMovies() {
   const { isOpen, onOpen, onClose } = useDisclosure();

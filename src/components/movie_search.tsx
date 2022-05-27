@@ -11,18 +11,6 @@ interface SeachProps {
     onMovieOpen: any;
 }
 
-/*
-{
-        "title": "Crashing",
-        "imdbId": "tt5295524",
-        "posterLink": "https://m.media-amazon.com/images/M/MV5BM2MyODZlOGMtMzFiNy00N2ExLTg1OGYtOWQ5YjU5YmVlMTAwXkEyXkFqcGdeQXVyMjYwMjMwMzk@._V1_.jpg",
-        "year": 2017,
-        "rating": 7.7,
-        "ratingCount": 19633,
-        "isSynced": false
-    }
-*/
-
 interface ImdbMovie {
     title: string;
     imdbId: string;
@@ -34,7 +22,6 @@ interface ImdbMovie {
     description: string;
 }
 
-//const movies = ['foo', 'nbar', 'super boring movie', 'Steve Jobs']
 
 const MovieSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedMovie, setClickedRating, onMovieOpen }: SeachProps ) => {
     const [movies, setMovies] = useState<ImdbMovie[]>([]);
@@ -44,7 +31,7 @@ const MovieSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedMovie, s
     const search = async (e: any) => {
         if (e.key == 'Enter') {
             setLoading(true);
-            const resp = await fetch(`http://${process.env.SERVER || 'wtw:8080'}/search`, 
+            const resp = await fetch(`http://server.triplan.club/search`, 
                 {
                     method: 'POST',
                     body: input

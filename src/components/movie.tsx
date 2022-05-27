@@ -28,24 +28,6 @@ interface MovieProps {
   rating: number;
 }
 
-/*
-  * {"seenMovies":
-  *   [{
-  *     "movie":{ 
-  *       "title": "Our Planet",
-  *       "imdbId":"tt9253866",
-  *       "posterLink":"https://m.media-amazon.com/images/M/MV5BN2I1ZjA5YjQtYmQ0ZS00ZmE1LTk1ZjktNTQ5ODIzY2JiZDdhXkEyXkFqcGdeQXVyNjg2NjQwMDQ@._V1_UX182_CR0,0,182,268_AL_.jpg",
-  *       "year":2019,
-  *       "rating":0,
-  *       "ratingCount":0,
-  *       "isSynced":false
-  *     },
-  *     "rating": 9,
-  *     "comment":""
-  *   }]
-  * }
- */
-
 const Movie: React.FC<MovieProps> = ({ movie, rating }: MovieProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
