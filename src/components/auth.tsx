@@ -20,6 +20,7 @@ const Auth: React.FC<AuthProps> = ({ isOpen, onClose }) => {
         setLoading(true);
         const ep = action === 'Login' ? 'signin' : 'signup';
         const url = `http://server.triplan.club/` + ep;
+        //const url = `http://localhost:8080/` + ep;
         console.log(url)
         const payload = {
             method: 'POST',
@@ -33,8 +34,18 @@ const Auth: React.FC<AuthProps> = ({ isOpen, onClose }) => {
         //@ts-ignore
         const resp = await fetch(url, payload)
         setLoading(false);
-        onClose();
-        location.reload()
+        if (resp.status === 200) {
+            onClose();
+            location.reload()
+        } else {
+            if (resp.status === 401) {
+                alert('Invalid email or password')
+            } else if (resp.status === 400) {
+                alert('A user with this email already exists')
+            } else {
+                alert('error occured')
+            }
+        }
     }
 
     const logout = () => {

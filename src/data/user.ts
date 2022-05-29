@@ -1,6 +1,8 @@
 export const userFetcher = () => {
+  const url = `http://server.triplan.club/validate`
+  //const url = `http://localhost:8080/validate`
   if (document.cookie.includes("jwtToken")) {
-    return fetch(`http://server.triplan.club/validate`, {method: "GET", credentials: "include", headers: {
+    return fetch(url, {method: "GET", credentials: "include", headers: {
       "Content-Type": "application/json",
     }}).then((res) => {
       console.log(res)  
