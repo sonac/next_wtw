@@ -31,7 +31,7 @@ const MovieSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedMovie, s
     const search = async (e: any) => {
         if (e.key == 'Enter') {
             setLoading(true);
-            const resp = await fetch(`https://server.triplan.club/search`, 
+            const resp = await fetch(`/api/search`, 
                 {
                     method: 'POST',
                     body: input

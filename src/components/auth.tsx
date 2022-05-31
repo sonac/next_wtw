@@ -19,8 +19,8 @@ const Auth: React.FC<AuthProps> = ({ isOpen, onClose }) => {
     const sendAuth = async () => {
         setLoading(true);
         const ep = action === 'Login' ? 'signin' : 'signup';
-        const url = `https://server.triplan.club/` + ep;
-        //const url = `http://localhost:8080/` + ep;
+        //const url = `https://server.triplan.club/` + ep;
+        const url = `/api/` + ep;
         console.log(url)
         const payload = {
             method: 'POST',
