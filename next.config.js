@@ -1,8 +1,8 @@
 const ContentSecurityPolicy = `
   default-src 'self';
   script-src 'self' 'unsafe-inline' 'unsafe-eval';
-  style-src 'self';
-  img-src * 'self' https://m.media-amazon.com;
+  style-src 'self' 'unsafe-inline' 'unsafe-eval';
+  img-src https://m.media-amazon.com/ 'self';
 `;
 
 const securityHeaders = [
