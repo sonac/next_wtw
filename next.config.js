@@ -1,5 +1,5 @@
 const ContentSecurityPolicy = `
-  default-src 'self';
+  default-src https://m.media-amazon.com/ 'self';
   script-src 'self' 'unsafe-inline' 'unsafe-eval';
   style-src 'self' 'unsafe-inline' 'unsafe-eval';
   img-src https://m.media-amazon.com/ 'self';
