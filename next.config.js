@@ -1,5 +1,4 @@
 const ContentSecurityPolicy = `
-  default-src *;
   img-src * 'self' data:;
 `;
 
