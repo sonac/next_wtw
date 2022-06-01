@@ -36,5 +36,4 @@ jobs:
             docker compose down
             cat gh_token | docker login ghcr.io -u $GITHUB_USERNAME --password-stdin
             docker pull ghcr.io/sonac/next_wtw/next_wtw:latest
-            docker compose -f nginx-compose up -d
-            docker-compose up -d
+            docker compose up -d
