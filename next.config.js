@@ -1,8 +1,8 @@
 const ContentSecurityPolicy = `
-  default-src https://m.media-amazon.com/ 'self';
+  default-src https://m.media-amazon.com/images/M/ 'self';
   script-src 'self' 'unsafe-inline' 'unsafe-eval';
   style-src 'self' 'unsafe-inline' 'unsafe-eval';
-  img-src https://m.media-amazon.com/ 'self';
+  img-src https://m.media-amazon.com/images/M/ 'self';
 `;
 
 const securityHeaders = [
@@ -40,6 +40,6 @@ module.exports = {
     SERVER: process.env.SERVER,
   },
   images: {
-    domains: ['m.media-amazon.com'],
+    domains: ['https://m.media-amazon.com/images/M/'],
   }
 };
