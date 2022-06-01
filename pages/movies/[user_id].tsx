@@ -1,12 +1,12 @@
 import { useRouter } from 'next/router';
 import { SimpleGrid, GridItem, VStack, Image, useDisclosure } from '@chakra-ui/react';
 import useSWR from 'swr';
+import { useState } from 'react';
 
 import Movie, { MovieInterface, SeenMovie } from '../../src/components/movie';
 import MovieSearch from '../../src/components/movie_search'
 import Header from '../../src/sections/header';
 import MovieCard from '../../src/components/movie_card';
-import { useState } from 'react';
 
 //@ts-ignore
 const moviesFetcher = () => fetch(`/api/seen-movies`, {credentials: 'include'}).then((res) => res.json())
@@ -45,7 +45,7 @@ function UserMovies() {
       <SimpleGrid columns={[1, 2, 3, 4, 5, 6]} spacing={8}>
         <GridItem key="plus">
           <Image           
-            src="https://icons.iconarchive.com/icons/icons8/ios7/512/User-Interface-Plus-icon.png"
+            src={"/plus_icon.png"}
             alt="plus"
             size="100%"
             boxSize="100%"

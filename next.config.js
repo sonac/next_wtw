@@ -1,14 +1,3 @@
-const ContentSecurityPolicy = `
-  img-src * 'self' data:;
-`;
-
-const securityHeaders = [
-  {
-    key: "Content-Security-Policy",
-    value: ContentSecurityPolicy.replace(/\s{2,}/g, " ").trim(),
-  },
-];
-
 /** @type {import('next').NextConfig} */
 module.exports = {
   /*async rewrites() {
@@ -19,14 +8,6 @@ module.exports = {
       }
     ]
   },*/
-  async headers() {
-    return [
-      {
-        source: "/:path*",
-        headers: securityHeaders,
-      },
-    ];
-  },
   reactStrictMode: true,
   experimental: {
     outputStandalone: true,
@@ -34,4 +15,7 @@ module.exports = {
   publicRuntimeConfig: {
     SERVER: process.env.SERVER,
   },
+  images: {
+    domains: ['m.media-amazon.com'],
+  }
 };
