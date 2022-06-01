@@ -1,7 +1,5 @@
 const ContentSecurityPolicy = `
-  default-src 'self';
-  script-src 'self';
-  font-src 'self';
+  default-src *;
   img-src * 'self' data:;
 `;
 
