@@ -8,12 +8,14 @@ const ContentSecurityPolicy = `
 const securityHeaders = [
   {
     key: "Content-Security-Policy",
-    value: ContentSecurityPolicy.replace(/\s{2,}/g, " ").trim(),
+    value: `default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:;`, 
+    //ContentSecurityPolicy.replace(/\s{2,}/g, " ").trim(),
   },
 ];
 
 /** @type {import('next').NextConfig} */
 module.exports = {
+  /*
   async rewrites() {
     return [
       {
@@ -21,7 +23,7 @@ module.exports = {
         destination: 'http://localhost:8080/:path',
       }
     ]
-  },
+  },*/
   async headers() {
     return [
       {
