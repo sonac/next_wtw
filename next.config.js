@@ -2,7 +2,7 @@ const ContentSecurityPolicy = `
   default-src https://m.media-amazon.com/images/M/ 'self';
   script-src 'self' 'unsafe-inline' 'unsafe-eval';
   style-src 'self' 'unsafe-inline' 'unsafe-eval';
-  img-src https://m.media-amazon.com/images/M/ 'self';
+  img-src 'self' blob: data: https://m.media-amazon.com;
 `;
 
 const securityHeaders = [
