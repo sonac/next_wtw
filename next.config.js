@@ -27,7 +27,7 @@ module.exports = {
   async headers() {
     return [
       {
-        source: "/:path*",
+        source: "/(.*)",
         headers: securityHeaders,
       },
     ];
