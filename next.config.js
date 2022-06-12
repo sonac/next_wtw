@@ -40,6 +40,6 @@ module.exports = {
     SERVER: process.env.SERVER,
   },
   images: {
-    domains: ['https://m.media-amazon.com/images/M/'],
+    domains: ['m.media-amazon.com'],
   }
 };
