@@ -11,7 +11,10 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
       <ChakraProvider theme={theme}>
         <NextHead>
-          <meta httpEquiv='Content-Security-Policy' content="default-src '*'" />
+          <meta 
+            httpEquiv='Content-Security-Policy' 
+            content="default-src https://m.media-amazon.com/images/M/ 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' 'unsafe-eval'; img-src https://m.media-amazon.com/images/M/ 'self';" 
+          />
         </NextHead>
         <Component {...pageProps} />
       </ChakraProvider>
