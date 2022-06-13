@@ -3,6 +3,7 @@ import { Flex, Box, Heading, Text, useDisclosure } from '@chakra-ui/react';
 import React from 'react';
 
 export interface MovieInterface {
+  dateAdded: string;
   title: string;
   imdbId: string;
   posterLink: string;
@@ -37,6 +38,7 @@ const Movie: React.FC<MovieProps> = ({ movie, rating }: MovieProps) => {
           alt={movie.title}
           size="100%"
           boxSize="100%"
+          h={"30em"}
           _hover={{
             cursor: "pointer"
           }}

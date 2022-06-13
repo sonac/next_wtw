@@ -8,7 +8,6 @@ const ContentSecurityPolicy = `
 const securityHeaders = [
   {
     key: "Content-Security-Policy",
-    //value: `default-src https://m.media-amazon.com/images/M/ 'self'; style-src 'self' 'unsafe-inline'; img-src https://m.media-amazon.com/images/M/ 'self' data: https:;`, 
     value: ContentSecurityPolicy.replace(/\s{2,}/g, " ").trim(),
   },
 ];
