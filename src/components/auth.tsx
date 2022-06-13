@@ -9,6 +9,10 @@ interface AuthProps {
     onClose: any;
 }
 
+const validateEmail = (email: string) => {
+    return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
+}
+
 const Auth: React.FC<AuthProps> = ({ isOpen, onClose }) => {
     const { data, error } = useSWR('auth', userFetcher)
     const [action, setAction] = useState('Login');
@@ -17,11 +21,13 @@ const Auth: React.FC<AuthProps> = ({ isOpen, onClose }) => {
     const [loading, setLoading] = useState(false);
 
     const sendAuth = async () => {
+        if (!validateEmail(email)) {
+            alert('Invalid email');
+            return;
+        }
         setLoading(true);
         const ep = action === 'Login' ? 'signin' : 'signup';
-        //const url = `https://server.triplan.club/` + ep;
         const url = `/api/` + ep;
-        console.log(url)
         const payload = {
             method: 'POST',
             body: JSON.stringify({
