@@ -12,6 +12,7 @@ interface SeachProps {
 }
 
 interface ImdbMovie {
+    dateAdded: string;
     title: string;
     imdbId: string;
     posterLink: string;
