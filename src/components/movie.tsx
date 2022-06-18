@@ -32,13 +32,12 @@ interface MovieProps {
 const Movie: React.FC<MovieProps> = ({ movie, rating }: MovieProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-      <Box>
+      <Box w={"15em"}>
         <Image
           src={`${movie.posterLink}`}
           alt={movie.title}
-          size="100%"
-          boxSize="100%"
-          h={"30em"}
+          h={"20em"}
+          w={"100%"}
           _hover={{
             cursor: "pointer"
           }}
