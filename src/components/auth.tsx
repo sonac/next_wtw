@@ -56,7 +56,7 @@ const Auth: React.FC<AuthProps> = ({ isOpen, onClose }) => {
 
     const logout = () => {
         document.cookie = 'jwtToken=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-        location.reload()
+        location.assign("/")
     }
 
     const isAuthenticated = !(data === null || data === undefined);
