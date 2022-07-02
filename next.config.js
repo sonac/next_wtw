@@ -14,7 +14,7 @@ const securityHeaders = [
 
 /** @type {import('next').NextConfig} */
 module.exports = {
-  /* 
+   
   async rewrites() {
     return [
       {
@@ -22,7 +22,8 @@ module.exports = {
         destination: 'http://localhost:8080/:path',
       }
     ]
-  },*/
+  },
+  /*
   async headers() {
     return [
       {
@@ -30,7 +31,7 @@ module.exports = {
         headers: securityHeaders,
       },
     ];
-  },
+  },*/
   reactStrictMode: true,
   experimental: {
     outputStandalone: true,

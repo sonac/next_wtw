@@ -2,16 +2,16 @@
 import { Modal, ModalOverlay, ModalContent, ModalHeader, 
     ModalBody, Flex, Image, Text, Grid, Heading, GridItem, Box, Button } from '@chakra-ui/react'
 import { Dispatch, SetStateAction, useState } from 'react';
-import { MovieInterface, SeenMovie } from './movie';
+import { TitleInterface, SeenTitle } from './title';
 
 interface CardProps {
     isOpen: boolean;
     onClose: any;
-    movie: MovieInterface;
+    movie: TitleInterface;
     clickedRating: number;
     setClickedRating: Dispatch<SetStateAction<number>>;
-    setMovies: Dispatch<SetStateAction<SeenMovie[]>>;
-    movies: SeenMovie[];
+    setMovies: Dispatch<SetStateAction<SeenTitle[]>>;
+    movies: SeenTitle[];
 }
 
 interface ImdbMovie {
@@ -37,8 +37,8 @@ const MovieCard: React.FC<CardProps> = ({ isOpen, onClose, movie, clickedRating,
     }
 
     const clickMovie = async () => {
-        const newMovie: SeenMovie = {
-            movie: movie,
+        const newMovie: SeenTitle = {
+            title: movie,
             rating: clickedRating,
             comment: ''
         }

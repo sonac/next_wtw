@@ -1,3 +1,4 @@
+
 import { useRouter } from 'next/router';
 import { SimpleGrid, GridItem, VStack, Image, useDisclosure, Menu, MenuButton, 
   MenuList, MenuItem, Button } from '@chakra-ui/react';
@@ -5,17 +6,17 @@ import { ChevronDownIcon } from '@chakra-ui/icons';
 import useSWR from 'swr';
 import { useState } from 'react';
 
-import Title, { TitleInterface, SeenTitle } from '../../src/components/title';
-import MovieSearch from '../../src/components/movie_search'
+import Title, { SeenTitle } from '../../src/components/title';
+import SeriesSearch from '../../src/components/series_search'
 import Header from '../../src/sections/header';
 import MovieCard from '../../src/components/title_card';
 
 //@ts-ignore
-const moviesFetcher = () => fetch(`/api/seen-movies`, {credentials: 'include'}).then((res) => res.json())
+const moviesFetcher = () => fetch(`/api/seen-series`, {credentials: 'include'}).then((res) => res.json())
 
-function UserMovies() {
+function UserSeries() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { isOpen: movieOpen, onOpen: onMovieOpen, onClose: onMovieClose } = useDisclosure();
+  const { isOpen: seriesOpen, onOpen: onSeriesOpen, onClose: onSeriesClose } = useDisclosure();
   const [clickedMovie, setClickedMovie] = useState<SeenTitle>();
   const [movies, setMovies] = useState<SeenTitle[]>([]);
   const [clickedRating, setClickedRating] = useState<number>(0);
@@ -23,17 +24,17 @@ function UserMovies() {
   const router = useRouter();
   const { data, error } = useSWR('seenList', moviesFetcher)
 
-  if (error) { return <div>failed to load</div> };
-  if (!data) { return <div>loading...</div> };
+  console.log(data)
 
-  if (data.seenMovies && movies.length === 0) {
+  if (error) { return <div>failed to load</div> };
+  if (data && data.seenMovies && movies.length === 0) {
     setMovies(data.seenMovies)
   }
 
   const clickMovie = (m: SeenTitle) => {
     setClickedMovie(m);
     setClickedRating(m.rating)
-    onMovieOpen();
+    onSeriesOpen();
   }
 
   let curMovies = movies;
@@ -69,8 +70,8 @@ function UserMovies() {
         </MenuList>
       </Menu>
       </div>
-      <MovieSearch isOpen={isOpen} onClose={onClose} setClickedMovie={setClickedMovie} setClickedRating={setClickedRating} onMovieOpen={onMovieOpen} />
-      {clickedMovie !== undefined ? <MovieCard isOpen={movieOpen} onClose={onMovieClose} movie={clickedMovie.title} 
+      <SeriesSearch isOpen={isOpen} onClose={onClose} setClickedMovie={setClickedMovie} setClickedRating={setClickedRating} onMovieOpen={onSeriesOpen} />
+      {clickedMovie !== undefined ? <MovieCard isOpen={seriesOpen} onClose={onSeriesClose} movie={clickedMovie.title} 
         clickedRating={clickedRating} setClickedRating={setClickedRating} setMovies={setMovies} movies={movies} /> : <></>}
       <SimpleGrid columns={[1, 2, 3, 4, 5, 6]} spacing={8}>
         <GridItem key="plus">
@@ -95,4 +96,4 @@ function UserMovies() {
   );
 }
 
-export default UserMovies;
+export default UserSeries;
