@@ -10,8 +10,7 @@ interface CardProps {
     movie: TitleInterface;
     clickedRating: number;
     setClickedRating: Dispatch<SetStateAction<number>>;
-    setMovies: Dispatch<SetStateAction<SeenTitle[]>>;
-    movies: SeenTitle[];
+    upsertTitle: () => Promise<void>;
 }
 
 interface ImdbMovie {
@@ -25,35 +24,13 @@ interface ImdbMovie {
     description: string;
 }
 
-const MovieCard: React.FC<CardProps> = ({ isOpen, onClose, movie, clickedRating, setClickedRating, setMovies, movies }: CardProps ) => {
-    const [loading, setLoading] = useState(false);
-    const [input, setInput] = useState('');
+const MovieCard: React.FC<CardProps> = ({ isOpen, onClose, movie, clickedRating, setClickedRating, upsertTitle: upsertMovie }: CardProps ) => {
 
     const getBg = (rtng: number): string => {
         if (rtng == clickedRating) {
             return 'rgba(120, 116, 171, 0.52)'
         }
         return 'transparent'
-    }
-
-    const clickMovie = async () => {
-        const newMovie: SeenTitle = {
-            title: movie,
-            rating: clickedRating,
-            comment: ''
-        }
-        const resp = await fetch(`/api/movie`, {
-            method: movie.isSynced ? 'PUT' : 'POST',
-            body: JSON.stringify(newMovie),
-            credentials: 'include'
-        })
-        if (resp.status === 200) {
-            setMovies([...movies, newMovie])
-            onClose()
-            location.reload()
-        } else {
-            console.error(resp)
-        }
     }
 
 
@@ -137,7 +114,7 @@ const MovieCard: React.FC<CardProps> = ({ isOpen, onClose, movie, clickedRating,
                                 <Text align='center'>10</Text>
                             </Box>
                         </Flex>
-                        <Button onClick={clickMovie}>{movie.isSynced ? 'Update' : 'Add'}</Button>
+                        <Button onClick={upsertMovie}>{movie.isSynced ? 'Update' : 'Add'}</Button>
                     </Flex>
                 </Flex>
             </ModalBody>

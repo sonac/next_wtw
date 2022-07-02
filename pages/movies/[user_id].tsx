@@ -36,7 +36,33 @@ function UserMovies() {
     onMovieOpen();
   }
 
+  const upsertMovie = async (): Promise<void> => {
+      if (clickedMovie === null || clickedMovie === undefined) {
+        console.error("failed to upsert movie")
+        return
+      }
+      const newMovie: SeenTitle = {
+          title: clickedMovie?.title,
+          rating: clickedRating,
+          comment: ''
+      }
+      const resp = await fetch(`/api/movie`, {
+          method: clickedMovie.title.isSynced ? 'PUT' : 'POST',
+          body: JSON.stringify(newMovie),
+          credentials: 'include'
+      })
+      if (resp.status === 200) {
+          setMovies([...movies, newMovie])
+          onClose()
+          location.reload()
+      } else {
+          console.error(resp)
+      }
+  }
+
   let curMovies = movies;
+
+  console.log(curMovies)
 
   switch(sortBy) {
     case 'dateAdded':
@@ -71,7 +97,7 @@ function UserMovies() {
       </div>
       <MovieSearch isOpen={isOpen} onClose={onClose} setClickedMovie={setClickedMovie} setClickedRating={setClickedRating} onMovieOpen={onMovieOpen} />
       {clickedMovie !== undefined ? <MovieCard isOpen={movieOpen} onClose={onMovieClose} movie={clickedMovie.title} 
-        clickedRating={clickedRating} setClickedRating={setClickedRating} setMovies={setMovies} movies={movies} /> : <></>}
+        clickedRating={clickedRating} setClickedRating={setClickedRating} upsertTitle={upsertMovie} /> : <></>}
       <SimpleGrid columns={[1, 2, 3, 4, 5, 6]} spacing={8}>
         <GridItem key="plus">
           <Image           
@@ -86,8 +112,8 @@ function UserMovies() {
           />
         </GridItem>
         {curMovies.map((sm: any) => (
-          <GridItem key={sm.movie.imdbId} onClick={() => clickMovie(sm)}>
-            <Title movie={sm.movie} rating={sm.rating} />
+          <GridItem key={sm.title.imdbId} onClick={() => clickMovie(sm)}>
+            <Title movie={sm.title} rating={sm.rating} />
           </GridItem>
         ))}
       </SimpleGrid>

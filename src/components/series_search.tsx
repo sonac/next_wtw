@@ -7,13 +7,9 @@ import { SeenTitle, TitleInterface } from './title';
 interface SeachProps {
     isOpen: boolean;
     onClose: any;
-    setClickedMovie: Dispatch<SetStateAction<SeenTitle | undefined>>
+    setClickedSeries: Dispatch<SetStateAction<SeenTitle | undefined>>
     setClickedRating: Dispatch<SetStateAction<number>>
-    onMovieOpen: any;
-}
-
-interface TraktShow {
-    Show: Show
+    onSeriesOpen: any;
 }
 
 interface Ids {
@@ -22,15 +18,22 @@ interface Ids {
     Slug: string
 }
 
-interface Show {
+interface TraktShow {
     Ids: Ids
     Title: string
     Year: number
 }
 
+//since TraktShow and Series inside DB have different structure - we need safe build of a key
+const getKey = (show: TraktShow | TitleInterface ): string => {
+    if ('Ids' in show) {
+        return show.Ids.Imdb
+    }
+    return show.imdbId
+}
 
-const SeriesSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedMovie, setClickedRating, onMovieOpen }: SeachProps ) => {
-    const [movies, setMovies] = useState<TraktShow[]>([]);
+const SeriesSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedSeries, setClickedRating, onSeriesOpen }: SeachProps ) => {
+    const [movies, setSeries] = useState<TraktShow[]>([]);
     const [loading, setLoading] = useState(false);
     const [input, setInput] = useState('');
 
@@ -43,7 +46,7 @@ const SeriesSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedMovie, 
                     body: input
                 }
             )
-            setMovies(await resp.json());
+            setSeries(await resp.json());
             setLoading(false);
         }
     }
@@ -59,7 +62,7 @@ const SeriesSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedMovie, 
         console.log(resp);
         const data = await resp.json();
         console.log(data)
-        setMovies(data);
+        setSeries(data);
         setLoading(false);
     }
 
@@ -67,19 +70,19 @@ const SeriesSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedMovie, 
         const resp = await fetch(`/api/series-details`, 
             {
                 method: 'POST',
-                body: JSON.stringify(m.Show)    
+                body: JSON.stringify(m)    
             }
         )
         const titleDetails: TitleInterface = await resp.json()
         console.log(titleDetails)
         const seenMovie: SeenTitle = {title: titleDetails, rating: 0, comment: ""};
-        setClickedMovie(seenMovie);
+        setClickedSeries(seenMovie);
         setClickedRating(0);
-        onMovieOpen();
+        onSeriesOpen();
     }
 
     return (
-        <Modal isOpen={isOpen} size={'xl'} onClose={() => {setMovies([]); onClose();}} isCentered>
+        <Modal isOpen={isOpen} size={'xl'} onClose={() => {setSeries([]); onClose();}} isCentered>
             <ModalOverlay />
             <ModalContent>
             <ModalHeader>
@@ -92,9 +95,9 @@ const SeriesSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedMovie, 
             <ModalBody bg="rgba(86, 86, 86, 0.1)">
                 {loading ? 
                     <Spinner /> : 
-                    <div>{movies != null ? movies.map(m => <Text key={m.Show.Title} onClick={async () => await clickMovie(m)}
+                    <div>{movies != null ? movies.map(m => <Text key={getKey(m)} onClick={async () => await clickMovie(m)}
                         _hover={{cursor: 'pointer', bg: 'rgba(86, 86, 86, 1)'}}
-                    >{m.Show.Year} {m.Show.Title}</Text>) : <></>}
+                    >{m.Year} {m.Title}</Text>) : <></>}
                     <Text key="globalSearch" onClick={search} _hover={{cursor: 'pointer', bg: 'rgba(86, 86, 86, 1)'}}>
                         ...
                     </Text>

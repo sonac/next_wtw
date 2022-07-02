@@ -37,8 +37,35 @@ function UserSeries() {
     onSeriesOpen();
   }
 
+  const upsertSeries = async (): Promise<void> => {
+      if (clickedMovie === null || clickedMovie === undefined) {
+        console.error("failed to upsert movie")
+        return
+      }
+      const newMovie: SeenTitle = {
+          title: clickedMovie?.title,
+          rating: clickedRating,
+          comment: ''
+      }
+      const resp = await fetch(`/api/movie`, {
+          method: clickedMovie.title.isSynced ? 'PUT' : 'POST',
+          body: JSON.stringify(newMovie),
+          credentials: 'include'
+      })
+      if (resp.status === 200) {
+          setMovies([...movies, newMovie])
+          onClose()
+          location.reload()
+      } else {
+          console.error(resp)
+      }
+    }
+
   let curMovies = movies;
 
+  console.log(curMovies)
+
+  /*
   switch(sortBy) {
     case 'dateAdded':
       curMovies = movies.sort((a, b) => Date.parse(b.title.dateAdded) - Date.parse(a.title.dateAdded))
@@ -49,7 +76,7 @@ function UserSeries() {
     case 'title':
       curMovies = movies.sort((a, b) => a.title.title.localeCompare(b.title.title))
       break;
-  }
+  }*/
 
   return (
       <VStack 
@@ -70,9 +97,10 @@ function UserSeries() {
         </MenuList>
       </Menu>
       </div>
-      <SeriesSearch isOpen={isOpen} onClose={onClose} setClickedMovie={setClickedMovie} setClickedRating={setClickedRating} onMovieOpen={onSeriesOpen} />
+      <SeriesSearch isOpen={isOpen} onClose={onClose} setClickedSeries={setClickedMovie} setClickedRating={setClickedRating} 
+        onSeriesOpen={onSeriesOpen} />
       {clickedMovie !== undefined ? <MovieCard isOpen={seriesOpen} onClose={onSeriesClose} movie={clickedMovie.title} 
-        clickedRating={clickedRating} setClickedRating={setClickedRating} setMovies={setMovies} movies={movies} /> : <></>}
+        clickedRating={clickedRating} setClickedRating={setClickedRating} upsertTitle={upsertSeries} /> : <></>}
       <SimpleGrid columns={[1, 2, 3, 4, 5, 6]} spacing={8}>
         <GridItem key="plus">
           <Image           
