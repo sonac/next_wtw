@@ -12,48 +12,49 @@ import Header from '../../src/sections/header';
 import MovieCard from '../../src/components/title_card';
 
 //@ts-ignore
-const moviesFetcher = () => fetch(`/api/seen-series`, {credentials: 'include'}).then((res) => res.json())
+const seriesFetcher = () => fetch(`/api/seen-series`, {credentials: 'include'}).then((res) => res.json())
 
 function UserSeries() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { isOpen: seriesOpen, onOpen: onSeriesOpen, onClose: onSeriesClose } = useDisclosure();
-  const [clickedMovie, setClickedMovie] = useState<SeenTitle>();
-  const [movies, setMovies] = useState<SeenTitle[]>([]);
+  const [clickedSeries, setClickedSeries] = useState<SeenTitle>();
+  const [series, setSeries] = useState<SeenTitle[]>([]);
   const [clickedRating, setClickedRating] = useState<number>(0);
   const [sortBy, setSorting] = useState<string>('title');
   const router = useRouter();
-  const { data, error } = useSWR('seenList', moviesFetcher)
+  const { data, error } = useSWR('seenSeries', seriesFetcher)
 
   console.log(data)
 
   if (error) { return <div>failed to load</div> };
-  if (data && data.seenMovies && movies.length === 0) {
-    setMovies(data.seenMovies)
+  if (data && series.length === 0) {
+    setSeries(data)
   }
 
   const clickMovie = (m: SeenTitle) => {
-    setClickedMovie(m);
+    setClickedSeries(m);
     setClickedRating(m.rating)
     onSeriesOpen();
   }
 
   const upsertSeries = async (): Promise<void> => {
-      if (clickedMovie === null || clickedMovie === undefined) {
+      if (clickedSeries === null || clickedSeries === undefined) {
         console.error("failed to upsert movie")
         return
       }
-      const newMovie: SeenTitle = {
-          title: clickedMovie?.title,
+      const newSeries: SeenTitle = {
+          title: clickedSeries?.title,
           rating: clickedRating,
           comment: ''
       }
-      const resp = await fetch(`/api/movie`, {
-          method: clickedMovie.title.isSynced ? 'PUT' : 'POST',
-          body: JSON.stringify(newMovie),
+      console.log(newSeries)
+      const resp = await fetch(`/api/series`, {
+          method: clickedSeries.title.isSynced ? 'PUT' : 'POST',
+          body: JSON.stringify(newSeries),
           credentials: 'include'
       })
       if (resp.status === 200) {
-          setMovies([...movies, newMovie])
+          setSeries([...series, newSeries])
           onClose()
           location.reload()
       } else {
@@ -61,22 +62,20 @@ function UserSeries() {
       }
     }
 
-  let curMovies = movies;
+  let curSeries = series;
 
-  console.log(curMovies)
 
-  /*
   switch(sortBy) {
     case 'dateAdded':
-      curMovies = movies.sort((a, b) => Date.parse(b.title.dateAdded) - Date.parse(a.title.dateAdded))
+      curSeries = series.sort((a, b) => Date.parse(b.title.dateAdded) - Date.parse(a.title.dateAdded))
       break;
     case 'rating':
-      curMovies = movies.sort((a, b) => b.rating - a.rating)
+      curSeries = series.sort((a, b) => b.rating - a.rating)
       break;
     case 'title':
-      curMovies = movies.sort((a, b) => a.title.title.localeCompare(b.title.title))
+      curSeries = series.sort((a, b) => a.title.title.localeCompare(b.title.title))
       break;
-  }*/
+  }
 
   return (
       <VStack 
@@ -97,9 +96,9 @@ function UserSeries() {
         </MenuList>
       </Menu>
       </div>
-      <SeriesSearch isOpen={isOpen} onClose={onClose} setClickedSeries={setClickedMovie} setClickedRating={setClickedRating} 
+      <SeriesSearch isOpen={isOpen} onClose={onClose} setClickedSeries={setClickedSeries} setClickedRating={setClickedRating} 
         onSeriesOpen={onSeriesOpen} />
-      {clickedMovie !== undefined ? <MovieCard isOpen={seriesOpen} onClose={onSeriesClose} movie={clickedMovie.title} 
+      {clickedSeries !== undefined ? <MovieCard isOpen={seriesOpen} onClose={onSeriesClose} movie={clickedSeries.title} 
         clickedRating={clickedRating} setClickedRating={setClickedRating} upsertTitle={upsertSeries} /> : <></>}
       <SimpleGrid columns={[1, 2, 3, 4, 5, 6]} spacing={8}>
         <GridItem key="plus">
@@ -114,9 +113,9 @@ function UserSeries() {
             onClick={onOpen}
           />
         </GridItem>
-        {curMovies.map((sm: any) => (
-          <GridItem key={sm.movie.imdbId} onClick={() => clickMovie(sm)}>
-            <Title movie={sm.movie} rating={sm.rating} />
+        {curSeries.map((sm: any) => (
+          <GridItem key={sm.title.imdbId} onClick={() => clickMovie(sm)}>
+            <Title movie={sm.title} rating={sm.rating} />
           </GridItem>
         ))}
       </SimpleGrid>

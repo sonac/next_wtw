@@ -19,21 +19,21 @@ interface Ids {
 }
 
 interface TraktShow {
-    Ids: Ids
-    Title: string
-    Year: number
+    ids: Ids
+    title: string
+    year: number
 }
 
 //since TraktShow and Series inside DB have different structure - we need safe build of a key
 const getKey = (show: TraktShow | TitleInterface ): string => {
-    if ('Ids' in show) {
-        return show.Ids.Imdb
+    if ('ids' in show) {
+        return show.ids.Imdb
     }
     return show.imdbId
 }
 
 const SeriesSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedSeries, setClickedRating, onSeriesOpen }: SeachProps ) => {
-    const [movies, setSeries] = useState<TraktShow[]>([]);
+    const [series, setSeries] = useState<TraktShow[]>([]);
     const [loading, setLoading] = useState(false);
     const [input, setInput] = useState('');
 
@@ -46,7 +46,8 @@ const SeriesSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedSeries,
                     body: input
                 }
             )
-            setSeries(await resp.json());
+            const data = await resp.json();
+            setSeries(data)
             setLoading(false);
         }
     }
@@ -59,9 +60,7 @@ const SeriesSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedSeries,
                 body: input
             }
         )
-        console.log(resp);
         const data = await resp.json();
-        console.log(data)
         setSeries(data);
         setLoading(false);
     }
@@ -95,9 +94,9 @@ const SeriesSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedSeries,
             <ModalBody bg="rgba(86, 86, 86, 0.1)">
                 {loading ? 
                     <Spinner /> : 
-                    <div>{movies != null ? movies.map(m => <Text key={getKey(m)} onClick={async () => await clickMovie(m)}
+                    <div>{series != null ? series.map(m => <Text key={getKey(m)} onClick={async () => await clickMovie(m)}
                         _hover={{cursor: 'pointer', bg: 'rgba(86, 86, 86, 1)'}}
-                    >{m.Year} {m.Title}</Text>) : <></>}
+                    >{m.year} {m.title}</Text>) : <></>}
                     <Text key="globalSearch" onClick={search} _hover={{cursor: 'pointer', bg: 'rgba(86, 86, 86, 1)'}}>
                         ...
                     </Text>

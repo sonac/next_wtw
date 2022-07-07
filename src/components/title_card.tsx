@@ -50,7 +50,7 @@ const MovieCard: React.FC<CardProps> = ({ isOpen, onClose, movie, clickedRating,
                         boxSize="50%" 
                     />
                     <Flex flexDir="column" p={10} justifyContent='space-between'>
-                        <Heading spaddingTop={10} paddingLeft={25} size="2xl" color="white">{movie.title}</Heading>
+                        <Heading paddingTop={10} paddingLeft={25} size="2xl" color="white">{movie.title}</Heading>
                         <Grid p={25} templateColumns='repeat(3, 1fr)' justifyContent='space-between' templateRows='repeat(2,1fr)'>
                             <GridItem>
                                 <Text fontSize='lg' color="white" fontWeight="bold">Year</Text>
