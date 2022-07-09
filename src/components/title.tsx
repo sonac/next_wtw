@@ -2,8 +2,8 @@ import { Image } from '@chakra-ui/image';
 import { Flex, Box, Heading, Text, useDisclosure } from '@chakra-ui/react';
 import React from 'react';
 
-export interface MovieInterface {
-  dateAdded: string;
+export interface TitleInterface {
+  dateAdded: Date;
   title: string;
   imdbId: string;
   posterLink: string;
@@ -14,22 +14,22 @@ export interface MovieInterface {
   description: string;
 }
 
-export interface SeenMovie {
-  movie: MovieInterface;
+export interface SeenTitle {
+  title: TitleInterface;
   rating: number;
   comment: string;
 }
 
 export interface UserResponse {
-  seenMovies: Array<SeenMovie>;
+  seenMovies: Array<SeenTitle>;
 }
 
 interface MovieProps {
-  movie: MovieInterface;
+  movie: TitleInterface;
   rating: number;
 }
 
-const Movie: React.FC<MovieProps> = ({ movie, rating }: MovieProps) => {
+const Title: React.FC<MovieProps> = ({ movie, rating }: MovieProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
       <Box w={"15em"}>
@@ -60,4 +60,4 @@ const Movie: React.FC<MovieProps> = ({ movie, rating }: MovieProps) => {
   );
 };
 
-export default Movie;
+export default Title;

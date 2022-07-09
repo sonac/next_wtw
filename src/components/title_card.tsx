@@ -2,16 +2,15 @@
 import { Modal, ModalOverlay, ModalContent, ModalHeader, 
     ModalBody, Flex, Image, Text, Grid, Heading, GridItem, Box, Button } from '@chakra-ui/react'
 import { Dispatch, SetStateAction, useState } from 'react';
-import { MovieInterface, SeenMovie } from './movie';
+import { TitleInterface, SeenTitle } from './title';
 
 interface CardProps {
     isOpen: boolean;
     onClose: any;
-    movie: MovieInterface;
+    movie: TitleInterface;
     clickedRating: number;
     setClickedRating: Dispatch<SetStateAction<number>>;
-    setMovies: Dispatch<SetStateAction<SeenMovie[]>>;
-    movies: SeenMovie[];
+    upsertTitle: () => Promise<void>;
 }
 
 interface ImdbMovie {
@@ -25,35 +24,13 @@ interface ImdbMovie {
     description: string;
 }
 
-const MovieCard: React.FC<CardProps> = ({ isOpen, onClose, movie, clickedRating, setClickedRating, setMovies, movies }: CardProps ) => {
-    const [loading, setLoading] = useState(false);
-    const [input, setInput] = useState('');
+const MovieCard: React.FC<CardProps> = ({ isOpen, onClose, movie, clickedRating, setClickedRating, upsertTitle: upsertMovie }: CardProps ) => {
 
     const getBg = (rtng: number): string => {
         if (rtng == clickedRating) {
             return 'rgba(120, 116, 171, 0.52)'
         }
         return 'transparent'
-    }
-
-    const clickMovie = async () => {
-        const newMovie: SeenMovie = {
-            movie: movie,
-            rating: clickedRating,
-            comment: ''
-        }
-        const resp = await fetch(`/api/movie`, {
-            method: movie.isSynced ? 'PUT' : 'POST',
-            body: JSON.stringify(newMovie),
-            credentials: 'include'
-        })
-        if (resp.status === 200) {
-            setMovies([...movies, newMovie])
-            onClose()
-            location.reload()
-        } else {
-            console.error(resp)
-        }
     }
 
 
@@ -73,7 +50,7 @@ const MovieCard: React.FC<CardProps> = ({ isOpen, onClose, movie, clickedRating,
                         boxSize="50%" 
                     />
                     <Flex flexDir="column" p={10} justifyContent='space-between'>
-                        <Heading spaddingTop={10} paddingLeft={25} size="2xl" color="white">{movie.title}</Heading>
+                        <Heading paddingTop={10} paddingLeft={25} size="2xl" color="white">{movie.title}</Heading>
                         <Grid p={25} templateColumns='repeat(3, 1fr)' justifyContent='space-between' templateRows='repeat(2,1fr)'>
                             <GridItem>
                                 <Text fontSize='lg' color="white" fontWeight="bold">Year</Text>
@@ -137,7 +114,7 @@ const MovieCard: React.FC<CardProps> = ({ isOpen, onClose, movie, clickedRating,
                                 <Text align='center'>10</Text>
                             </Box>
                         </Flex>
-                        <Button onClick={clickMovie}>{movie.isSynced ? 'Update' : 'Add'}</Button>
+                        <Button onClick={upsertMovie}>{movie.isSynced ? 'Update' : 'Add'}</Button>
                     </Flex>
                 </Flex>
             </ModalBody>

@@ -1,8 +1,8 @@
 const ContentSecurityPolicy = `
-  default-src https://m.media-amazon.com/images/M/ 'self';
+  default-src https://m.media-amazon.com/images/M/ http://assets.fanart.tv/ 'self';
   script-src 'self' 'unsafe-inline' 'unsafe-eval';
   style-src 'self' 'unsafe-inline' 'unsafe-eval';
-  img-src 'self' blob: data: https://m.media-amazon.com;
+  img-src 'self' blob: data: https://m.media-amazon.com http://assets.fanart.tv/;
 `;
 
 const securityHeaders = [
@@ -14,7 +14,7 @@ const securityHeaders = [
 
 /** @type {import('next').NextConfig} */
 module.exports = {
-  /* 
+   
   async rewrites() {
     return [
       {
@@ -22,7 +22,7 @@ module.exports = {
         destination: 'http://localhost:8080/:path',
       }
     ]
-  },*/
+  },
   async headers() {
     return [
       {
@@ -39,6 +39,6 @@ module.exports = {
     SERVER: process.env.SERVER,
   },
   images: {
-    domains: ['m.media-amazon.com'],
+    domains: ['m.media-amazon.com', 'assets.fanart.tv'],
   }
 };
