@@ -6,7 +6,7 @@ import { ChevronDownIcon } from '@chakra-ui/icons';
 import useSWR from 'swr';
 import { useState } from 'react';
 
-import Title, { SeenTitle } from '../../src/components/title';
+import Title, { SeenTitle, TitleInterface } from '../../src/components/title';
 import SeriesSearch from '../../src/components/series_search'
 import Header from '../../src/sections/header';
 import MovieCard from '../../src/components/title_card';
@@ -42,8 +42,10 @@ function UserSeries() {
         console.error("failed to upsert movie")
         return
       }
+      const seriesToUpsert: TitleInterface = clickedSeries?.title
+      seriesToUpsert.dateAdded = new Date()
       const newSeries: SeenTitle = {
-          title: clickedSeries?.title,
+          title: seriesToUpsert,
           rating: clickedRating,
           comment: ''
       }

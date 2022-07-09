@@ -3,7 +3,7 @@ import { Flex, Box, Heading, Text, useDisclosure } from '@chakra-ui/react';
 import React from 'react';
 
 export interface TitleInterface {
-  dateAdded: string;
+  dateAdded: Date;
   title: string;
   imdbId: string;
   posterLink: string;
