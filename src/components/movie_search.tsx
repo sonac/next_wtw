@@ -1,7 +1,7 @@
 import { Modal, ModalOverlay, ModalContent, ModalHeader, 
     ModalBody, ModalCloseButton, Input, Text, Spinner } from '@chakra-ui/react'
 import { Dispatch, SetStateAction, useState } from 'react';
-import { SeenTitle } from './title';
+import { SeenTitle, TitleInterface } from './title';
 
 interface SeachProps {
     isOpen: boolean;
@@ -11,21 +11,8 @@ interface SeachProps {
     onMovieOpen: any;
 }
 
-interface ImdbMovie {
-    dateAdded: string;
-    title: string;
-    imdbId: string;
-    posterLink: string;
-    year: number;
-    rating: number;
-    ratingCount: number;
-    isSynced: boolean;
-    description: string;
-}
-
-
 const MovieSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedMovie, setClickedRating, onMovieOpen }: SeachProps ) => {
-    const [movies, setMovies] = useState<ImdbMovie[]>([]);
+    const [movies, setMovies] = useState<TitleInterface[]>([]);
     const [loading, setLoading] = useState(false);
     const [input, setInput] = useState('');
 
@@ -51,12 +38,11 @@ const MovieSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedMovie, s
                 body: input
             }
         )
-        console.log(resp);
         setMovies(await resp.json());
         setLoading(false);
     }
 
-    const clickMovie = (m: ImdbMovie): void => {
+    const clickMovie = (m: TitleInterface): void => {
         const seenMovie: SeenTitle = {title: m, rating: 0, comment: ""};
         setClickedMovie(seenMovie);
         setClickedRating(0);
