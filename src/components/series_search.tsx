@@ -73,7 +73,6 @@ const SeriesSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedSeries,
             }
         )
         const titleDetails: TitleInterface = await resp.json()
-        console.log(titleDetails)
         const seenMovie: SeenTitle = {title: titleDetails, rating: 0, comment: ""};
         setClickedSeries(seenMovie);
         setClickedRating(0);
