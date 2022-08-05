@@ -53,6 +53,7 @@ const MovieSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedMovie, s
         )
         const titleDetails: TitleInterface = await resp.json()
         const seenMovie: SeenTitle = {title: titleDetails, rating: 0, comment: ""};
+        seenMovie.title.dateAdded = new Date(seenMovie.title.dateAdded);
         setClickedMovie(seenMovie);
         setClickedRating(0);
         onMovieOpen();
