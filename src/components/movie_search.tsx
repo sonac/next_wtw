@@ -25,7 +25,9 @@ const MovieSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedMovie, s
                     body: input
                 }
             )
-            setMovies(await resp.json());
+            const d = await resp.json()
+            console.log(d)
+            setMovies(d);
             setLoading(false);
         }
     }
@@ -42,8 +44,15 @@ const MovieSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedMovie, s
         setLoading(false);
     }
 
-    const clickMovie = (m: TitleInterface): void => {
-        const seenMovie: SeenTitle = {title: m, rating: 0, comment: ""};
+    const clickMovie = async (m: TitleInterface): Promise<void> => {
+        const resp = await fetch(`/api/movie-details`, 
+            {
+                method: 'POST',
+                body: JSON.stringify(m)    
+            }
+        )
+        const titleDetails: TitleInterface = await resp.json()
+        const seenMovie: SeenTitle = {title: titleDetails, rating: 0, comment: ""};
         setClickedMovie(seenMovie);
         setClickedRating(0);
         onMovieOpen();
