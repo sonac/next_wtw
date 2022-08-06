@@ -2,6 +2,7 @@ import { Modal, ModalOverlay, ModalContent, ModalHeader,
     ModalBody, ModalCloseButton, Input, Text, Spinner } from '@chakra-ui/react'
 import { Dispatch, SetStateAction, useState } from 'react';
 import { SeenTitle, TitleInterface } from './title';
+import { TraktTitle, Ids} from './series_search'
 
 interface SeachProps {
     isOpen: boolean;
@@ -9,6 +10,10 @@ interface SeachProps {
     setClickedMovie: Dispatch<SetStateAction<SeenTitle | undefined>>
     setClickedRating: Dispatch<SetStateAction<number>>
     onMovieOpen: any;
+}
+
+interface TraktMovie {
+
 }
 
 const MovieSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedMovie, setClickedRating, onMovieOpen }: SeachProps ) => {
@@ -44,15 +49,20 @@ const MovieSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedMovie, s
         setLoading(false);
     }
 
-    const clickMovie = async (m: TitleInterface): Promise<void> => {
-        const resp = await fetch(`/api/movie-details`, 
-            {
-                method: 'POST',
-                body: JSON.stringify(m)    
-            }
-        )
-        const titleDetails: TitleInterface = await resp.json()
-        const seenMovie: SeenTitle = {title: titleDetails, rating: 0, comment: ""};
+    const clickMovie = async (m: TitleInterface | TraktTitle): Promise<void> => {
+        let seenMovie;
+        if ('ids' in m) {
+            const resp = await fetch(`/api/movie-details`, 
+                {
+                    method: 'POST',
+                    body: JSON.stringify(m)    
+                }
+            )
+            const titleDetails: TitleInterface = await resp.json()
+            seenMovie = {title: titleDetails, rating: 0, comment: ""};
+        } else {
+            seenMovie = {title: m, rating: 0, comment: ""};
+        }        
         seenMovie.title.dateAdded = new Date(seenMovie.title.dateAdded);
         setClickedMovie(seenMovie);
         setClickedRating(0);
