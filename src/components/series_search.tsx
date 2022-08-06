@@ -12,20 +12,22 @@ interface SeachProps {
     onSeriesOpen: any;
 }
 
-interface Ids {
+export interface Ids {
     Trakt: number
     Imdb: string
     Slug: string
+    Tvdb: number
+    Tmdb: number
 }
 
-interface TraktShow {
+export interface TraktTitle {
     ids: Ids
     title: string
     year: number
 }
 
 //since TraktShow and Series inside DB have different structure - we need safe build of a key
-const getKey = (show: TraktShow | TitleInterface ): string => {
+const getKey = (show: TraktTitle | TitleInterface ): string => {
     if ('ids' in show) {
         return show.ids.Imdb
     }
@@ -33,7 +35,7 @@ const getKey = (show: TraktShow | TitleInterface ): string => {
 }
 
 const SeriesSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedSeries, setClickedRating, onSeriesOpen }: SeachProps ) => {
-    const [series, setSeries] = useState<TraktShow[]>([]);
+    const [series, setSeries] = useState<TraktTitle[]|TitleInterface[]>([]);
     const [loading, setLoading] = useState(false);
     const [input, setInput] = useState('');
 
@@ -65,15 +67,20 @@ const SeriesSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedSeries,
         setLoading(false);
     }
 
-    const clickMovie = async (m: TraktShow): Promise<void> => {
-        const resp = await fetch(`/api/series-details`, 
-            {
-                method: 'POST',
-                body: JSON.stringify(m)    
-            }
-        )
-        const titleDetails: TitleInterface = await resp.json()
-        const seenSeries: SeenTitle = {title: titleDetails, rating: 0, comment: ""};
+    const clickSeries = async (m: TraktTitle | TitleInterface): Promise<void> => {
+        let seenSeries;
+        if ('ids' in m) {
+            const resp = await fetch(`/api/series-details`, 
+                {
+                    method: 'POST',
+                    body: JSON.stringify(m)    
+                }
+            )
+            const titleDetails: TitleInterface = await resp.json()
+            seenSeries = {title: titleDetails, rating: 0, comment: ""};
+        } else {
+            seenSeries = {title: m, rating: 0, comment: ""};
+        }        
         seenSeries.title.dateAdded = new Date(seenSeries.title.dateAdded);
         setClickedSeries(seenSeries);
         setClickedRating(0);
@@ -94,7 +101,7 @@ const SeriesSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedSeries,
             <ModalBody bg="rgba(86, 86, 86, 0.1)">
                 {loading ? 
                     <Spinner /> : 
-                    <div>{series != null ? series.map(m => <Text key={getKey(m)} onClick={async () => await clickMovie(m)}
+                    <div>{series != null ? series.map(m => <Text key={getKey(m)} onClick={async () => await clickSeries(m)}
                         _hover={{cursor: 'pointer', bg: 'rgba(86, 86, 86, 1)'}}
                     >{m.year} {m.title}</Text>) : <></>}
                     <Text key="globalSearch" onClick={search} _hover={{cursor: 'pointer', bg: 'rgba(86, 86, 86, 1)'}}>
