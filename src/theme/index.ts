@@ -4,7 +4,7 @@ const theme = extendTheme({
   styles: {
     global: {
       'html, body': {
-        background: 'linear-gradient(169.34deg, #C9D4EA -1.32%, #F0D9CC 92.08%)',
+        backgroundImage: 'radial-gradient(#C9D4EA, #F0D9CC)',
       }
     }
   },

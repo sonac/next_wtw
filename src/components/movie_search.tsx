@@ -63,7 +63,6 @@ const MovieSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedMovie, s
         } else {
             seenMovie = {title: m, rating: 0, comment: ""};
         }        
-        seenMovie.title.dateAdded = new Date(seenMovie.title.dateAdded);
         setClickedMovie(seenMovie);
         setClickedRating(0);
         onMovieOpen();

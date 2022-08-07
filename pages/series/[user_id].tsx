@@ -69,7 +69,7 @@ function UserSeries() {
 
   switch(sortBy) {
     case 'dateAdded':
-      curSeries = series.sort((a, b) => b.title.dateAdded.getTime() - a.title.dateAdded.getTime())
+      curSeries = series.sort((a, b) => new Date(b.title.dateAdded).getTime() - new Date(a.title.dateAdded).getTime())
       break;
     case 'rating':
       curSeries = series.sort((a, b) => b.rating - a.rating)
