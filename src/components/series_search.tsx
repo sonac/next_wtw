@@ -81,7 +81,6 @@ const SeriesSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedSeries,
         } else {
             seenSeries = {title: m, rating: 0, comment: ""};
         }        
-        seenSeries.title.dateAdded = new Date(seenSeries.title.dateAdded);
         setClickedSeries(seenSeries);
         setClickedRating(0);
         onSeriesOpen();

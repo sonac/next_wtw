@@ -7,9 +7,10 @@ const imgLoader = ({ src, ...props }: any) => {
 const body = () => {
   return (
     <VStack>
-      <Heading fontSize="6xl">Welcome to WTW</Heading>
-      <Text fontSize="4xl">Don't know what to watch?</Text>
-      <Text fontSize="4xl">Don't worry, we got you covered.</Text>
+      <Heading fontSize="6xl">Welcome to MyList</Heading>
+      <Text fontSize="4xl">Here you can track everything</Text>
+      <Text fontSize="4xl">All movies that you've wathced</Text>
+      <Text fontSize="4xl">All TV Series that you've binged</Text>
     </VStack>
   );
 };

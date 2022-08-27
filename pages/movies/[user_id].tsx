@@ -66,7 +66,7 @@ function UserMovies() {
 
   switch(sortBy) {
     case 'dateAdded':
-      curMovies = movies.sort((a, b) => b.title.dateAdded.getTime() - a.title.dateAdded.getTime())
+      curMovies = movies.sort((a, b) => new Date(b.title.dateAdded).getTime() - new Date(a.title.dateAdded).getTime())
       break;
     case 'rating':
       curMovies = movies.sort((a, b) => b.rating - a.rating)
