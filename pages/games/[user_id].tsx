@@ -7,68 +7,60 @@ import useSWR from 'swr';
 import { useState } from 'react';
 
 import Title, { SeenTitle, TitleInterface } from '../../src/components/title';
-import SeriesSearch from '../../src/components/series_search'
+import GamesSearch, { UserGame } from '../../src/components/games_search'
 import Header from '../../src/sections/header';
-import MovieCard, { CardTitle } from '../../src/components/title_card';
+import TitleCard, { CardTitle } from '../../src/components/title_card';
 
 //@ts-ignore
-const seriesFetcher = () => fetch(`/api/seen-series`, {credentials: 'include'}).then((res) => res.json())
+const gamesFetcher = () => fetch(`/api/user-games`, {credentials: 'include'}).then((res) => res.json())
 
-const seriesToCardTitle = (series: TitleInterface): CardTitle => {
+const gameToCardTitle = (game: UserGame): CardTitle => {
   return {
-    posterLink: series.posterLink,
-    name: series.title,
-    year: series.year,
-    rating: series.rating,
-    ratingCount: series.ratingCount,
-    description: series.description,
-    isSynced: series.isSynced
+    posterLink: '',
+    name: game.game.name,
+    year: 1999,
+    rating: 0,
+    ratingCount: 0,
+    description: '',
+    isSynced: game.isSynced
   }
 }
 
 function UserSeries() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { isOpen: seriesOpen, onOpen: onSeriesOpen, onClose: onSeriesClose } = useDisclosure();
-  const [clickedSeries, setClickedSeries] = useState<SeenTitle>();
-  const [series, setSeries] = useState<SeenTitle[]>([]);
+  const { isOpen: seriesOpen, onOpen: onGamesOpen, onClose: onSeriesClose } = useDisclosure();
+  const [clickedGame, setClickedGame] = useState<UserGame>();
+  const [games, setGames] = useState<UserGame[]>([]);
   const [clickedRating, setClickedRating] = useState<number>(0);
   const [sortBy, setSorting] = useState<string>('title');
-  const router = useRouter();
-  const { data, error } = useSWR('seenSeries', seriesFetcher)
+  const { data, error } = useSWR('seenGames', gamesFetcher)
 
   console.log(data)
 
   if (error) { return <div>failed to load</div> };
-  if (data && series.length === 0) {
-    setSeries(data)
+  if (data && games.length === 0) {
+    setGames(data)
   }
 
-  const clickMovie = (m: SeenTitle) => {
-    setClickedSeries(m);
+  const clickGame = (m: UserGame) => {
+    setClickedGame(m);
     setClickedRating(m.rating)
-    onSeriesOpen();
+    onGamesOpen();
   }
 
   const upsertSeries = async (): Promise<void> => {
-      if (clickedSeries === null || clickedSeries === undefined) {
+      if (clickedGame === null || clickedGame === undefined) {
         console.error("failed to upsert movie")
         return
       }
-      const seriesToUpsert: TitleInterface = clickedSeries?.title
-      seriesToUpsert.dateAdded = new Date()
-      const newSeries: SeenTitle = {
-          title: seriesToUpsert,
-          rating: clickedRating,
-          comment: ''
-      }
-      console.log(newSeries)
-      const resp = await fetch(`/api/series`, {
-          method: clickedSeries.title.isSynced ? 'PUT' : 'POST',
-          body: JSON.stringify(newSeries),
+      clickedGame.rating = clickedRating
+      const resp = await fetch(`/api/game`, {
+          method: clickedGame.isSynced ? 'PUT' : 'POST',
+          body: JSON.stringify(clickedGame),
           credentials: 'include'
       })
       if (resp.status === 200) {
-          setSeries([...series, newSeries])
+          setGames([...games, clickedGame])
           onClose()
           location.reload()
       } else {
@@ -76,18 +68,18 @@ function UserSeries() {
       }
     }
 
-  let curSeries = series;
+  let curGames = games;
 
 
   switch(sortBy) {
     case 'dateAdded':
-      curSeries = series.sort((a, b) => new Date(b.title.dateAdded).getTime() - new Date(a.title.dateAdded).getTime())
+      curGames = games.sort((a, b) => new Date(b.dateAdded).getTime() - new Date(a.dateAdded).getTime())
       break;
     case 'rating':
-      curSeries = series.sort((a, b) => b.rating - a.rating)
+      curGames = games.sort((a, b) => b.rating - a.rating)
       break;
     case 'title':
-      curSeries = series.sort((a, b) => a.title.title.localeCompare(b.title.title))
+      curGames = games.sort((a, b) => a.game.name.localeCompare(b.game.name))
       break;
   }
 
@@ -110,9 +102,9 @@ function UserSeries() {
         </MenuList>
       </Menu>
       </div>
-      <SeriesSearch isOpen={isOpen} onClose={onClose} setClickedSeries={setClickedSeries} setClickedRating={setClickedRating} 
-        onSeriesOpen={onSeriesOpen} />
-      {clickedSeries !== undefined ? <MovieCard isOpen={seriesOpen} onClose={onSeriesClose} title={seriesToCardTitle(clickedSeries.title)} 
+      <GamesSearch isOpen={isOpen} onClose={onClose} setClickedGames={setClickedGame} setClickedRating={setClickedRating} 
+        onGamesOpen={onGamesOpen} />
+      {clickedGame !== undefined ? <TitleCard isOpen={seriesOpen} onClose={onSeriesClose} title={gameToCardTitle(clickedGame)} 
         clickedRating={clickedRating} setClickedRating={setClickedRating} upsertTitle={upsertSeries} /> : <></>}
       <SimpleGrid columns={[1, 2, 3, 4, 5, 6]} spacing={8}>
         <GridItem key="plus">
@@ -127,8 +119,8 @@ function UserSeries() {
             onClick={onOpen}
           />
         </GridItem>
-        {curSeries.map((sm: any) => (
-          <GridItem key={sm.title.imdbId} onClick={() => clickMovie(sm)}>
+        {curGames.map((sm: any) => (
+          <GridItem key={sm.title.imdbId} onClick={() => clickGame(sm)}>
             <Title movie={sm.title} rating={sm.rating} />
           </GridItem>
         ))}
