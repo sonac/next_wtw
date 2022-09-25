@@ -36,8 +36,6 @@ function UserSeries() {
   const router = useRouter();
   const { data, error } = useSWR('seenSeries', seriesFetcher)
 
-  console.log(data)
-
   if (error) { return <div>failed to load</div> };
   if (data && series.length === 0) {
     setSeries(data)
@@ -61,7 +59,6 @@ function UserSeries() {
           rating: clickedRating,
           comment: ''
       }
-      console.log(newSeries)
       const resp = await fetch(`/api/series`, {
           method: clickedSeries.title.isSynced ? 'PUT' : 'POST',
           body: JSON.stringify(newSeries),

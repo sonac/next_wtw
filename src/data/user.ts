@@ -4,7 +4,6 @@ export const userFetcher = () => {
     return fetch(url, {method: "GET", credentials: "include", headers: {
       "Content-Type": "application/json",
     }}).then((res) => {
-      console.log(res)  
       return res.text()
     })
   }

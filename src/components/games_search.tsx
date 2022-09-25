@@ -6,7 +6,7 @@ import { SeenTitle, TitleInterface } from './title';
 interface SeachProps {
     isOpen: boolean;
     onClose: any;
-    setClickedGames: Dispatch<SetStateAction<UserGame | undefined>>
+    setClickedGame: Dispatch<SetStateAction<UserGame | undefined>>
     setClickedRating: Dispatch<SetStateAction<number>>
     onGamesOpen: any;
 }
@@ -23,6 +23,8 @@ export interface Game {
     name: string
     id: number
     first_release_date: number
+    poster_link: string
+    summary: string
 }
 
 export interface UserGame {
@@ -38,7 +40,7 @@ const yearFromTs = (ts: number): number => {
 }
 
 
-const GamesSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedGames, setClickedRating, onGamesOpen }: SeachProps ) => {
+const GamesSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedGame, setClickedRating, onGamesOpen }: SeachProps ) => {
     const [games, setGames] = useState<Game[]>([]);
     const [loading, setLoading] = useState(false);
     const [input, setInput] = useState('');
@@ -53,7 +55,6 @@ const GamesSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedGames, s
                 }
             )
             const data = await resp.json();
-            console.log(data)
             setGames(data)
             setLoading(false);
         }
@@ -68,22 +69,22 @@ const GamesSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedGames, s
             }
         )
         const data = await resp.json();
-        console.log(data)
         setGames(data);
         setLoading(false);
     }
 
     const clickGames = async (m: Game): Promise<void> => {
-        let seenGames;
-        const resp = await fetch(`/api/games-details`, 
+        let seenGame;
+        const resp = await fetch(`/api/game-details`, 
             {
                 method: 'POST',
                 body: JSON.stringify(m)    
             }
         )
         const titleDetails: Game = await resp.json()
-        seenGames= {game: titleDetails, rating: 0, dateAdded: new Date(), isSynced: false};
-        setClickedGames(seenGames);
+        seenGame = {game: titleDetails, rating: 0, dateAdded: new Date(), isSynced: false};
+        console.log(titleDetails)
+        setClickedGame(seenGame);
         setClickedRating(0);
         onGamesOpen();
     }

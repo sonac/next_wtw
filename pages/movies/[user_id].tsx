@@ -62,8 +62,6 @@ function UserMovies() {
 
   let curMovies = movies;
 
-  console.log(curMovies)
-
   switch(sortBy) {
     case 'dateAdded':
       curMovies = movies.sort((a, b) => new Date(b.title.dateAdded).getTime() - new Date(a.title.dateAdded).getTime())
@@ -96,7 +94,7 @@ function UserMovies() {
       </Menu>
       </div>
       <MovieSearch isOpen={isOpen} onClose={onClose} setClickedMovie={setClickedMovie} setClickedRating={setClickedRating} onMovieOpen={onMovieOpen} />
-      {clickedMovie !== undefined ? <MovieCard isOpen={movieOpen} onClose={onMovieClose} movie={clickedMovie.title} 
+      {clickedMovie !== undefined ? <MovieCard isOpen={movieOpen} onClose={onMovieClose} title={clickedMovie.title} 
         clickedRating={clickedRating} setClickedRating={setClickedRating} upsertTitle={upsertMovie} /> : <></>}
       <SimpleGrid columns={[1, 2, 3, 4, 5, 6]} spacing={8}>
         <GridItem key="plus">

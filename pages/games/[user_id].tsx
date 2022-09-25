@@ -16,26 +16,24 @@ const gamesFetcher = () => fetch(`/api/user-games`, {credentials: 'include'}).th
 
 const gameToCardTitle = (game: UserGame): CardTitle => {
   return {
-    posterLink: '',
+    posterLink: game.game.poster_link,
     name: game.game.name,
-    year: 1999,
+    year: game.game.first_release_date,
     rating: 0,
     ratingCount: 0,
-    description: '',
+    description: game.game.summary,
     isSynced: game.isSynced
   }
 }
 
 function UserSeries() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { isOpen: seriesOpen, onOpen: onGamesOpen, onClose: onSeriesClose } = useDisclosure();
+  const { isOpen: seriesOpen, onOpen: onGamesOpen, onClose: onGameClose } = useDisclosure();
   const [clickedGame, setClickedGame] = useState<UserGame>();
   const [games, setGames] = useState<UserGame[]>([]);
   const [clickedRating, setClickedRating] = useState<number>(0);
   const [sortBy, setSorting] = useState<string>('title');
   const { data, error } = useSWR('seenGames', gamesFetcher)
-
-  console.log(data)
 
   if (error) { return <div>failed to load</div> };
   if (data && games.length === 0) {
@@ -48,7 +46,7 @@ function UserSeries() {
     onGamesOpen();
   }
 
-  const upsertSeries = async (): Promise<void> => {
+  const upsertGame = async (): Promise<void> => {
       if (clickedGame === null || clickedGame === undefined) {
         console.error("failed to upsert movie")
         return
@@ -83,6 +81,8 @@ function UserSeries() {
       break;
   }
 
+  console.log(clickedGame)
+
   return (
       <VStack 
         h={{ md: '100vh' }} 
@@ -102,10 +102,10 @@ function UserSeries() {
         </MenuList>
       </Menu>
       </div>
-      <GamesSearch isOpen={isOpen} onClose={onClose} setClickedGames={setClickedGame} setClickedRating={setClickedRating} 
+      <GamesSearch isOpen={isOpen} onClose={onClose} setClickedGame={setClickedGame} setClickedRating={setClickedRating} 
         onGamesOpen={onGamesOpen} />
-      {clickedGame !== undefined ? <TitleCard isOpen={seriesOpen} onClose={onSeriesClose} title={gameToCardTitle(clickedGame)} 
-        clickedRating={clickedRating} setClickedRating={setClickedRating} upsertTitle={upsertSeries} /> : <></>}
+      {clickedGame !== undefined ? <TitleCard isOpen={isOpen} onClose={onGameClose} title={gameToCardTitle(clickedGame)} 
+        clickedRating={clickedRating} setClickedRating={setClickedRating} upsertTitle={upsertGame} /> : <></>}
       <SimpleGrid columns={[1, 2, 3, 4, 5, 6]} spacing={8}>
         <GridItem key="plus">
           <Image           
