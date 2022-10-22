@@ -1,4 +1,18 @@
-import { Modal, ModalBody, ModalContent, ModalOverlay, ModalHeader, ModalCloseButton, Input, Text, Button, Flex, Spinner } from '@chakra-ui/react'
+import {
+    Modal,
+    ModalBody,
+    ModalContent,
+    ModalOverlay,
+    ModalHeader,
+    ModalCloseButton,
+    Input,
+    Text,
+    Button,
+    Flex,
+    Box,
+    useColorModeValue,
+    Stack, FormControl, FormLabel, Link
+} from '@chakra-ui/react'
 import { useState } from 'react';
 import useSWR from 'swr'
 
@@ -21,10 +35,10 @@ const Auth: React.FC<AuthProps> = ({ isOpen, onClose }) => {
     const [loading, setLoading] = useState(false);
 
     const sendAuth = async () => {
-        if (!validateEmail(email)) {
+        /*if (!validateEmail(email)) {
             alert('Invalid email');
             return;
-        }
+        }*/
         setLoading(true);
         const ep = action === 'Login' ? 'signin' : 'signup';
         const url = `/api/` + ep;
@@ -59,6 +73,9 @@ const Auth: React.FC<AuthProps> = ({ isOpen, onClose }) => {
         location.assign("/")
     }
 
+    const getButtonText = (): string => action === 'Login' ? 'Sign in' : 'Sign up'
+    const getBottomText = (): string => action === 'Login' ? `Don't have an account yet?` : "Already a user?"
+
     const isAuthenticated = !(data === null || data === undefined);
 
     return (
@@ -67,20 +84,31 @@ const Auth: React.FC<AuthProps> = ({ isOpen, onClose }) => {
             <ModalContent>
                 {!isAuthenticated ?
                 <div>
-                <ModalHeader m='0' p='0'>
-                    <Flex m={'0'} p={'0'} minHeight={"100%"} justifyContent='space-between' pr={"10%"}>
-                        <Text variant={'button'} p='10px' paddingLeft={'12%'} 
-                            borderRight={"1px black solid"} minW='50%' bg={(action === 'Login') ? 'blue' : ''}
-                            onClick={() => setAction('Login')}>LOGIN</Text>
-                        <Text variant={'button'} p='10px' paddingLeft={'5%'} minW='50%'
-                            bg={(action === 'Register') ? 'blue' : ''} onClick={() => setAction('Register')}>REGISTER</Text>
-                    </Flex>
-                        <ModalCloseButton m='auto' paddingTop={'5%'} paddingLeft='2%'/>
-                </ModalHeader>
                 <ModalBody>
-                    <Input type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
-                    <Input type="password" placeholder="Password" onKeyDown={(k) => {if (k.key == 'Enter') sendAuth()}} onChange={(e) => setPassword(e.target.value)}/>
-                    <Button color="blue" mt={4} onClick={sendAuth}  >{loading ? <Spinner/> : action}</Button>
+                    {/* eslint-disable-next-line react-hooks/rules-of-hooks */}
+                    <Box rounded={'lg'} bg={'white'} boxShadow={'lg'} p={8}>
+                        <Stack spacing={4}>
+                            <FormControl id={"email"}>
+                                <FormLabel>
+                                    Email address
+                                </FormLabel>
+                                <Input type={"email"} onChange={(e) => setEmail(e.target.value)}/>
+                            </FormControl>
+                            <FormControl id={"password"}>
+                                <FormLabel>
+                                    Password
+                                </FormLabel>
+                                <Input type={"password"} onChange={(e) => setPassword(e.target.value)}/>
+                            </FormControl>
+                            <Button bg={'blue.400'} color={'white'} _hover={{ bg: 'blue.500' }} onClick={sendAuth}>{getButtonText()}</Button>
+                        </Stack>
+                        <Stack pt={6}>
+                            <Text align={'center'} fontSize={'sm'}>{getBottomText()} <Link color={'blue.400'}
+                                                                                           fontSize={'sm'}
+                                                                                           onClick={() => setAction(action === 'Login' ? 'Register': 'Login')}>{action}</Link>
+                            </Text>
+                        </Stack>
+                    </Box>
                 </ModalBody></div> : (
                 <div>
                     <ModalBody>
