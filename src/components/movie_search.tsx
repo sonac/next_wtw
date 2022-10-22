@@ -31,7 +31,6 @@ const MovieSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedMovie, s
                 }
             )
             const d = await resp.json()
-            console.log(d)
             setMovies(d);
             setLoading(false);
         }
