@@ -1,7 +1,6 @@
 import { Modal, ModalOverlay, ModalContent, ModalHeader, 
     ModalBody, ModalCloseButton, Input, Text, Spinner } from '@chakra-ui/react'
 import { Dispatch, SetStateAction, useState } from 'react';
-import { json } from 'stream/consumers';
 import { SeenTitle, TitleInterface } from './title';
 
 interface SeachProps {
@@ -26,13 +25,13 @@ export interface TraktTitle {
     year: number
 }
 
-//since TraktShow and Series inside DB have different structure - we need safe build of a key
-const getKey = (show: TraktTitle | TitleInterface ): string => {
-    if ('ids' in show) {
-        return show.ids.Imdb
+export const getName = (input: TraktTitle | TitleInterface): string => {
+    if ('ids' in input) {
+        return input.title
     }
-    return show.imdbId
+    return input.name
 }
+
 
 const SeriesSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedSeries, setClickedRating, onSeriesOpen }: SeachProps ) => {
     const [series, setSeries] = useState<TraktTitle[]|TitleInterface[]>([]);
@@ -100,9 +99,9 @@ const SeriesSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedSeries,
             <ModalBody bg="rgba(86, 86, 86, 0.1)">
                 {loading ? 
                     <Spinner /> : 
-                    <div>{series != null ? series.map(m => <Text key={getKey(m)} onClick={async () => await clickSeries(m)}
+                    <div>{series != null ? series.map(m => <Text key={getName(m)} onClick={async () => await clickSeries(m)}
                         _hover={{cursor: 'pointer', bg: 'rgba(86, 86, 86, 1)'}}
-                    >{m.year} {m.title}</Text>) : <></>}
+                    >{m.year} {getName(m)}</Text>) : <></>}
                     <Text key="globalSearch" onClick={search} _hover={{cursor: 'pointer', bg: 'rgba(86, 86, 86, 1)'}}>
                         ...
                     </Text>

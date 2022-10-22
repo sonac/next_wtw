@@ -2,7 +2,7 @@ import { Modal, ModalOverlay, ModalContent, ModalHeader,
     ModalBody, ModalCloseButton, Input, Text, Spinner } from '@chakra-ui/react'
 import { Dispatch, SetStateAction, useState } from 'react';
 import { SeenTitle, TitleInterface } from './title';
-import { TraktTitle, Ids} from './series_search'
+import {getName, TraktTitle} from "./series_search";
 
 interface SeachProps {
     isOpen: boolean;
@@ -10,10 +10,6 @@ interface SeachProps {
     setClickedMovie: Dispatch<SetStateAction<SeenTitle | undefined>>
     setClickedRating: Dispatch<SetStateAction<number>>
     onMovieOpen: any;
-}
-
-interface TraktMovie {
-
 }
 
 const MovieSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedMovie, setClickedRating, onMovieOpen }: SeachProps ) => {
@@ -81,9 +77,9 @@ const MovieSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedMovie, s
             <ModalBody bg="rgba(86, 86, 86, 0.1)">
                 {loading ? 
                     <Spinner /> : 
-                    <div>{movies != null ? movies.map(m => <Text key={m.title} onClick={() => clickMovie(m)}
-                        _hover={{cursor: 'pointer', bg: 'rgba(86, 86, 86, 1)'}}
-                    >{m['year']} {m['title']}</Text>) : <></>}
+                    <div>{movies != null ? movies.map((m: TraktTitle | TitleInterface) => <Text key={getName(m)} onClick={() => clickMovie(m)}
+                        _hover={{cursor: 'pointer', bg: 'rgba(85, 86, 86, 1)'}}
+                    >{m.year} {getName(m)}</Text>) : <></>}
                     <Text key="globalSearch" onClick={search} _hover={{cursor: 'pointer', bg: 'rgba(86, 86, 86, 1)'}}>
                         ...
                     </Text>
