@@ -15,7 +15,6 @@ import TitleCard from '../../src/components/title_card';
 const gamesFetcher = () => fetch(`/api/user-games`, { credentials: 'include' }).then((res) => res.json())
 
 const gameToCardTitle = (game: UserGame): TitleInterface => {
-  console.log(game)
   return {
     dateAdded: game.dateAdded,
     name: game.game.name,

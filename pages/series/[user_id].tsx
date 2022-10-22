@@ -109,7 +109,7 @@ function UserSeries() {
       </div>
       <SeriesSearch isOpen={isOpen} onClose={onClose} setClickedSeries={setClickedSeries} setClickedRating={setClickedRating}
         onSeriesOpen={onSeriesOpen} />
-      {clickedSeries !== undefined ? <MovieCard isOpen={seriesOpen} onClose={onSeriesClose} title={seriesToCardTitle(clickedSeries.title)}
+      {clickedSeries !== undefined ? <MovieCard isOpen={seriesOpen} onClose={onSeriesClose} title={clickedSeries.title}
         clickedRating={clickedRating} setClickedRating={setClickedRating} upsertTitle={upsertSeries} /> : <></>}
       <SimpleGrid minChildWidth='240px' spacing={8}>
         <GridItem key="plus">
@@ -124,9 +124,9 @@ function UserSeries() {
             onClick={onOpen}
           />
         </GridItem>
-        {curSeries.map((sm: any) => (
-          <GridItem key={sm.title.imdbId} onClick={() => clickMovie(sm)}>
-            <Title movie={sm.title} rating={sm.rating} />
+        {curSeries.map((sm: SeenTitle) => (
+          <GridItem key={sm.title.name} onClick={() => clickMovie(sm)}>
+            <Title title={sm.title} rating={sm.rating} />
           </GridItem>
         ))}
       </SimpleGrid>
