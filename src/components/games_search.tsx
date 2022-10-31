@@ -6,7 +6,7 @@ import { SeenTitle, TitleInterface } from './title';
 interface SeachProps {
     isOpen: boolean;
     onClose: any;
-    setClickedGame: Dispatch<SetStateAction<UserGame | undefined>>
+    setClickedGame: Dispatch<SetStateAction<SeenTitle | undefined>>
     setClickedRating: Dispatch<SetStateAction<number>>
     onGamesOpen: any;
 }
@@ -81,9 +81,8 @@ const GamesSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedGame, se
                 body: JSON.stringify(m)    
             }
         )
-        const titleDetails: Game = await resp.json()
-        seenGame = {game: titleDetails, rating: 0, dateAdded: new Date(), isSynced: false};
-        console.log(titleDetails)
+        const titleDetails: TitleInterface = await resp.json()
+        seenGame = {title: titleDetails, rating: 0, comment: ''};
         setClickedGame(seenGame);
         setClickedRating(0);
         onGamesOpen();

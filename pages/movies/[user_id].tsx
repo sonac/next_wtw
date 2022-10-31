@@ -30,7 +30,7 @@ function UserMovies() {
     setMovies(data.seenMovies)
   }
 
-  const clickMovie = (m: SeenTitle) => {
+  const clickMovie = (m: SeenTitle): void => {
     setClickedMovie(m);
     setClickedRating(m.rating)
     onMovieOpen();
@@ -96,7 +96,7 @@ function UserMovies() {
       <MovieSearch isOpen={isOpen} onClose={onClose} setClickedMovie={setClickedMovie} setClickedRating={setClickedRating} onMovieOpen={onMovieOpen} />
       {clickedMovie !== undefined ? <MovieCard isOpen={movieOpen} onClose={onMovieClose} title={clickedMovie.title}
         clickedRating={clickedRating} setClickedRating={setClickedRating} upsertTitle={upsertMovie} /> : <></>}
-      <SimpleGrid minChildWidth='240px'>
+      <SimpleGrid minChildWidth='240px' spacing={'3vw'} gridTemplateColumns={'repeat(auto-fill, minmax(240px, 1fr))'}>
         <GridItem key="plus">
           <Image
             src={"/plus_icon.png"}
@@ -110,8 +110,8 @@ function UserMovies() {
           />
         </GridItem>
         {curMovies.map((sm: any) => (
-          <GridItem key={sm.title.imdbId} onClick={() => clickMovie(sm)}>
-            <Title title={sm.title} rating={sm.rating} />
+          <GridItem key={sm.title.imdbId}>
+            <Title st={sm} clickTitle={clickMovie}/>
           </GridItem>
         ))}
       </SimpleGrid>

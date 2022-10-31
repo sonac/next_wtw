@@ -26,7 +26,7 @@ interface CardProps {
 }
 
 
-const TitleCard: React.FC<CardProps> = ({ isOpen, onClose, title, clickedRating, setClickedRating, upsertTitle: upsertMovie }: CardProps) => {
+const TitleCard: React.FC<CardProps> = ({ isOpen, onClose, title, clickedRating, setClickedRating, upsertTitle}: CardProps) => {
 
   const getBg = (rtng: number): string => {
     if (rtng == clickedRating) {
@@ -72,7 +72,7 @@ const TitleCard: React.FC<CardProps> = ({ isOpen, onClose, title, clickedRating,
                   <Text fontSize='lg' color="white" fontWeight="bold">{title.ratingCount}</Text>
                 </GridItem>
               </Grid>
-              <Text fontSize='xl' color='white'>{title.description.length > 0 ? title.description : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'}</Text>
+              <Text fontSize='xl' color='white'>{title.description.length > 0 ? title.description : 'No description provided'}</Text>
               <Flex flexDir="row" paddingTop={10} justifyContent='space-between'>
                 <Box bg={getBg(1)} className='rating' color='white' borderWidth='1px'
                   borderRadius='0.5em' maxH='1.5em' w='1.5em' onClick={() => setClickedRating(1)}>
@@ -115,7 +115,7 @@ const TitleCard: React.FC<CardProps> = ({ isOpen, onClose, title, clickedRating,
                   <Text align='center'>10</Text>
                 </Box>
               </Flex>
-              <Button onClick={upsertMovie}>{title.isSynced ? 'Update' : 'Add'}</Button>
+              <Button onClick={upsertTitle}>{title.isSynced ? 'Update' : 'Add'}</Button>
             </Flex>
           </Flex>
         </ModalBody>

@@ -6,7 +6,7 @@ import { ChevronDownIcon } from '@chakra-ui/icons';
 import useSWR from 'swr';
 import { useState } from 'react';
 
-import Title, { TitleInterface } from '../../src/components/title';
+import Title, {SeenTitle, TitleInterface} from '../../src/components/title';
 import GamesSearch, { Game, UserGame } from '../../src/components/games_search'
 import Header from '../../src/sections/header';
 import TitleCard from '../../src/components/title_card';
@@ -27,11 +27,19 @@ const gameToCardTitle = (game: UserGame): TitleInterface => {
   }
 }
 
+const gameToSeenTitle = (game: UserGame): SeenTitle => {
+  return {
+    title: gameToCardTitle(game),
+    rating: game.rating,
+    comment: '',
+  }
+}
+
 function UserSeries() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { isOpen: gameOpen, onOpen: onGamesOpen, onClose: onGameClose } = useDisclosure();
-  const [clickedGame, setClickedGame] = useState<UserGame>();
-  const [games, setGames] = useState<UserGame[]>([]);
+  const [clickedGame, setClickedGame] = useState<SeenTitle>();
+  const [games, setGames] = useState<SeenTitle[]>([]);
   const [clickedRating, setClickedRating] = useState<number>(0);
   const [sortBy, setSorting] = useState<string>('title');
   const { data, error } = useSWR('seenGames', gamesFetcher)
@@ -41,7 +49,7 @@ function UserSeries() {
     setGames(data)
   }
 
-  const clickGame = (m: UserGame) => {
+  const clickGame = (m: SeenTitle) => {
     setClickedGame(m);
     setClickedRating(m.rating)
     onGamesOpen();
@@ -54,7 +62,7 @@ function UserSeries() {
     }
     clickedGame.rating = clickedRating
     const resp = await fetch(`/api/game`, {
-      method: clickedGame.isSynced ? 'PUT' : 'POST',
+      method: clickedGame.title.isSynced ? 'PUT' : 'POST',
       body: JSON.stringify(clickedGame),
       credentials: 'include'
     })
@@ -73,13 +81,13 @@ function UserSeries() {
 
   switch (sortBy) {
     case 'dateAdded':
-      curGames = games.sort((a, b) => new Date(b.dateAdded).getTime() - new Date(a.dateAdded).getTime())
+      curGames = games.sort((a, b) => new Date(b.title.dateAdded).getTime() - new Date(a.title.dateAdded).getTime())
       break;
     case 'rating':
       curGames = games.sort((a, b) => b.rating - a.rating)
       break;
     case 'title':
-      curGames = games.sort((a, b) => a.game.name.localeCompare(b.game.name))
+      curGames = games.sort((a, b) => a.title.name.localeCompare(b.title.name))
       break;
   }
 
@@ -104,9 +112,9 @@ function UserSeries() {
       </div>
       <GamesSearch isOpen={isOpen} onClose={onClose} setClickedGame={setClickedGame} setClickedRating={setClickedRating}
         onGamesOpen={onGamesOpen} />
-      {clickedGame !== undefined ? <TitleCard isOpen={isOpen} onClose={onGameClose} title={gameToCardTitle(clickedGame)}
+      {clickedGame !== undefined ? <TitleCard isOpen={isOpen} onClose={onGameClose} title={clickedGame.title}
         clickedRating={clickedRating} setClickedRating={setClickedRating} upsertTitle={upsertGame} /> : <></>}
-      <SimpleGrid minChildWidth='240px' spacing={8}>
+      <SimpleGrid minChildWidth='240px' spacing={8} gridTemplateColumns={'repeat(auto-fill, minmax(240px, 1fr))'}>
         <GridItem key="plus">
           <Image
             src={"/plus_icon.png"}
@@ -119,9 +127,9 @@ function UserSeries() {
             onClick={onOpen}
           />
         </GridItem>
-        {curGames.map((ug: UserGame) => (
-          <GridItem key={ug.game.id} onClick={() => clickGame(ug)}>
-            <Title title={gameToCardTitle(ug)} rating={ug.rating} />
+        {curGames.map((g: SeenTitle) => (
+          <GridItem key={g.title.name}>
+            <Title st={(g)} clickTitle={clickGame} />
           </GridItem>
         ))}
       </SimpleGrid>

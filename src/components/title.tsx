@@ -24,35 +24,34 @@ export interface UserResponse {
 }
 
 interface MovieProps {
-  title: TitleInterface;
-  rating: number;
+  st: SeenTitle;
+  clickTitle: (title: SeenTitle) => void;
 }
 
-const Title: React.FC<MovieProps> = ({ title, rating }: MovieProps) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+const Title: React.FC<MovieProps> = ({ st, clickTitle}: MovieProps) => {
   return (
     <Box w={"15em"}>
       <Image
-        src={`${title.posterLink}`}
-        alt={title.name}
+        src={`${st.title.posterLink}`}
+        alt={st.title.name}
         h={"20em"}
         w={"100%"}
         _hover={{
           cursor: "pointer"
         }}
-        onClick={onOpen}
+        onClick={() => clickTitle(st)}
       />
       <Flex justify="space-between" p={2} flexDir="column">
         <Flex justifyContent="space-between" flexDirection="row">
           <Heading as="h3" size="md">
-            {title.name}
+            {st.title.name}
           </Heading>
-          <Text paddingRight={5}>{title.year}</Text>
-          <Text >{title.rating}</Text>
+          <Text paddingRight={5}>{st.title.year}</Text>
+          <Text >{st.title.rating}</Text>
         </Flex>
         <Flex justifyContent="space-between" flexDirection="row">
           <Text>Your rating: </Text>
-          <Text fontWeight="bold" color="blue" fontSize="sm">{rating}</Text>
+          <Text fontWeight="bold" color="blue" fontSize="sm">{st.rating}</Text>
         </Flex>
       </Flex>
     </Box>

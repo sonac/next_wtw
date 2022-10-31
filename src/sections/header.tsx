@@ -27,9 +27,6 @@ const Header = () => {
   const { data, error } = useSWR('auth', userFetcher)
   const isAuthenticated = !(data === null || data === undefined);
 
-  //if (error) { return <div>failed to load</div> };
-  const btnRef = React.useRef()
-
   const tobase64 = (s: string) => {
     return Buffer.from(s).toString('base64')
   }
@@ -38,7 +35,7 @@ const Header = () => {
   return (
     <>
     <HStack 
-      borderBottom="1px solid" 
+      borderBottom="5px solid"
       w="100vw" 
       h="10vh"
       justify="space-between"

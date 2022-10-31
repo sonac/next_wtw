@@ -41,7 +41,7 @@ function UserSeries() {
     setSeries(data)
   }
 
-  const clickMovie = (m: SeenTitle) => {
+  const clickSeries = (m: SeenTitle) => {
     setClickedSeries(m);
     setClickedRating(m.rating)
     onSeriesOpen();
@@ -111,7 +111,7 @@ function UserSeries() {
         onSeriesOpen={onSeriesOpen} />
       {clickedSeries !== undefined ? <MovieCard isOpen={seriesOpen} onClose={onSeriesClose} title={clickedSeries.title}
         clickedRating={clickedRating} setClickedRating={setClickedRating} upsertTitle={upsertSeries} /> : <></>}
-      <SimpleGrid minChildWidth='240px' spacing={8}>
+      <SimpleGrid minChildWidth='240px' spacing={8} gridTemplateColumns={'repeat(auto-fill, minmax(240px, 1fr))'}>
         <GridItem key="plus">
           <Image
             src={"/plus_icon.png"}
@@ -125,8 +125,8 @@ function UserSeries() {
           />
         </GridItem>
         {curSeries.map((sm: SeenTitle) => (
-          <GridItem key={sm.title.name} onClick={() => clickMovie(sm)}>
-            <Title title={sm.title} rating={sm.rating} />
+          <GridItem key={sm.title.name}>
+            <Title st={sm} clickTitle={clickSeries} />
           </GridItem>
         ))}
       </SimpleGrid>
