@@ -3,7 +3,6 @@ import { Flex, Box, Heading, Text, useDisclosure } from '@chakra-ui/react';
 import React from 'react';
 
 export interface TitleInterface {
-  dateAdded: Date;
   name: string;
   posterLink: string;
   year: number;
@@ -17,6 +16,7 @@ export interface SeenTitle {
   title: TitleInterface;
   rating: number;
   comment: string;
+  dateAdded: Date;
 }
 
 export interface UserResponse {

@@ -14,9 +14,8 @@ import TitleCard from '../../src/components/title_card';
 //@ts-ignore
 const gamesFetcher = () => fetch(`/api/user-games`, { credentials: 'include' }).then((res) => res.json())
 
-const gameToCardTitle = (game: UserGame): TitleInterface => {
+export const gameToCardTitle = (game: UserGame): TitleInterface => {
   return {
-    dateAdded: game.dateAdded,
     name: game.game.name,
     posterLink: game.game.poster_link,
     year: game.game.first_release_date,
@@ -30,8 +29,9 @@ const gameToCardTitle = (game: UserGame): TitleInterface => {
 const gameToSeenTitle = (game: UserGame): SeenTitle => {
   return {
     title: gameToCardTitle(game),
-    rating: game.rating,
+    rating: 0,
     comment: '',
+    dateAdded: new Date(),
   }
 }
 
@@ -46,7 +46,7 @@ function UserSeries() {
 
   if (error) { return <div>failed to load</div> };
   if (data && games.length === 0) {
-    setGames(data)
+    setGames(data.map((g: UserGame) => gameToSeenTitle(g)))
   }
 
   const clickGame = (m: SeenTitle) => {
@@ -81,7 +81,7 @@ function UserSeries() {
 
   switch (sortBy) {
     case 'dateAdded':
-      curGames = games.sort((a, b) => new Date(b.title.dateAdded).getTime() - new Date(a.title.dateAdded).getTime())
+      curGames = games.sort((a, b) => new Date(b.dateAdded).getTime() - new Date(a.dateAdded).getTime())
       break;
     case 'rating':
       curGames = games.sort((a, b) => b.rating - a.rating)

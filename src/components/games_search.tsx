@@ -25,6 +25,7 @@ export interface Game {
     first_release_date: number
     poster_link: string
     summary: string
+    year: number
 }
 
 export interface UserGame {
@@ -34,8 +35,34 @@ export interface UserGame {
   isSynced: boolean
 }
 
-const yearFromTs = (ts: number): number => {
-    const dt =  new Date(ts * 1000);
+/*
+name: string;
+posterLink: string;
+year: number;
+rating: number;
+ratingCount: number;
+isSynced: boolean;
+description: string;
+*/
+
+const gameToTitle = (game: Game): TitleInterface => {
+    return {
+        name: game.name,
+        posterLink: game.poster_link,
+        year: game.year,
+        rating: 0,
+        ratingCount: 0,
+        isSynced: true,
+        description: game.summary
+    }
+}
+
+// After saving game to local db, timestamp gets transformed to normal date
+const getYearFromGame = (g: Game): number => {
+    if (isNaN(g.first_release_date)) {
+        return g.year
+    }
+    const dt =  new Date(g.first_release_date * 1000);
     return dt.getFullYear();
 }
 
@@ -45,8 +72,7 @@ const GamesSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedGame, se
     const [loading, setLoading] = useState(false);
     const [input, setInput] = useState('');
 
-    const searchLocal = async (e: any) => {
-        if (e.key == 'Enter') {
+    const searchLocal = async () => {
             setLoading(true)
             const resp = await fetch(`/api/search-games-local`, 
                 {
@@ -57,10 +83,9 @@ const GamesSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedGame, se
             const data = await resp.json();
             setGames(data)
             setLoading(false);
-        }
     }
 
-    const search = async (e: any) => {
+    const search = async () => {
         setLoading(true);
         const resp = await fetch(`/api/search-games`, 
             {
@@ -74,16 +99,16 @@ const GamesSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedGame, se
     }
 
     const clickGames = async (m: Game): Promise<void> => {
-        let seenGame;
+        let gameDetails: SeenTitle;
         const resp = await fetch(`/api/game-details`, 
             {
                 method: 'POST',
                 body: JSON.stringify(m)    
             }
         )
-        const titleDetails: TitleInterface = await resp.json()
-        seenGame = {title: titleDetails, rating: 0, comment: ''};
-        setClickedGame(seenGame);
+        const game: Game = await resp.json()
+        gameDetails = {title: gameToTitle(game), rating: 0, comment: '', dateAdded: new Date()};
+        setClickedGame(gameDetails);
         setClickedRating(0);
         onGamesOpen();
     }
@@ -94,8 +119,9 @@ const GamesSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedGame, se
             <ModalContent>
             <ModalHeader>
                 <Input placeholder='series name...' size='lg' variant='unstyled'
-                    onChange={e => setInput(e.target.value)}
-                    onKeyDown={searchLocal}
+                       onChange={e => setInput(e.target.value)}
+                       onKeyPress={async (evt) => {if (evt.key == "Enter" && evt.shiftKey) await search()}}
+                       onKeyDown={async (evt) => {if (evt.key == "Enter") await searchLocal()}}
                 />
             </ModalHeader>
             <ModalCloseButton />
@@ -104,7 +130,7 @@ const GamesSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedGame, se
                     <Spinner /> : 
                     <div>{games != null ? games.map(m => <Text key={m.id} onClick={async () => await clickGames(m)}
                         _hover={{cursor: 'pointer', bg: 'rgba(86, 86, 86, 1)'}}
-                    >{yearFromTs(m.first_release_date)} {m.name}</Text>) : <></>}
+                    >{getYearFromGame(m)} {m.name}</Text>) : <></>}
                     <Text key="globalSearch" onClick={search} _hover={{cursor: 'pointer', bg: 'rgba(86, 86, 86, 1)'}}>
                         ...
                     </Text>
