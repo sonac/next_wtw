@@ -17,8 +17,8 @@ const gamesFetcher = () => fetch(`/api/user-games`, { credentials: 'include' }).
 export const gameToCardTitle = (game: UserGame): TitleInterface => {
   return {
     name: game.game.name,
-    posterLink: game.game.poster_link,
-    year: game.game.first_release_date,
+    posterLink: game.game.posterLink,
+    year: game.game.year,
     rating: 0,
     ratingCount: 0,
     isSynced: game.isSynced,

@@ -22,8 +22,8 @@ export interface Ids {
 export interface Game {
     name: string
     id: number
-    first_release_date: number
-    poster_link: string
+    firstReleaseDate: number
+    posterLink: string
     summary: string
     year: number
 }
@@ -35,20 +35,10 @@ export interface UserGame {
   isSynced: boolean
 }
 
-/*
-name: string;
-posterLink: string;
-year: number;
-rating: number;
-ratingCount: number;
-isSynced: boolean;
-description: string;
-*/
-
 const gameToTitle = (game: Game): TitleInterface => {
     return {
         name: game.name,
-        posterLink: game.poster_link,
+        posterLink: game.posterLink,
         year: game.year,
         rating: 0,
         ratingCount: 0,
@@ -59,10 +49,10 @@ const gameToTitle = (game: Game): TitleInterface => {
 
 // After saving game to local db, timestamp gets transformed to normal date
 const getYearFromGame = (g: Game): number => {
-    if (isNaN(g.first_release_date)) {
+    if (isNaN(g.firstReleaseDate)) {
         return g.year
     }
-    const dt =  new Date(g.first_release_date * 1000);
+    const dt =  new Date(g.firstReleaseDate * 1000);
     return dt.getFullYear();
 }
 
