@@ -22,16 +22,32 @@ export const gameToCardTitle = (game: UserGame): TitleInterface => {
     rating: 0,
     ratingCount: 0,
     isSynced: game.isSynced,
-    description: game.game.summary
+    description: game.game.summary,
+    id: game.game.id.toString(),
   }
 }
 
 const gameToSeenTitle = (game: UserGame): SeenTitle => {
   return {
     title: gameToCardTitle(game),
-    rating: 0,
+    rating: game.rating,
     comment: '',
+    dateAdded: game.dateAdded,
+  }
+}
+
+const titleToUserGame = (title: TitleInterface): UserGame => {
+  return {
+    rating: 0,
     dateAdded: new Date(),
+    isSynced: false,
+    game: {
+      name: title.name,
+      id: parseInt(title.id),
+      posterLink: title.posterLink,
+      summary: title.description,
+      year: title.year
+    }
   }
 }
 
@@ -57,13 +73,14 @@ function UserSeries() {
 
   const upsertGame = async (): Promise<void> => {
     if (clickedGame === null || clickedGame === undefined) {
-      console.error("failed to upsert movie")
+      console.error("failed to upsert game")
       return
     }
-    clickedGame.rating = clickedRating
+    const game = titleToUserGame(clickedGame.title)
+    game.rating = clickedRating
     const resp = await fetch(`/api/game`, {
       method: clickedGame.title.isSynced ? 'PUT' : 'POST',
-      body: JSON.stringify(clickedGame),
+      body: JSON.stringify(game),
       credentials: 'include'
     })
     if (resp.status === 200) {
@@ -129,7 +146,7 @@ function UserSeries() {
         </GridItem>
         {curGames.map((g: SeenTitle) => (
           <GridItem key={g.title.name}>
-            <Title st={(g)} clickTitle={clickGame} />
+            <Title st={g} clickTitle={clickGame} />
           </GridItem>
         ))}
       </SimpleGrid>

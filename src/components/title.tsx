@@ -10,6 +10,7 @@ export interface TitleInterface {
   ratingCount: number;
   isSynced: boolean;
   description: string;
+  id: string;
 }
 
 export interface SeenTitle {

@@ -9,7 +9,7 @@ import { useState } from 'react';
 import Title, { SeenTitle } from '../../src/components/title';
 import MovieSearch from '../../src/components/movie_search'
 import Header from '../../src/sections/header';
-import MovieCard from '../../src/components/title_card';
+import TitleCard from '../../src/components/title_card';
 
 //@ts-ignore
 const moviesFetcher = () => fetch(`/api/seen-movies`, { credentials: 'include' }).then((res) => res.json())
@@ -44,7 +44,8 @@ function UserMovies() {
     const newMovie: SeenTitle = {
       title: clickedMovie?.title,
       rating: clickedRating,
-      comment: ''
+      comment: '',
+      dateAdded: new Date()
     }
     const resp = await fetch(`/api/movie`, {
       method: clickedMovie.title.isSynced ? 'PUT' : 'POST',
@@ -64,7 +65,7 @@ function UserMovies() {
 
   switch (sortBy) {
     case 'dateAdded':
-      curMovies = movies.sort((a, b) => new Date(b.title.dateAdded).getTime() - new Date(a.title.dateAdded).getTime())
+      curMovies = movies.sort((a, b) => new Date(b.dateAdded).getTime() - new Date(a.dateAdded).getTime())
       break;
     case 'rating':
       curMovies = movies.sort((a, b) => b.rating - a.rating)
@@ -94,7 +95,7 @@ function UserMovies() {
         </Menu>
       </div>
       <MovieSearch isOpen={isOpen} onClose={onClose} setClickedMovie={setClickedMovie} setClickedRating={setClickedRating} onMovieOpen={onMovieOpen} />
-      {clickedMovie !== undefined ? <MovieCard isOpen={movieOpen} onClose={onMovieClose} title={clickedMovie.title}
+      {clickedMovie !== undefined ? <TitleCard isOpen={movieOpen} onClose={onMovieClose} title={clickedMovie.title}
         clickedRating={clickedRating} setClickedRating={setClickedRating} upsertTitle={upsertMovie} /> : <></>}
       <SimpleGrid minChildWidth='240px' spacing={'3vw'} gridTemplateColumns={'repeat(auto-fill, minmax(240px, 1fr))'}>
         <GridItem key="plus">

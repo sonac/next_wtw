@@ -22,7 +22,6 @@ export interface Ids {
 export interface Game {
     name: string
     id: number
-    firstReleaseDate: number
     posterLink: string
     summary: string
     year: number
@@ -42,20 +41,11 @@ const gameToTitle = (game: Game): TitleInterface => {
         year: game.year,
         rating: 0,
         ratingCount: 0,
-        isSynced: true,
-        description: game.summary
+        isSynced: false,
+        description: game.summary,
+        id: game.id.toString(),
     }
 }
-
-// After saving game to local db, timestamp gets transformed to normal date
-const getYearFromGame = (g: Game): number => {
-    if (isNaN(g.firstReleaseDate)) {
-        return g.year
-    }
-    const dt =  new Date(g.firstReleaseDate * 1000);
-    return dt.getFullYear();
-}
-
 
 const GamesSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedGame, setClickedRating, onGamesOpen }: SeachProps ) => {
     const [games, setGames] = useState<Game[]>([]);
@@ -120,7 +110,7 @@ const GamesSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedGame, se
                     <Spinner /> : 
                     <div>{games != null ? games.map(m => <Text key={m.id} onClick={async () => await clickGames(m)}
                         _hover={{cursor: 'pointer', bg: 'rgba(86, 86, 86, 1)'}}
-                    >{getYearFromGame(m)} {m.name}</Text>) : <></>}
+                    >{m.year} {m.name}</Text>) : <></>}
                     <Text key="globalSearch" onClick={search} _hover={{cursor: 'pointer', bg: 'rgba(86, 86, 86, 1)'}}>
                         ...
                     </Text>

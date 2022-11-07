@@ -62,9 +62,9 @@ const MovieSearch: React.FC<SeachProps> = ({
                 }
             )
             const titleDetails: TitleInterface = await resp.json()
-            seenMovie = {title: titleDetails, rating: 0, comment: ""};
+            seenMovie = {title: titleDetails, rating: 0, comment: "", dateAdded: new Date()};
         } else {
-            seenMovie = {title: m, rating: 0, comment: ""};
+            seenMovie = {title: m, rating: 0, comment: "", dateAdded: new Date()};
         }
         setClickedMovie(seenMovie);
         setClickedRating(0);
