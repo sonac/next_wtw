@@ -6,10 +6,16 @@ import { ChevronDownIcon } from '@chakra-ui/icons';
 import useSWR from 'swr';
 import { useState } from 'react';
 
-import Title, { SeenTitle } from '../../src/components/title';
+import Title, { SeenTitle, TitleInterface } from '../../src/components/title';
 import MovieSearch from '../../src/components/movie_search'
 import Header from '../../src/sections/header';
 import TitleCard from '../../src/components/title_card';
+
+const seenMovieToCardTitle = (mv: SeenTitle): TitleInterface => {
+  const title = mv.title
+  title.isSynced = true
+  return title
+}
 
 //@ts-ignore
 const moviesFetcher = () => fetch(`/api/seen-movies`, { credentials: 'include' }).then((res) => res.json())
@@ -95,7 +101,7 @@ function UserMovies() {
         </Menu>
       </div>
       <MovieSearch isOpen={isOpen} onClose={onClose} setClickedMovie={setClickedMovie} setClickedRating={setClickedRating} onMovieOpen={onMovieOpen} />
-      {clickedMovie !== undefined ? <TitleCard isOpen={movieOpen} onClose={onMovieClose} title={clickedMovie.title}
+      {clickedMovie !== undefined ? <TitleCard isOpen={movieOpen} onClose={onMovieClose} title={seenMovieToCardTitle(clickedMovie)}
         clickedRating={clickedRating} setClickedRating={setClickedRating} upsertTitle={upsertMovie} /> : <></>}
       <SimpleGrid minChildWidth='240px' spacing={'3vw'} gridTemplateColumns={'repeat(auto-fill, minmax(240px, 1fr))'}>
         <GridItem key="plus">

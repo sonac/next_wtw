@@ -14,22 +14,22 @@ import TitleCard from '../../src/components/title_card';
 //@ts-ignore
 const gamesFetcher = () => fetch(`/api/user-games`, { credentials: 'include' }).then((res) => res.json())
 
-export const gameToCardTitle = (game: UserGame): TitleInterface => {
+export const gameToCardTitle = (game: Game, isSynced: boolean): TitleInterface => {
   return {
-    name: game.game.name,
-    posterLink: game.game.posterLink,
-    year: game.game.year,
+    name: game.name,
+    posterLink: game.posterLink,
+    year: game.year,
     rating: 0,
     ratingCount: 0,
-    isSynced: game.isSynced,
-    description: game.game.summary,
-    id: game.game.id.toString(),
+    isSynced: isSynced,
+    description: game.summary,
+    id: game.id.toString(),
   }
 }
 
 const gameToSeenTitle = (game: UserGame): SeenTitle => {
   return {
-    title: gameToCardTitle(game),
+    title: gameToCardTitle(game.game, true),
     rating: game.rating,
     comment: '',
     dateAdded: game.dateAdded,
@@ -129,7 +129,7 @@ function UserSeries() {
       </div>
       <GamesSearch isOpen={isOpen} onClose={onClose} setClickedGame={setClickedGame} setClickedRating={setClickedRating}
         onGamesOpen={onGamesOpen} />
-      {clickedGame !== undefined ? <TitleCard isOpen={isOpen} onClose={onGameClose} title={clickedGame.title}
+      {clickedGame !== undefined ? <TitleCard isOpen={gameOpen} onClose={onGameClose} title={clickedGame.title}
         clickedRating={clickedRating} setClickedRating={setClickedRating} upsertTitle={upsertGame} /> : <></>}
       <SimpleGrid minChildWidth='240px' spacing={8} gridTemplateColumns={'repeat(auto-fill, minmax(240px, 1fr))'}>
         <GridItem key="plus">
