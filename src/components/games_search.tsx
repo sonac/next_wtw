@@ -25,6 +25,8 @@ export interface Game {
     posterLink: string
     summary: string
     year: number
+    rating: number
+    ratingCount: number
 }
 
 export interface UserGame {
@@ -39,8 +41,8 @@ const gameToTitle = (game: Game): TitleInterface => {
         name: game.name,
         posterLink: game.posterLink,
         year: game.year,
-        rating: 0,
-        ratingCount: 0,
+        rating: game.rating,
+        ratingCount: game.ratingCount,
         isSynced: false,
         description: game.summary,
         id: game.id.toString(),

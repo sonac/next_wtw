@@ -15,6 +15,12 @@ import MovieCard, { CardTitle } from '../../src/components/title_card';
 //@ts-ignore
 const seriesFetcher = () => fetch(`/api/seen-series`, { credentials: 'include' }).then((res) => res.json())
 
+const seenSeriesToCardTitle = (series: SeenTitle): TitleInterface => {
+  const title = series.title
+  title.isSynced = true
+  return title
+}
+
 const seriesToCardTitle = (series: TitleInterface): CardTitle => {
   return {
     posterLink: series.posterLink,
@@ -53,11 +59,11 @@ function UserSeries() {
       return
     }
     const seriesToUpsert: TitleInterface = clickedSeries?.title
-    seriesToUpsert.dateAdded = new Date()
     const newSeries: SeenTitle = {
       title: seriesToUpsert,
       rating: clickedRating,
-      comment: ''
+      comment: '',
+      dateAdded: new Date(),
     }
     const resp = await fetch(`/api/series`, {
       method: clickedSeries.title.isSynced ? 'PUT' : 'POST',
@@ -78,7 +84,7 @@ function UserSeries() {
 
   switch (sortBy) {
     case 'dateAdded':
-      curSeries = series.sort((a, b) => new Date(b.title.dateAdded).getTime() - new Date(a.title.dateAdded).getTime())
+      curSeries = series.sort((a, b) => new Date(b.dateAdded).getTime() - new Date(a.dateAdded).getTime())
       break;
     case 'rating':
       curSeries = series.sort((a, b) => b.rating - a.rating)
@@ -109,7 +115,7 @@ function UserSeries() {
       </div>
       <SeriesSearch isOpen={isOpen} onClose={onClose} setClickedSeries={setClickedSeries} setClickedRating={setClickedRating}
         onSeriesOpen={onSeriesOpen} />
-      {clickedSeries !== undefined ? <MovieCard isOpen={seriesOpen} onClose={onSeriesClose} title={clickedSeries.title}
+      {clickedSeries !== undefined ? <MovieCard isOpen={seriesOpen} onClose={onSeriesClose} title={seenSeriesToCardTitle(clickedSeries)}
         clickedRating={clickedRating} setClickedRating={setClickedRating} upsertTitle={upsertSeries} /> : <></>}
       <SimpleGrid minChildWidth='240px' spacing={8} gridTemplateColumns={'repeat(auto-fill, minmax(240px, 1fr))'}>
         <GridItem key="plus">
