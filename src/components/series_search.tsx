@@ -76,10 +76,10 @@ const SeriesSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedSeries,
                 }
             )
             const titleDetails: TitleInterface = await resp.json()
-            seenSeries = {title: titleDetails, rating: 0, comment: ""};
+            seenSeries = {title: titleDetails, rating: 0, comment: "", dateAdded: new Date()};
         } else {
-            seenSeries = {title: m, rating: 0, comment: ""};
-        }        
+            seenSeries = {title: m, rating: 0, comment: "", dateAdded: new Date()};
+        }   
         setClickedSeries(seenSeries);
         setClickedRating(0);
         onSeriesOpen();
