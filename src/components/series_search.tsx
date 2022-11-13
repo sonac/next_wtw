@@ -91,8 +91,9 @@ const SeriesSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedSeries,
             <ModalContent>
             <ModalHeader>
                 <Input placeholder='series name...' size='lg' variant='unstyled'
-                    onChange={e => setInput(e.target.value)}
-                    onKeyDown={searchLocal}
+                       onChange={e => setInput(e.target.value)}
+                       onKeyDown={searchLocal}
+                       onKeyPress={async (evt) => {if (evt.key == "Enter" && evt.shiftKey) await search(evt)}}
                 />
             </ModalHeader>
             <ModalCloseButton />

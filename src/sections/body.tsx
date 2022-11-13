@@ -6,7 +6,7 @@ const imgLoader = ({ src, ...props }: any) => {
 
 const body = () => {
   return (
-    <VStack>
+    <VStack pt={"40%"}>
       <Heading fontSize="6xl">Welcome to MyList</Heading>
       <Text fontSize="4xl">Here you can track everything</Text>
       <Text fontSize="4xl">All movies that you've wathced</Text>
