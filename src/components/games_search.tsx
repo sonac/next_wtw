@@ -33,7 +33,6 @@ export interface UserGame {
   game: Game
   rating: number
   dateAdded: Date
-  isSynced: boolean
 }
 
 const gameToTitle = (game: Game): TitleInterface => {

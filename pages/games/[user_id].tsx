@@ -54,7 +54,6 @@ const titleToUserGame = (title: TitleInterface): UserGame => {
   return {
     rating: 0,
     dateAdded: new Date(),
-    isSynced: false,
     game: {
       name: title.name,
       id: parseInt(title.id),
@@ -108,6 +107,42 @@ function UserSeries() {
     if (resp.status === 200) {
       setGames([...games, clickedGame]);
       onClose();
+      setClickedGame(undefined);
+      location.reload();
+    } else {
+      console.error(resp);
+    }
+  };
+  interface Game {
+    name: string
+    id: number
+    posterLink: string
+    summary: string
+    year: number
+    rating: number
+    ratingCount: number
+}
+  const refreshGame = async (): Promise<void> => {
+    const game: Game = {
+      name: clickedGame?.title.name || '',
+      id: parseInt(clickedGame?.title.id || '0'),
+      posterLink: clickedGame?.title.posterLink || '',
+      summary: clickedGame?.title.description || '',
+      year: clickedGame?.title.year || 0,
+      rating: clickedGame?.title.rating || 0,
+      ratingCount: clickedGame?.title.ratingCount || 0,
+    }
+    const uGame: UserGame = {
+      rating: clickedGame?.rating || 0,
+      dateAdded: clickedGame?.dateAdded || new Date,
+      game: game
+    }
+    const resp = await fetch(`/api/refresh-game`, {
+      method: 'PUT',
+      body: JSON.stringify(uGame),
+      credentials: 'include',
+    });
+    if (resp.status === 200) {
       setClickedGame(undefined);
       location.reload();
     } else {
@@ -171,6 +206,7 @@ function UserSeries() {
           clickedRating={clickedRating}
           setClickedRating={setClickedRating}
           upsertTitle={upsertGame}
+          refreshTitle={refreshGame}
         />
       ) : (
         <></>
