@@ -39,7 +39,7 @@ const SeriesSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedSeries,
     const [input, setInput] = useState('');
 
     const searchLocal = async (e: any) => {
-        if (e.key == 'Enter') {
+        if (e.key == 'Enter' && !e.shiftKey) {
             setLoading(true)
             const resp = await fetch(`/api/search-series-local`, 
                 {
@@ -80,6 +80,8 @@ const SeriesSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedSeries,
         } else {
             seenSeries = {title: m, rating: 0, comment: "", dateAdded: new Date()};
         }   
+        seenSeries.title.isSynced = false
+        console.log(seenSeries.title.isSynced)
         setClickedSeries(seenSeries);
         setClickedRating(0);
         onSeriesOpen();
