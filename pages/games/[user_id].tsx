@@ -113,15 +113,11 @@ function UserSeries() {
       console.error(resp);
     }
   };
-  interface Game {
-    name: string
-    id: number
-    posterLink: string
-    summary: string
-    year: number
-    rating: number
-    ratingCount: number
-}
+
+  const removeGame = async (): Promise<void> => {
+    alert('Not implemented yet!')
+  }
+
   const refreshGame = async (): Promise<void> => {
     const game: Game = {
       name: clickedGame?.title.name || '',
@@ -207,6 +203,7 @@ function UserSeries() {
           setClickedRating={setClickedRating}
           upsertTitle={upsertGame}
           refreshTitle={refreshGame}
+          removeTitle={removeGame}
         />
       ) : (
         <></>
@@ -215,7 +212,7 @@ function UserSeries() {
         paddingLeft="40px"
         paddingRight="40px"
         minChildWidth="240px"
-        spacing={8}
+        spacing='3vw'
         gridTemplateColumns={"repeat(auto-fill, minmax(240px, 1fr))"}
       >
         <GridItem key="plus">

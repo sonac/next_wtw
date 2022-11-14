@@ -33,6 +33,7 @@ interface CardProps {
   setClickedRating: Dispatch<SetStateAction<number>>;
   upsertTitle: () => Promise<void>;
   refreshTitle: () => Promise<void>;
+  removeTitle: () => Promise<void>;
 }
 
 const TitleCard: React.FC<CardProps> = ({
@@ -43,6 +44,7 @@ const TitleCard: React.FC<CardProps> = ({
   setClickedRating,
   upsertTitle,
   refreshTitle,
+  removeTitle,
 }: CardProps) => {
   const getBg = (rtng: number): string => {
     if (rtng == clickedRating) {
@@ -50,6 +52,8 @@ const TitleCard: React.FC<CardProps> = ({
     }
     return "transparent";
   };
+
+  console.log(title)
 
   return (
     <Modal
@@ -69,9 +73,9 @@ const TitleCard: React.FC<CardProps> = ({
               maxW="40%"
               minW="40%"
             />
-            <Flex flexDir="column" p={10} justifyContent="space-between">
+            <Flex flexDir="column" p='10px' justifyContent="space-between">
               <Heading
-                paddingTop={10}
+                paddingTop='10px'
                 paddingLeft={25}
                 size="2xl"
                 color="white"
@@ -120,7 +124,10 @@ const TitleCard: React.FC<CardProps> = ({
                   ? title.description
                   : "No description provided"}
               </Text>
-              <Button onClick={refreshTitle} colorScheme='teal' variant='outline' w='20%'>Refresh info</Button>
+              <Flex flexDir="row" mt='3vh'>
+                <Button onClick={refreshTitle} colorScheme='teal' variant='outline' w='20%'>Refresh info</Button>
+                <Button onClick={removeTitle} ml='3vw' colorScheme='red' variant='outline' w='20%'>Delete</Button>
+              </Flex>
               <Flex
                 flexDir="row"
                 paddingTop={10}
