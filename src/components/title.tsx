@@ -2,6 +2,12 @@ import { Image } from '@chakra-ui/image';
 import { Flex, Box, Heading, Text, useDisclosure } from '@chakra-ui/react';
 import React from 'react';
 
+export enum MediaType {
+  Movie = 1,
+  Series,
+  Game
+} 
+
 export interface TitleInterface {
   name: string;
   posterLink: string;
@@ -11,6 +17,8 @@ export interface TitleInterface {
   isSynced: boolean;
   description: string;
   id: string;
+  type: MediaType;
+  isFinished: boolean;
 }
 
 export interface SeenTitle {
@@ -18,6 +26,7 @@ export interface SeenTitle {
   rating: number;
   comment: string;
   dateAdded: Date;
+  isFinished: boolean;
 }
 
 export interface UserResponse {

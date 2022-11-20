@@ -1,7 +1,7 @@
 import { Modal, ModalOverlay, ModalContent, ModalHeader, 
     ModalBody, ModalCloseButton, Input, Text, Spinner } from '@chakra-ui/react'
 import { Dispatch, SetStateAction, useState } from 'react';
-import { SeenTitle, TitleInterface } from './title';
+import { MediaType, SeenTitle, TitleInterface } from './title';
 
 interface SeachProps {
     isOpen: boolean;
@@ -33,6 +33,7 @@ export interface UserGame {
   game: Game
   rating: number
   dateAdded: Date
+  isFinished: boolean
 }
 
 const gameToTitle = (game: Game): TitleInterface => {
@@ -45,6 +46,8 @@ const gameToTitle = (game: Game): TitleInterface => {
         isSynced: false,
         description: game.summary,
         id: game.id.toString(),
+        type: MediaType.Game,
+        isFinished: false,
     }
 }
 
@@ -88,7 +91,7 @@ const GamesSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedGame, se
             }
         )
         const game: Game = await resp.json()
-        gameDetails = {title: gameToTitle(game), rating: 0, comment: '', dateAdded: new Date()};
+        gameDetails = {title: gameToTitle(game), rating: 0, comment: '', dateAdded: new Date(), isFinished: false};
         setClickedGame(gameDetails);
         setClickedRating(0);
         onGamesOpen();

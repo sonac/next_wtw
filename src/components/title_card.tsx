@@ -11,19 +11,12 @@ import {
   GridItem,
   Box,
   Button,
+  FormControl,
+  FormLabel,
+  Switch,
 } from "@chakra-ui/react";
 import { Dispatch, SetStateAction } from "react";
 import { TitleInterface } from "./title";
-
-export interface CardTitle {
-  posterLink: string;
-  name: string;
-  year: number;
-  rating: number;
-  ratingCount: number;
-  description: string;
-  isSynced: boolean;
-}
 
 interface CardProps {
   isOpen: boolean;
@@ -125,8 +118,12 @@ const TitleCard: React.FC<CardProps> = ({
                   : "No description provided"}
               </Text>
               <Flex flexDir="row" mt='3vh'>
-                <Button onClick={refreshTitle} colorScheme='teal' variant='outline' w='20%'>Refresh info</Button>
+                <Button onClick={refreshTitle} colorScheme='teal' variant='outline' w='30%'>Refresh info</Button>
                 <Button onClick={removeTitle} ml='3vw' colorScheme='red' variant='outline' w='20%'>Delete</Button>
+                <FormControl ml='3vw' display='flex' alignItems='center'>
+                  <FormLabel htmlFor='is-finished' mb='0' fontSize='20px' color='gray'><b>Is finished?</b></FormLabel>
+                  <Switch id='is-finished' defaultChecked={title.isFinished} onChange={(e) => title.isFinished = !title.isFinished}/>
+                </FormControl>
               </Flex>
               <Flex
                 flexDir="row"

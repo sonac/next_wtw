@@ -14,7 +14,7 @@ import { ChevronDownIcon } from "@chakra-ui/icons";
 import useSWR from "swr";
 import { useState } from "react";
 
-import Title, { SeenTitle, TitleInterface } from "../../src/components/title";
+import Title, { SeenTitle, TitleInterface, MediaType } from "../../src/components/title";
 import GamesSearch, { Game, UserGame } from "../../src/components/games_search";
 import Header from "../../src/sections/header";
 import TitleCard from "../../src/components/title_card";
@@ -27,7 +27,8 @@ const gamesFetcher = () =>
 
 export const gameToCardTitle = (
   game: Game,
-  isSynced: boolean
+  isSynced: boolean,
+  isFinished: boolean
 ): TitleInterface => {
   return {
     name: game.name,
@@ -38,15 +39,18 @@ export const gameToCardTitle = (
     isSynced: isSynced,
     description: game.summary,
     id: game.id.toString(),
+    type: MediaType.Game,
+    isFinished: isFinished,
   };
 };
 
 const gameToSeenTitle = (game: UserGame): SeenTitle => {
   return {
-    title: gameToCardTitle(game.game, true),
+    title: gameToCardTitle(game.game, true, game.isFinished),
     rating: game.rating,
     comment: "",
     dateAdded: game.dateAdded,
+    isFinished: game.isFinished,
   };
 };
 
@@ -63,6 +67,7 @@ const titleToUserGame = (title: TitleInterface): UserGame => {
       rating: title.rating,
       ratingCount: title.ratingCount,
     },
+    isFinished: title.isFinished,
   };
 };
 
@@ -131,7 +136,8 @@ function UserSeries() {
     const uGame: UserGame = {
       rating: clickedGame?.rating || 0,
       dateAdded: clickedGame?.dateAdded || new Date,
-      game: game
+      game: game,
+      isFinished: clickedGame?.title.isFinished || false
     }
     const resp = await fetch(`/api/refresh-game`, {
       method: 'PUT',

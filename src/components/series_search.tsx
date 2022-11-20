@@ -76,9 +76,9 @@ const SeriesSearch: React.FC<SeachProps> = ({ isOpen, onClose, setClickedSeries,
                 }
             )
             const titleDetails: TitleInterface = await resp.json()
-            seenSeries = {title: titleDetails, rating: 0, comment: "", dateAdded: new Date()};
+            seenSeries = {title: titleDetails, rating: 0, comment: "", dateAdded: new Date(), isFinished: false};
         } else {
-            seenSeries = {title: m, rating: 0, comment: "", dateAdded: new Date()};
+            seenSeries = {title: m, rating: 0, comment: "", dateAdded: new Date(), isFinished: false};
         }   
         seenSeries.title.isSynced = false
         console.log(seenSeries.title.isSynced)

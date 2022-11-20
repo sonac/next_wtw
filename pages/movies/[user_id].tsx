@@ -52,6 +52,7 @@ function UserMovies() {
   const clickMovie = (m: SeenTitle): void => {
     setClickedMovie(m);
     setClickedRating(m.rating);
+    m.title.isFinished = true // movies in progress are unacceptable here
     onMovieOpen();
   };
 
@@ -65,6 +66,7 @@ function UserMovies() {
       rating: clickedRating,
       comment: "",
       dateAdded: new Date(),
+      isFinished: true
     };
     const resp = await fetch(`/api/movie`, {
       method: clickedMovie.title.isSynced ? "PUT" : "POST",

@@ -17,25 +17,13 @@ import { useState } from "react";
 import Title, { SeenTitle, TitleInterface } from "../../src/components/title";
 import SeriesSearch from "../../src/components/series_search";
 import Header from "../../src/sections/header";
-import TitleCard, { CardTitle } from "../../src/components/title_card";
+import TitleCard from "../../src/components/title_card";
 
 //@ts-ignore
 const seriesFetcher = () =>
   fetch(`/api/seen-series`, { credentials: "include" }).then((res) =>
     res.json()
   );
-
-const seriesToCardTitle = (series: TitleInterface): CardTitle => {
-  return {
-    posterLink: series.posterLink,
-    name: series.name,
-    year: series.year,
-    rating: series.rating,
-    ratingCount: series.ratingCount,
-    description: series.description,
-    isSynced: series.isSynced,
-  };
-};
 
 function UserSeries() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -60,6 +48,7 @@ function UserSeries() {
   const clickSeries = (m: SeenTitle) => {
     setClickedSeries(m);
     setClickedRating(m.rating);
+    m.title.isFinished = m.isFinished
     onSeriesOpen();
   };
 
@@ -74,18 +63,20 @@ function UserSeries() {
       rating: clickedRating,
       comment: "",
       dateAdded: new Date(),
+      isFinished: seriesToUpsert.isFinished,
     };
+    console.log(newSeries)
     const resp = await fetch(`/api/series`, {
       method: clickedSeries.title.isSynced ? "PUT" : "POST",
       body: JSON.stringify(newSeries),
       credentials: "include",
     });
     if (resp.status === 200) {
-      newSeries.title.isSynced = true
+      newSeries.title.isSynced = true;
       setSeries([...series, newSeries]);
       onClose();
       onSeriesClose();
-      //location.reload();
+      location.reload();
     } else {
       console.error(resp);
     }
@@ -95,22 +86,22 @@ function UserSeries() {
     if (clickedSeries === null || clickedSeries === undefined) {
       console.error("failed to remove movie");
       return;
-    } 
+    }
     const resp = await fetch(`/api/series`, {
       method: "DELETE",
       body: JSON.stringify(clickedSeries),
-      credentials: "include"
+      credentials: "include",
     });
     if (resp.status === 200) {
       //TODO: seems not working properly, fix and remove reload
-      setSeries(series.filter(s => s.title.id !== clickedSeries.title.id)) 
+      setSeries(series.filter((s) => s.title.id !== clickedSeries.title.id));
       onClose();
       onSeriesClose();
-      location.reload()
+      location.reload();
     } else {
-      console.error(resp)
+      console.error(resp);
     }
-  }
+  };
 
   const refreshSeries = async (): Promise<void> => {
     alert("Not implemented yet");
