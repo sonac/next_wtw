@@ -8,6 +8,11 @@ export enum MediaType {
   Game
 } 
 
+export interface Ids {
+  titleId: string;
+  coverId: number;
+}
+
 export interface TitleInterface {
   name: string;
   posterLink: string;
@@ -16,7 +21,7 @@ export interface TitleInterface {
   ratingCount: number;
   isSynced: boolean;
   description: string;
-  id: string;
+  ids: Ids;
   type: MediaType;
   isFinished: boolean;
 }
