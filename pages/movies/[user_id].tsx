@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import { useState } from "react";
 import UserTitles from "../../src/components/user_titles";
-import Title, { SeenTitle, TitleInterface } from "../../src/components/title";
+import { SeenTitle } from "../../src/components/title";
 
 //@ts-ignore
 const moviesFetcher = () =>

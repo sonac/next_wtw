@@ -3,9 +3,9 @@ import { Flex, Box, Heading, Text, useDisclosure } from '@chakra-ui/react';
 import React from 'react';
 
 export enum MediaType {
-  Movie = 1,
-  Series,
-  Game
+  Movie = "Movie",
+  Series = "Series",
+  Game = "Game"
 } 
 
 export interface Ids {

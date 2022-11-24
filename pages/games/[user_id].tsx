@@ -1,23 +1,7 @@
-import {
-  SimpleGrid,
-  GridItem,
-  VStack,
-  Image,
-  useDisclosure,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  Button,
-} from "@chakra-ui/react";
-import { ChevronDownIcon } from "@chakra-ui/icons";
 import useSWR from "swr";
 import { useState } from "react";
 
-import Title, { SeenTitle, TitleInterface, MediaType } from "../../src/components/title";
-import GamesSearch, { Game, UserGame } from "../../src/components/games_search";
-import Header from "../../src/sections/header";
-import TitleCard from "../../src/components/title_card";
+import  { SeenTitle } from "../../src/components/title";
 import UserTitles from "../../src/components/user_titles";
 
 //@ts-ignore

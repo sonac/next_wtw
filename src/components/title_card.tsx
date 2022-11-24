@@ -16,7 +16,7 @@ import {
   Switch,
 } from "@chakra-ui/react";
 import { Dispatch, SetStateAction } from "react";
-import { SeenTitle } from "./title";
+import { MediaType, SeenTitle } from "./title";
 
 interface CardProps {
   isOpen: boolean;
@@ -62,9 +62,9 @@ const TitleCard: React.FC<CardProps> = ({
               maxW="40%"
               minW="40%"
             />
-            <Flex flexDir="column" p='10px' justifyContent="space-between">
+            <Flex flexDir="column" p="10px" justifyContent="space-between">
               <Heading
-                paddingTop='10px'
+                paddingTop="10px"
                 paddingLeft={25}
                 size="2xl"
                 color="white"
@@ -113,13 +113,45 @@ const TitleCard: React.FC<CardProps> = ({
                   ? userTitle.title.description
                   : "No description provided"}
               </Text>
-              <Flex flexDir="row" mt='3vh'>
-                <Button onClick={refreshTitle} colorScheme='teal' variant='outline' w='30%'>Refresh info</Button>
-                <Button onClick={removeTitle} ml='3vw' colorScheme='red' variant='outline' w='20%'>Delete</Button>
-                <FormControl ml='3vw' display='flex' alignItems='center'>
-                  <FormLabel htmlFor='is-finished' mb='0' fontSize='20px' color='gray'><b>Is finished?</b></FormLabel>
-                  <Switch id='is-finished' defaultChecked={userTitle.isFinished} onChange={(e) => userTitle.isFinished = !userTitle.isFinished}/>
-                </FormControl>
+              <Flex flexDir="row" mt="3vh">
+                <Button
+                  onClick={refreshTitle}
+                  colorScheme="teal"
+                  variant="outline"
+                  w="30%"
+                >
+                  Refresh info
+                </Button>
+                <Button
+                  onClick={removeTitle}
+                  ml="3vw"
+                  colorScheme="red"
+                  variant="outline"
+                  w="20%"
+                >
+                  Delete
+                </Button>
+                {userTitle.title.type !== MediaType.Movie ? (
+                  <FormControl ml="3vw" display="flex" alignItems="center">
+                    <FormLabel
+                      htmlFor="is-finished"
+                      mb="0"
+                      fontSize="20px"
+                      color="gray"
+                    >
+                      <b>Is finished?</b>
+                    </FormLabel>
+                    <Switch
+                      id="is-finished"
+                      defaultChecked={userTitle.isFinished}
+                      onChange={(e) =>
+                        (userTitle.isFinished = !userTitle.isFinished)
+                      }
+                    />
+                  </FormControl>
+                ) : (
+                  <div></div>
+                )}
               </Flex>
               <Flex
                 flexDir="row"
@@ -135,7 +167,7 @@ const TitleCard: React.FC<CardProps> = ({
                   borderRadius="0.5em"
                   maxH="1.5em"
                   w="1.5em"
-                  onClick={() => setClickedTitle({...userTitle, rating: 1})}
+                  onClick={() => setClickedTitle({ ...userTitle, rating: 1 })}
                 >
                   <Text align="center">1</Text>
                 </Box>
@@ -147,7 +179,7 @@ const TitleCard: React.FC<CardProps> = ({
                   borderRadius="0.5em"
                   maxH="1.5em"
                   w="1.5em"
-                  onClick={() => setClickedTitle({...userTitle, rating: 2})}
+                  onClick={() => setClickedTitle({ ...userTitle, rating: 2 })}
                 >
                   <Text align="center">2</Text>
                 </Box>
@@ -159,7 +191,7 @@ const TitleCard: React.FC<CardProps> = ({
                   borderRadius="0.5em"
                   maxH="1.5em"
                   w="1.5em"
-                  onClick={() => setClickedTitle({...userTitle, rating: 3})}
+                  onClick={() => setClickedTitle({ ...userTitle, rating: 3 })}
                 >
                   <Text align="center">3</Text>
                 </Box>
@@ -171,7 +203,7 @@ const TitleCard: React.FC<CardProps> = ({
                   borderRadius="0.5em"
                   maxH="1.5em"
                   w="1.5em"
-                  onClick={() => setClickedTitle({...userTitle, rating: 4})}
+                  onClick={() => setClickedTitle({ ...userTitle, rating: 4 })}
                 >
                   <Text align="center">4</Text>
                 </Box>
@@ -183,7 +215,7 @@ const TitleCard: React.FC<CardProps> = ({
                   borderRadius="0.5em"
                   maxH="1.5em"
                   w="1.5em"
-                  onClick={() => setClickedTitle({...userTitle, rating: 5})}
+                  onClick={() => setClickedTitle({ ...userTitle, rating: 5 })}
                 >
                   <Text align="center">5</Text>
                 </Box>
@@ -195,7 +227,7 @@ const TitleCard: React.FC<CardProps> = ({
                   borderRadius="0.5em"
                   maxH="1.5em"
                   w="1.5em"
-                  onClick={() => setClickedTitle({...userTitle, rating: 6})}
+                  onClick={() => setClickedTitle({ ...userTitle, rating: 6 })}
                 >
                   <Text align="center">6</Text>
                 </Box>
@@ -207,7 +239,7 @@ const TitleCard: React.FC<CardProps> = ({
                   borderRadius="0.5em"
                   maxH="1.5em"
                   w="1.5em"
-                  onClick={() => setClickedTitle({...userTitle, rating: 7})}
+                  onClick={() => setClickedTitle({ ...userTitle, rating: 7 })}
                 >
                   <Text align="center">7</Text>
                 </Box>
@@ -219,7 +251,7 @@ const TitleCard: React.FC<CardProps> = ({
                   borderRadius="0.5em"
                   maxH="1.5em"
                   w="1.5em"
-                  onClick={() => setClickedTitle({...userTitle, rating: 8})}
+                  onClick={() => setClickedTitle({ ...userTitle, rating: 8 })}
                 >
                   <Text align="center">8</Text>
                 </Box>
@@ -231,7 +263,7 @@ const TitleCard: React.FC<CardProps> = ({
                   borderRadius="0.5em"
                   maxH="1.5em"
                   w="1.5em"
-                  onClick={() => setClickedTitle({...userTitle, rating: 9})}
+                  onClick={() => setClickedTitle({ ...userTitle, rating: 9 })}
                 >
                   <Text align="center">9</Text>
                 </Box>
@@ -243,7 +275,7 @@ const TitleCard: React.FC<CardProps> = ({
                   borderRadius="0.5em"
                   maxH="1.5em"
                   w="1.5em"
-                  onClick={() => setClickedTitle({...userTitle, rating: 10})}
+                  onClick={() => setClickedTitle({ ...userTitle, rating: 10 })}
                 >
                   <Text align="center">10</Text>
                 </Box>

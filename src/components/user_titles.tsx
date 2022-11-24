@@ -1,7 +1,6 @@
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { Button, GridItem, Image, Menu, MenuButton, MenuItem, MenuList, SimpleGrid, useDisclosure, VStack } from "@chakra-ui/react";
 import React, { useState } from "react";
-import GamesSearch, { UserGame } from "./games_search";
 import Title, { SeenTitle } from "./title";
 import TitleCard from "./title_card";
 import TitlesSearch from "./titles_search";
