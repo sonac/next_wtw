@@ -76,15 +76,7 @@ const UserTitles: React.FC<UserGameProps> = ({titles, endpoint}: UserGameProps) 
     };
 
     return (
-        <VStack
-      h={{ md: "100vh" }}
-      w={{ md: "100%" }}
-      p={0}
-      m={0}
-      align="left"
-      spacing={8}
-    >
-      <Header />
+      <div>
       <div style={{ paddingLeft: 40 }}>
         <Menu>
           <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
@@ -145,7 +137,7 @@ const UserTitles: React.FC<UserGameProps> = ({titles, endpoint}: UserGameProps) 
           </GridItem>
         ))}
       </SimpleGrid>
-    </VStack>
+    </div>
   );
 }
 

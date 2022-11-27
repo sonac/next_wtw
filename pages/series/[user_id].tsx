@@ -3,6 +3,16 @@ import { useState } from "react";
 
 import { SeenTitle } from "../../src/components/title";
 import UserTitles from "../../src/components/user_titles";
+import {
+  Tabs,
+  TabList,
+  Tab,
+  TabPanels,
+  TabPanel,
+  VStack,
+  Flex,
+} from "@chakra-ui/react";
+import Header from "../../src/sections/header";
 
 //@ts-ignore
 const seriesFetcher = () =>
@@ -23,8 +33,35 @@ function UserSeries() {
   }
 
   return (
-    <UserTitles titles={series} endpoint="series" />
-  )
+    <VStack
+      h={{ md: "100vh" }}
+      w={{ md: "100%" }}
+      p={0}
+      m={0}
+      align="left"
+      spacing={8}
+    >
+      <Header />
+      <Tabs defaultIndex={1} variant="soft-rounded" colorScheme="green">
+        <TabList justifyContent={"space-evenly"}>
+            <Tab fontSize="2em">Plan to Watch</Tab>
+            <Tab fontSize="2em">In Progress</Tab>
+            <Tab fontSize="2em">Finished</Tab>
+        </TabList>
+        <TabPanels>
+          <TabPanel>
+            <UserTitles titles={[]} endpoint="serie" />
+          </TabPanel>
+          <TabPanel>
+            <UserTitles titles={series.filter(s => !s.isFinished)} endpoint="serie" />
+          </TabPanel>
+          <TabPanel>
+            <UserTitles titles={series.filter(s => s.isFinished)} endpoint="serie" />
+          </TabPanel>
+        </TabPanels>
+      </Tabs>
+    </VStack>
+  );
 }
 
 export default UserSeries;
