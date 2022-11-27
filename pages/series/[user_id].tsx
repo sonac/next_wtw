@@ -23,7 +23,7 @@ function UserSeries() {
   }
 
   return (
-    <UserTitles titles={series} endpoint="series" />
+    <UserTitles titles={series} endpoint="serie" />
   )
 }
 
