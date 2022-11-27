@@ -2,6 +2,8 @@ import useSWR from "swr";
 import { useState } from "react";
 import UserTitles from "../../src/components/user_titles";
 import { SeenTitle } from "../../src/components/title";
+import Header from "../../src/sections/header";
+import { VStack } from "@chakra-ui/react";
 
 //@ts-ignore
 const moviesFetcher = () =>
@@ -21,8 +23,18 @@ function UserMovies() {
     setMovies(data);
   }
 
-  return (
-    <UserTitles titles={movies} endpoint="movie" />
+  return (    
+    <VStack
+      h={{ md: "100vh" }}
+      w={{ md: "100%" }}
+      p={0}
+      m={0}
+      align="left"
+      spacing={8}
+    >
+      <Header />
+      <UserTitles titles={movies} endpoint="movie" />
+    </VStack>
   )
 }
 
