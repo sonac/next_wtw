@@ -67,7 +67,7 @@ const TitlesSearch: React.FC<SearchProps> = ({isOpen, onClose, setClickedTitle, 
                        onChange={e => setInput(e.target.value)}
                        onKeyPress={async (evt) => {
                             if (evt.key == "Enter" && evt.shiftKey) await search() 
-                            else if (evt.key = "Enter") await searchLocal
+                            else if (evt.key = "Enter") await searchLocal()
                         }}
                        //onKeyDown={async (evt) => {if (evt.key == "Enter" && !evt.shiftKey) await searchLocal()}}
                 />
@@ -79,8 +79,8 @@ const TitlesSearch: React.FC<SearchProps> = ({isOpen, onClose, setClickedTitle, 
                     <div>{titles != null ? titles.map(m => <Text key={m.ids.titleId} onClick={async () => await clickTitle(m)}
                         _hover={{cursor: 'pointer', bg: 'rgba(86, 86, 86, 1)'}}
                     >{m.year} {m.name}</Text>) : <></>}
-                    <Text key="globalSearch" onClick={search} _hover={{cursor: 'pointer', bg: 'rgba(86, 86, 86, 1)'}}>
-                        ...
+                    <Text fontSize="0.7em" key="globalSearch" onClick={search} _hover={{cursor: 'pointer', bg: 'rgba(86, 86, 86, 1)'}}>
+                        ... press shift+enter to perform global search
                     </Text>
                     </div>
                 }
