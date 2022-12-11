@@ -65,8 +65,11 @@ const TitlesSearch: React.FC<SearchProps> = ({isOpen, onClose, setClickedTitle, 
             <ModalHeader>
                 <Input placeholder='title name...' size='lg' variant='unstyled'
                        onChange={e => setInput(e.target.value)}
-                       onKeyPress={async (evt) => {if (evt.key == "Enter" && evt.shiftKey) await search()}}
-                       onKeyDown={async (evt) => {if (evt.key == "Enter") await searchLocal()}}
+                       onKeyPress={async (evt) => {
+                            if (evt.key == "Enter" && evt.shiftKey) await search() 
+                            else if (evt.key = "Enter") await searchLocal
+                        }}
+                       //onKeyDown={async (evt) => {if (evt.key == "Enter" && !evt.shiftKey) await searchLocal()}}
                 />
             </ModalHeader>
             <ModalCloseButton />
