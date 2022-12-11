@@ -45,9 +45,9 @@ const UserTitles: React.FC<UserGameProps> = ({titles, endpoint}: UserGameProps) 
         break;
     }
 
-    const upsertTitle = async (userTitle: SeenTitle): Promise<void> => {
+    const upsertTitle = async (userTitle: SeenTitle, method: string): Promise<void> => {
       const resp = await fetch(`/api/${endpoint}`, {
-        method: userTitle.title.isSynced ? "PUT" : "POST",
+        method: method,
         body: JSON.stringify(userTitle),
         credentials: "include",
       });
@@ -58,14 +58,10 @@ const UserTitles: React.FC<UserGameProps> = ({titles, endpoint}: UserGameProps) 
       }
     };
   
-    const removeTitle = async (): Promise<void> => {
-      alert('Not implemented yet!')
-    }
-  
     const refreshTitle = async (): Promise<void> => {
       const resp = await fetch(`/api/refresh-${endpoint}`, {
         method: 'PUT',
-        body: JSON.stringify(clickTitle),
+        body: JSON.stringify(clickedTitle),
         credentials: 'include',
       });
       if (resp.status === 200) {
@@ -107,7 +103,6 @@ const UserTitles: React.FC<UserGameProps> = ({titles, endpoint}: UserGameProps) 
           setClickedTitle={setClickedTitle}
           upsertTitle={upsertTitle}
           refreshTitle={refreshTitle}
-          removeTitle={removeTitle}
         />
       ) : (
         <></>
