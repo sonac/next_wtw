@@ -42,12 +42,12 @@ const theme = extendTheme({
         }),
         movie: (props: any) => ({
           dialog: {
-            width: '30vw',
-            maxWidth: '38em',
+            minWidth: '30vw',
+            maxWidth: '70vw',
           },
           body: {
-            width: '30vw',
-            maxWidth: '38em'
+            minWidth: '30vw',
+            maxWidth: '70vw'
           }
         })
       }
