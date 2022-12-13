@@ -24,7 +24,7 @@ const theme = extendTheme({
       baseStyle: {
         dialog: {
           fontSize: '2em',
-          bg: 'rgba(86, 86, 86, 0.7)',
+          bg: 'rgba(86, 86, 86)',
         },
         header: {
           fontSize: '1,5em',
@@ -42,11 +42,11 @@ const theme = extendTheme({
         }),
         movie: (props: any) => ({
           dialog: {
-            width: '28em',
+            width: '30vw',
             maxWidth: '38em',
           },
           body: {
-            width: '28em',
+            width: '30vw',
             maxWidth: '38em'
           }
         })

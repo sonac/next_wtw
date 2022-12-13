@@ -36,9 +36,10 @@ function UserGames() {
       <Header />
       <Tabs defaultIndex={1} variant="soft-rounded" colorScheme="green">
         <TabList justifyContent={"space-evenly"}>
-            <Tab fontSize="2em">Plan to Watch</Tab>
+            <Tab fontSize="2em">Plan to Play</Tab>
             <Tab fontSize="2em">In Progress</Tab>
             <Tab fontSize="2em">Finished</Tab>
+            <Tab fontSize="2em">Infinite trash</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>
