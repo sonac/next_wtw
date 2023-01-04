@@ -3,7 +3,14 @@ import { useState } from "react";
 import UserTitles from "../../src/components/user_titles";
 import { SeenTitle } from "../../src/components/title";
 import Header from "../../src/sections/header";
-import { VStack } from "@chakra-ui/react";
+import {
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+  VStack,
+} from "@chakra-ui/react";
 
 //@ts-ignore
 const moviesFetcher = () =>
@@ -23,7 +30,7 @@ function UserMovies() {
     setMovies(data);
   }
 
-  return (    
+  return (
     <VStack
       h={{ md: "100vh" }}
       w={{ md: "100%" }}
@@ -33,9 +40,36 @@ function UserMovies() {
       spacing={8}
     >
       <Header />
-      <UserTitles titles={movies} endpoint="movie" />
+      <Tabs>
+        <TabList justifyContent="space-evenly">
+          <Tab fontSize="2em">2023</Tab>
+          <Tab fontSize="2em">2022</Tab>
+        </TabList>
+        <TabPanels>
+          <TabPanel>
+            <UserTitles
+              titles={movies.filter(
+                (m) =>
+                  m.isFinished &&
+                  new Date(m.dateFinished).getFullYear() === 2023
+              )}
+              endpoint="movie"
+            />
+          </TabPanel>
+          <TabPanel>
+            <UserTitles
+              titles={movies.filter(
+                (m) =>
+                  m.isFinished &&
+                  new Date(m.dateFinished).getFullYear() === 2022
+              )}
+              endpoint="movie"
+            />
+          </TabPanel>
+        </TabPanels>
+      </Tabs>
     </VStack>
-  )
+  );
 }
 
 export default UserMovies;

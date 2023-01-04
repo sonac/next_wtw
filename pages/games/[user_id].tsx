@@ -49,7 +49,20 @@ function UserGames() {
             <UserTitles titles={games.filter(g => !g.isFinished)} endpoint="game" />
           </TabPanel>
           <TabPanel>
-            <UserTitles titles={games.filter(g => g.isFinished)} endpoint="game" />
+            <Tabs>
+              <TabList justifyContent="space-evenly">
+                <Tab fontSize="2em">2023</Tab>
+                <Tab fontSize="2em">2022</Tab>
+              </TabList>
+              <TabPanels>
+                <TabPanel>
+                  <UserTitles titles={games.filter(g => g.isFinished && new Date(g.dateFinished).getFullYear() === 2023)} endpoint="game" />
+                </TabPanel>
+                <TabPanel>
+                  <UserTitles titles={games.filter(g => g.isFinished && new Date(g.dateFinished).getFullYear() === 2022)} endpoint="game" />
+                </TabPanel>
+              </TabPanels>
+            </Tabs>
           </TabPanel>
         </TabPanels>
       </Tabs>
