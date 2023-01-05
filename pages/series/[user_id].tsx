@@ -56,7 +56,20 @@ function UserSeries() {
             <UserTitles titles={series.filter(s => !s.isFinished)} endpoint="serie" />
           </TabPanel>
           <TabPanel>
-            <UserTitles titles={series.filter(s => s.isFinished)} endpoint="serie" />
+            <Tabs>
+              <TabList justifyContent="space-evenly">
+                <Tab fontSize="2em">2023</Tab>
+                <Tab fontSize="2em">2022</Tab>
+              </TabList>
+              <TabPanels>
+                <TabPanel>
+                  <UserTitles titles={series.filter(s => s.isFinished && new Date(s.dateFinished).getFullYear() === 2023)} endpoint="serie" />
+                </TabPanel>
+                <TabPanel>
+                  <UserTitles titles={series.filter(s => s.isFinished && new Date(s.dateFinished).getFullYear() === 2022)} endpoint="serie" />
+                </TabPanel>
+              </TabPanels>
+            </Tabs>
           </TabPanel>
         </TabPanels>
       </Tabs>

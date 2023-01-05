@@ -31,6 +31,7 @@ export interface SeenTitle {
   rating: number;
   comment: string;
   dateAdded: Date;
+  dateFinished: Date;
   isFinished: boolean;
 }
 
