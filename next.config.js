@@ -2,7 +2,7 @@ const ContentSecurityPolicy = `
   default-src https://m.media-amazon.com/images/M/ http://assets.fanart.tv/ https://images.igdb.com/ 'self';
   script-src 'self' 'unsafe-inline' 'unsafe-eval';
   style-src 'self' 'unsafe-inline' 'unsafe-eval';
-  img-src 'self' blob: data: https://m.media-amazon.com http://assets.fanart.tv/ https://images.igdb.com/;
+  img-src 'self' blob: data: https://m.media-amazon.com http://assets.fanart.tv/ https://images.igdb.com/ https://global-uploads.webflow.com/ http://books.google.com/;
 `;
 
 const securityHeaders = [
