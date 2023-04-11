@@ -40,31 +40,44 @@ function UserMovies() {
       spacing={8}
     >
       <Header />
-      <Tabs>
-        <TabList justifyContent="space-evenly">
-          <Tab fontSize="2em">2023</Tab>
-          <Tab fontSize="2em">2022</Tab>
+      <Tabs defaultIndex={1} variant="soft-rounded" colorScheme="green">
+        <TabList justifyContent={"space-evenly"}>
+            <Tab fontSize="2em">Plan to Watch</Tab>
+            <Tab fontSize="2em">Finished</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>
-            <UserTitles
-              titles={movies.filter(
-                (m) =>
-                  m.isFinished &&
-                  new Date(m.dateFinished).getFullYear() === 2023
-              )}
-              endpoint="movie"
-            />
+            <UserTitles titles={movies.filter(m => !m.isStarted)} endpoint="movie" />
           </TabPanel>
           <TabPanel>
-            <UserTitles
-              titles={movies.filter(
-                (m) =>
-                  m.isFinished &&
-                  new Date(m.dateFinished).getFullYear() === 2022
-              )}
-              endpoint="movie"
-            />
+            <Tabs>
+              <TabList justifyContent="space-evenly">
+                <Tab fontSize="2em">2023</Tab>
+                <Tab fontSize="2em">2022</Tab>
+              </TabList>
+              <TabPanels>
+                <TabPanel>
+                  <UserTitles
+                    titles={movies.filter(
+                      (m) =>
+                        m.isFinished &&
+                        new Date(m.dateFinished).getFullYear() === 2023
+                    )}
+                    endpoint="movie"
+                  />
+                </TabPanel>
+                <TabPanel>
+                  <UserTitles
+                    titles={movies.filter(
+                      (m) =>
+                        m.isFinished &&
+                        new Date(m.dateFinished).getFullYear() === 2022
+                    )}
+                    endpoint="movie"
+                  />
+                </TabPanel>
+              </TabPanels>
+            </Tabs>
           </TabPanel>
         </TabPanels>
       </Tabs>

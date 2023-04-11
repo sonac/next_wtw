@@ -33,6 +33,7 @@ export interface SeenTitle {
   dateAdded: Date;
   dateFinished: Date;
   isFinished: boolean;
+  isStarted: boolean;
 }
 
 export interface UserResponse {

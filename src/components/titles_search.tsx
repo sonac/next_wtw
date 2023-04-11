@@ -52,7 +52,7 @@ const TitlesSearch: React.FC<SearchProps> = ({isOpen, onClose, setClickedTitle, 
             }
         )
         const title: TitleInterface = await resp.json()
-        userTitle = {title: title, rating: 0, comment: '', dateAdded: new Date(), dateFinished: new Date(), isFinished: false};
+        userTitle = {title: title, rating: 0, comment: '', dateAdded: new Date(), dateFinished: new Date(), isFinished: false, isStarted: false};
         setClickedTitle(userTitle);
         setClickedRating(0);
         onTitleOpen();

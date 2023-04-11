@@ -122,18 +122,19 @@ const TitleCard: React.FC<CardProps> = ({
                   ? userTitle.title.description.substring(0, 100)
                   : "No description provided"}
               </Text>
-              <Flex flexDir="row" mt="3vh">
+              <Flex flexDir="row" justifyContent="space-between" w="100%" mt="3vh">
                 <Button
                   onClick={refreshTitle}
                   colorScheme="teal"
                   variant="outline"
-                  w="30%"
+                  fontSize="14px"
+                  w="35%"
                 >
                   Refresh info
                 </Button>
                 <Button
                   onClick={() => upsertTitle(userTitle, 'DELETE')}
-                  ml="3vw"
+                  ml="1vw"
                   colorScheme="red"
                   variant="outline"
                   w="20%"
@@ -141,7 +142,7 @@ const TitleCard: React.FC<CardProps> = ({
                   Delete
                 </Button>
                 {userTitle.title.type !== MediaType.Movie ? (
-                  <FormControl ml="3vw" display="flex" alignItems="center">
+                  <FormControl ml="1vw" display="flex" alignItems="center">
                     <FormLabel
                       htmlFor="is-finished"
                       mb="0"
@@ -161,6 +162,23 @@ const TitleCard: React.FC<CardProps> = ({
                 ) : (
                   <div></div>
                 )}
+                  <FormControl ml="1vw" display="flex" alignItems="center">
+                    <FormLabel
+                      htmlFor="is-finished"
+                      mb="0"
+                      fontSize="20px"
+                      color="gray"
+                    >
+                      <b>Is started?</b>
+                    </FormLabel>
+                    <Switch
+                      id="is-finished"
+                      defaultChecked={userTitle.isStarted}
+                      onChange={(e) =>
+                        (userTitle.isStarted = !userTitle.isStarted)
+                      }
+                    />
+                  </FormControl>
               </Flex>
               <Flex
                 flexDir="row"
