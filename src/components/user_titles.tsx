@@ -1,13 +1,13 @@
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { Button, GridItem, Image, Menu, MenuButton, MenuItem, MenuList, SimpleGrid, useDisclosure, VStack } from "@chakra-ui/react";
 import React, { useState } from "react";
-import Title, { SeenTitle } from "./title";
+import Title, { UserTitle } from "./title";
 import TitleCard from "./title_card";
 import TitlesSearch from "./titles_search";
 import Header from "../sections/header";
 
 interface UserGameProps {
-    titles: Array<SeenTitle>;
+    titles: Array<UserTitle>;
     endpoint: string;
 }
 
@@ -18,11 +18,11 @@ const UserTitles: React.FC<UserGameProps> = ({titles, endpoint}: UserGameProps) 
       onOpen: onTitleOpen,
       onClose: onTitleClose,
     } = useDisclosure();
-    const [clickedTitle, setClickedTitle] = useState<SeenTitle>();
+    const [clickedTitle, setClickedTitle] = useState<UserTitle>();
     const [clickedRating, setClickedRating] = useState<number>(0);
     const [sortBy, setSorting] = useState<string>("title");
 
-    const clickTitle = (m: SeenTitle) => {
+    const clickTitle = (m: UserTitle) => {
         setClickedTitle(m);
         setClickedRating(m.rating);
         onTitleOpen();
@@ -45,7 +45,8 @@ const UserTitles: React.FC<UserGameProps> = ({titles, endpoint}: UserGameProps) 
         break;
     }
 
-    const upsertTitle = async (userTitle: SeenTitle, method: string): Promise<void> => {
+    const upsertTitle = async (userTitle: UserTitle, method: string): Promise<void> => {
+      userTitle.isAdded = true;
       const resp = await fetch(`/api/${endpoint}`, {
         method: method,
         body: JSON.stringify(userTitle),
@@ -126,7 +127,7 @@ const UserTitles: React.FC<UserGameProps> = ({titles, endpoint}: UserGameProps) 
             onClick={onOpen}
           />
         </GridItem>
-        {titles.map((st: SeenTitle) => (
+        {titles.map((st: UserTitle) => (
           <GridItem key={st.title.name}>
             <Title st={st} clickTitle={clickTitle} />
           </GridItem>

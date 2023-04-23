@@ -17,14 +17,14 @@ import {
   Input,
 } from "@chakra-ui/react";
 import { Dispatch, SetStateAction } from "react";
-import { MediaType, SeenTitle } from "./title";
+import { MediaType, UserTitle } from "./title";
 
 interface CardProps {
   isOpen: boolean;
   onClose: any;
-  userTitle: SeenTitle;
-  setClickedTitle: Dispatch<SetStateAction<SeenTitle | undefined>>;
-  upsertTitle: (t: SeenTitle, m: string) => Promise<void>;
+  userTitle: UserTitle;
+  setClickedTitle: Dispatch<SetStateAction<UserTitle | undefined>>;
+  upsertTitle: (t: UserTitle, m: string) => Promise<void>;
   refreshTitle: () => Promise<void>;
 }
 
@@ -154,7 +154,7 @@ const TitleCard: React.FC<CardProps> = ({
                     <Switch
                       id="is-finished"
                       defaultChecked={userTitle.isFinished}
-                      onChange={(e) =>
+                      onChange={() =>
                         (userTitle.isFinished = !userTitle.isFinished)
                       }
                     />
@@ -174,7 +174,7 @@ const TitleCard: React.FC<CardProps> = ({
                     <Switch
                       id="is-finished"
                       defaultChecked={userTitle.isStarted}
-                      onChange={(e) =>
+                      onChange={() =>
                         (userTitle.isStarted = !userTitle.isStarted)
                       }
                     />
@@ -307,8 +307,8 @@ const TitleCard: React.FC<CardProps> = ({
                   <Text align="center">10</Text>
                 </Box>
               </Flex>
-              <Button onClick={() => upsertTitle(userTitle, userTitle.title.isSynced ? "PUT" : "POST")}>
-                {userTitle.title.isSynced ? "Update" : "Add"}
+              <Button onClick={() => upsertTitle(userTitle, userTitle.isAdded ? "PUT" : "POST")}>
+                {userTitle.isAdded ? "Update" : "Add"}
               </Button>
             </Flex>
           </Flex>

@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import { useState } from "react";
 import UserTitles from "../../src/components/user_titles";
-import { SeenTitle } from "../../src/components/title";
+import { UserTitle } from "../../src/components/title";
 import Header from "../../src/sections/header";
 import {
   Tab,
@@ -19,7 +19,7 @@ const moviesFetcher = () =>
   );
 
 function UserMovies() {
-  const [movies, setMovies] = useState<SeenTitle[]>([]);
+  const [movies, setMovies] = useState<UserTitle[]>([]);
   const { data, error } = useSWR("seenMovies", moviesFetcher);
 
   if (error) {
