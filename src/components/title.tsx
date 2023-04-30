@@ -26,22 +26,24 @@ export interface TitleInterface {
   isFinished: boolean;
 }
 
-export interface SeenTitle {
+export interface UserTitle {
   title: TitleInterface;
   rating: number;
   comment: string;
   dateAdded: Date;
   dateFinished: Date;
   isFinished: boolean;
+  isStarted: boolean;
+  isAdded: boolean;
 }
 
 export interface UserResponse {
-  seenMovies: Array<SeenTitle>;
+  seenMovies: Array<UserTitle>;
 }
 
 interface MovieProps {
-  st: SeenTitle;
-  clickTitle: (title: SeenTitle) => void;
+  st: UserTitle;
+  clickTitle: (title: UserTitle) => void;
 }
 
 const Title: React.FC<MovieProps> = ({ st, clickTitle}: MovieProps) => {

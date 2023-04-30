@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import { useState } from "react";
 
-import  { SeenTitle } from "../../src/components/title";
+import  { UserTitle } from "../../src/components/title";
 import UserTitles from "../../src/components/user_titles";
 import { Tab, TabList, TabPanel, TabPanels, Tabs, VStack } from "@chakra-ui/react";
 import Header from "../../src/sections/header";
@@ -13,7 +13,7 @@ const gamesFetcher = () =>
   );
 
 function UserGames() {
-  const [games, setGames] = useState<SeenTitle[]>([]);
+  const [games, setGames] = useState<UserTitle[]>([]);
   const { data, error } = useSWR("seenGames", gamesFetcher);
 
   if (error) {

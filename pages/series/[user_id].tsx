@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import { useState } from "react";
 
-import { SeenTitle } from "../../src/components/title";
+import { UserTitle } from "../../src/components/title";
 import UserTitles from "../../src/components/user_titles";
 import {
   Tabs,
@@ -21,7 +21,7 @@ const seriesFetcher = () =>
   );
 
 function UserSeries() {
-  const [series, setSeries] = useState<SeenTitle[]>([]);
+  const [series, setSeries] = useState<UserTitle[]>([]);
   const { data, error } = useSWR("seenSeries", seriesFetcher);
 
   if (error) {

@@ -62,6 +62,7 @@ const Header = () => {
             <Text fontSize="2xl"><Link href={`/series/${tobase64(data || '')}`}>Series</Link></Text>
             <Text fontSize="2xl"><Link href={`/games/${tobase64(data || '')}`}>Games</Link></Text>
             <Text fontSize="2xl"><Link href={`/books/${tobase64(data || '')}`}>Books</Link></Text>
+            <Text fontSize="2xl"><Link href={`/animes/${tobase64(data || '')}`}>Animes</Link></Text>
           </VStack>
         </DrawerBody>
         <DrawerFooter>
