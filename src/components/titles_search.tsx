@@ -44,15 +44,17 @@ const TitlesSearch: React.FC<SearchProps> = ({isOpen, onClose, setClickedTitle, 
     }
 
     const clickTitle = async (m: TitleInterface): Promise<void> => {
-        let userTitle: UserTitle;
-        const resp = await fetch(`/api/${endpoint}-details`, 
-            {
-                method: 'POST',
-                body: JSON.stringify(m)    
-            }
-        )
-        const title: TitleInterface = await resp.json()
-        userTitle = {title: title, rating: 0, comment: '', dateAdded: new Date(), dateFinished: new Date(), isFinished: false, isStarted: false, isAdded: false};
+        const userTitle: UserTitle = {title: m, rating: 0, comment: '', dateAdded: new Date(), dateFinished: new Date(), isFinished: false, isStarted: true, isAdded: false};;
+        if (endpoint !== 'movie' && endpoint !== 'serie') {
+            const resp = await fetch(`/api/${endpoint}-details`, 
+                {
+                    method: 'POST',
+                    body: JSON.stringify(m)    
+                }
+            )
+            const title: TitleInterface = await resp.json()
+            userTitle.title = title;
+        }
         setClickedTitle(userTitle);
         setClickedRating(0);
         onTitleOpen();
