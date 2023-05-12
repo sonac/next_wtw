@@ -45,7 +45,8 @@ const TitlesSearch: React.FC<SearchProps> = ({isOpen, onClose, setClickedTitle, 
 
     const clickTitle = async (m: TitleInterface): Promise<void> => {
         const userTitle: UserTitle = {title: m, rating: 0, comment: '', dateAdded: new Date(), dateFinished: new Date(), isFinished: false, isStarted: true, isAdded: false};;
-        if (endpoint !== 'movie' && endpoint !== 'serie') {
+        if (endpoint === 'game') {
+            // for game we need to separately fetch poster url
             const resp = await fetch(`/api/${endpoint}-details`, 
                 {
                     method: 'POST',

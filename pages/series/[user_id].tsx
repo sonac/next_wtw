@@ -1,5 +1,6 @@
 import useSWR from "swr";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from 'next/router';
 
 import { UserTitle } from "../../src/components/title";
 import UserTitles from "../../src/components/user_titles";
@@ -23,10 +24,14 @@ const seriesFetcher = () =>
 function UserSeries() {
   const [series, setSeries] = useState<UserTitle[]>([]);
   const { data, error } = useSWR("seenSeries", seriesFetcher);
+  const router = useRouter();
 
-  if (error) {
-    return <div>failed to load</div>;
-  }
+  useEffect(() => {
+      if (error) {
+        router.push("/")
+      }
+    [router]
+  });
 
   if (data && series.length === 0) {
     setSeries(data);

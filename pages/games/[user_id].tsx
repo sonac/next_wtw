@@ -1,5 +1,6 @@
 import useSWR from "swr";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from 'next/router';
 
 import  { UserTitle } from "../../src/components/title";
 import UserTitles from "../../src/components/user_titles";
@@ -16,8 +17,16 @@ function UserGames() {
   const [games, setGames] = useState<UserTitle[]>([]);
   const { data, error } = useSWR("seenGames", gamesFetcher);
 
+  const router = useRouter();
+
+  useEffect(() => {
+      if (error) {
+        router.push("/")
+      }
+    [router]});
+    
   if (error) {
-    return <div>failed to load</div>;
+    return <div>Redirecting...</div>;
   }
 
   if (data && games.length === 0) {
