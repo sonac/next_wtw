@@ -49,10 +49,10 @@ const UserBooks = () => {
         </TabList>
         <TabPanels>
           <TabPanel>
-            <UserTitles titles={[]} endpoint="book" />
+            <UserTitles titles={[]} endpoint="book" isDiscovery={false}/>
           </TabPanel>
           <TabPanel>
-            <UserTitles titles={books.filter(b => !b.isFinished)} endpoint="book" />
+            <UserTitles titles={books.filter(b => !b.isFinished)} endpoint="book" isDiscovery={false}/>
           </TabPanel>
           <TabPanel>
             <Tabs>
@@ -61,7 +61,7 @@ const UserBooks = () => {
               </TabList>
               <TabPanels>
                 <TabPanel>
-                  <UserTitles titles={books.filter(b => b.isFinished && new Date(b.dateFinished).getFullYear() === 2023)} endpoint="book" />
+                  <UserTitles titles={books.filter(b => b.isFinished && new Date(b.dateFinished).getFullYear() === 2023)} endpoint="book" isDiscovery={false}/>
                 </TabPanel>
               </TabPanels>
             </Tabs>

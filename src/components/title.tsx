@@ -46,6 +46,19 @@ interface MovieProps {
   clickTitle: (title: UserTitle) => void;
 }
 
+export const wrapToDefaultTitle = (title: TitleInterface): UserTitle => {
+  return {
+    title: title,
+    rating: 0,
+    comment: "",
+    dateAdded: new Date(),
+    dateFinished: new Date(),
+    isFinished: false,
+    isAdded: false,
+    isStarted: false,
+  }
+}
+
 const Title: React.FC<MovieProps> = ({ st, clickTitle}: MovieProps) => {
   return (
     <Box w={"15em"}>

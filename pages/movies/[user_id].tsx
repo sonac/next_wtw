@@ -1,6 +1,6 @@
 import useSWR from "swr";
 import { useState, useEffect } from "react";
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 
 import {
   Tab,
@@ -27,10 +27,10 @@ function UserMovies() {
   const router = useRouter();
 
   useEffect(() => {
-      if (error) {
-        router.push("/")
-      }
-    [router]
+    if (error) {
+      router.push("/");
+    }
+    [router];
   });
 
   if (data && movies.length === 0) {
@@ -49,12 +49,16 @@ function UserMovies() {
       <Header />
       <Tabs defaultIndex={1} variant="soft-rounded" colorScheme="green">
         <TabList justifyContent={"space-evenly"}>
-            <Tab fontSize="2em">Plan to Watch</Tab>
-            <Tab fontSize="2em">Finished</Tab>
+          <Tab fontSize="2em">Plan to Watch</Tab>
+          <Tab fontSize="2em">Finished</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>
-            <UserTitles titles={movies.filter(m => !m.isStarted)} endpoint="movie" />
+            <UserTitles
+              titles={movies.filter((m) => !m.isStarted)}
+              endpoint="movie"
+              isDiscovery={false}
+            />
           </TabPanel>
           <TabPanel>
             <Tabs>
@@ -71,6 +75,7 @@ function UserMovies() {
                         new Date(m.dateFinished).getFullYear() === 2023
                     )}
                     endpoint="movie"
+                    isDiscovery={false}
                   />
                 </TabPanel>
                 <TabPanel>
@@ -81,6 +86,7 @@ function UserMovies() {
                         new Date(m.dateFinished).getFullYear() === 2022
                     )}
                     endpoint="movie"
+                    isDiscovery={false}
                   />
                 </TabPanel>
               </TabPanels>

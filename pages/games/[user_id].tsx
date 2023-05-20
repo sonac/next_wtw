@@ -1,10 +1,17 @@
 import useSWR from "swr";
 import { useState, useEffect } from "react";
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 
-import  { UserTitle } from "../../src/components/title";
+import { UserTitle } from "../../src/components/title";
 import UserTitles from "../../src/components/user_titles";
-import { Tab, TabList, TabPanel, TabPanels, Tabs, VStack } from "@chakra-ui/react";
+import {
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+  VStack,
+} from "@chakra-ui/react";
 import Header from "../../src/sections/header";
 
 //@ts-ignore
@@ -20,11 +27,12 @@ function UserGames() {
   const router = useRouter();
 
   useEffect(() => {
-      if (error) {
-        router.push("/")
-      }
-    [router]});
-    
+    if (error) {
+      router.push("/");
+    }
+    [router];
+  });
+
   if (error) {
     return <div>Redirecting...</div>;
   }
@@ -33,7 +41,7 @@ function UserGames() {
     setGames(data);
   }
 
-  return (    
+  return (
     <VStack
       h={{ md: "100vh" }}
       w={{ md: "100%" }}
@@ -45,17 +53,21 @@ function UserGames() {
       <Header />
       <Tabs defaultIndex={1} variant="soft-rounded" colorScheme="green">
         <TabList justifyContent={"space-evenly"}>
-            <Tab fontSize="2em">Plan to Play</Tab>
-            <Tab fontSize="2em">In Progress</Tab>
-            <Tab fontSize="2em">Finished</Tab>
-            <Tab fontSize="2em">Infinite trash</Tab>
+          <Tab fontSize="2em">Plan to Play</Tab>
+          <Tab fontSize="2em">In Progress</Tab>
+          <Tab fontSize="2em">Finished</Tab>
+          <Tab fontSize="2em">Infinite trash</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>
-            <UserTitles titles={[]} endpoint="serie" />
+            <UserTitles titles={[]} endpoint="serie" isDiscovery={false} />
           </TabPanel>
           <TabPanel>
-            <UserTitles titles={games.filter(g => !g.isFinished)} endpoint="game" />
+            <UserTitles
+              titles={games.filter((g) => !g.isFinished)}
+              endpoint="game"
+              isDiscovery={false}
+            />
           </TabPanel>
           <TabPanel>
             <Tabs>
@@ -65,10 +77,26 @@ function UserGames() {
               </TabList>
               <TabPanels>
                 <TabPanel>
-                  <UserTitles titles={games.filter(g => g.isFinished && new Date(g.dateFinished).getFullYear() === 2023)} endpoint="game" />
+                  <UserTitles
+                    titles={games.filter(
+                      (g) =>
+                        g.isFinished &&
+                        new Date(g.dateFinished).getFullYear() === 2023
+                    )}
+                    endpoint="game"
+                    isDiscovery={false}
+                  />
                 </TabPanel>
                 <TabPanel>
-                  <UserTitles titles={games.filter(g => g.isFinished && new Date(g.dateFinished).getFullYear() === 2022)} endpoint="game" />
+                  <UserTitles
+                    titles={games.filter(
+                      (g) =>
+                        g.isFinished &&
+                        new Date(g.dateFinished).getFullYear() === 2022
+                    )}
+                    endpoint="game"
+                    isDiscovery={false}
+                  />
                 </TabPanel>
               </TabPanels>
             </Tabs>
@@ -76,7 +104,7 @@ function UserGames() {
         </TabPanels>
       </Tabs>
     </VStack>
-  )
+  );
 }
 
 export default UserGames;

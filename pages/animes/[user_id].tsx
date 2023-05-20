@@ -48,10 +48,10 @@ const UserAnimes = () => {
         </TabList>
         <TabPanels>
           <TabPanel>
-            <UserTitles titles={[]} endpoint="anime" />
+            <UserTitles titles={[]} endpoint="anime"  isDiscovery={false}/>
           </TabPanel>
           <TabPanel>
-            <UserTitles titles={animes.filter(a => !a.isFinished)} endpoint="anime" />
+            <UserTitles titles={animes.filter(a => !a.isFinished)} endpoint="anime"  isDiscovery={false}/>
           </TabPanel>
           <TabPanel>
             <Tabs>
@@ -60,7 +60,7 @@ const UserAnimes = () => {
               </TabList>
               <TabPanels>
                 <TabPanel>
-                  <UserTitles titles={animes.filter(a => a.isFinished && new Date(a.dateFinished).getFullYear() === 2023)} endpoint="anime" />
+                  <UserTitles titles={animes.filter(a => a.isFinished && new Date(a.dateFinished).getFullYear() === 2023)} endpoint="anime"  isDiscovery={false}/>
                 </TabPanel>
               </TabPanels>
             </Tabs>
