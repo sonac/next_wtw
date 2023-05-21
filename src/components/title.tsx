@@ -24,6 +24,7 @@ export interface TitleInterface {
   ids: Ids;
   type: MediaType;
   isFinished: boolean;
+  watchProviders: string[];
 }
 
 export interface UserTitle {
