@@ -169,7 +169,7 @@ const TitleCard: React.FC<CardProps> = ({
                     .map((wp) => (
                       <Image
                         src={logoForWP(wp)}
-                        alt="plus"
+                        alt="provider_logo"
                         h="30px"
                         w="70px"
                         pb={2}
@@ -177,6 +177,7 @@ const TitleCard: React.FC<CardProps> = ({
                     ))
                 )}
               </Flex>
+              <Text fontSize="sm" color="white" pt={5}>Powered by JustWatch</Text>
               <Flex
                 flexDir="row"
                 justifyContent="space-between"
