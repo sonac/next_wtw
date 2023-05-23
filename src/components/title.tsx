@@ -11,6 +11,7 @@ export enum MediaType {
 export interface Ids {
   titleId: string;
   coverId: number;
+  imdb: string;
 }
 
 export interface TitleInterface {
@@ -81,7 +82,7 @@ const Title: React.FC<MovieProps> = ({ st, clickTitle}: MovieProps) => {
           <Text paddingRight={5}>{st.title.year}</Text>
           <Text >{st.title.rating}</Text>
         </Flex>
-        <Flex justifyContent="space-between" flexDirection="row">
+        <Flex visibility={st.rating === 0 ? "hidden" : undefined} justifyContent="space-between" flexDirection="row">
           <Text>Your rating: </Text>
           <Text fontWeight="bold" color="blue" fontSize="sm">{st.rating}</Text>
         </Flex>

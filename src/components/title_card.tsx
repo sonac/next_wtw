@@ -15,6 +15,7 @@ import {
   FormLabel,
   Switch,
   Input,
+  Link
 } from "@chakra-ui/react";
 import { Dispatch, SetStateAction } from "react";
 import { MediaType, UserTitle } from "./title";
@@ -152,6 +153,7 @@ const TitleCard: React.FC<CardProps> = ({
                   </Text>
                 </GridItem>
               </Grid>
+              <Link fontSize="lg" color="white" href={`https://imdb.com/title/${userTitle.title.ids.imdb}`}>Imdb</Link>
               <Text fontSize="xl" color="white">
                 {userTitle.title.description.length > 0
                   ? userTitle.title.description.substring(0, 100)
@@ -173,6 +175,7 @@ const TitleCard: React.FC<CardProps> = ({
                         h="30px"
                         w="70px"
                         pb={2}
+                        mr={4}
                       />
                     ))
                 )}
