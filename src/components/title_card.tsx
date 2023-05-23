@@ -170,6 +170,7 @@ const TitleCard: React.FC<CardProps> = ({
                     .filter((wp) => isAllowedProvider(wp))
                     .map((wp) => (
                       <Image
+                        key={wp}
                         src={logoForWP(wp)}
                         alt="provider_logo"
                         h="30px"
