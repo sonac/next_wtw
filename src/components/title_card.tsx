@@ -15,6 +15,7 @@ import {
   FormLabel,
   Switch,
   Input,
+  Link
 } from "@chakra-ui/react";
 import { Dispatch, SetStateAction } from "react";
 import { MediaType, UserTitle } from "./title";
@@ -27,6 +28,28 @@ interface CardProps {
   upsertTitle: (t: UserTitle, m: string) => Promise<void>;
   refreshTitle: () => Promise<void>;
 }
+
+const logoForWP = (wpName: string): string => {
+  switch (wpName) {
+    case "Disney Plus":
+      return "/disney_logo.png";
+    case "Netflix":
+      return "/netflix_logo.png";
+    case "Amazon Prime Video":
+      return "/amazon_logo.png";
+  }
+  return "";
+};
+
+const isAllowedProvider = (wpName: string): boolean => {
+  const allowedProviders = [
+    "Netflix",
+    "Disney Plus",
+    "Amazon Prime Video",
+    "Apple TV",
+  ];
+  return allowedProviders.includes(wpName);
+};
 
 const TitleCard: React.FC<CardProps> = ({
   isOpen,
@@ -63,10 +86,23 @@ const TitleCard: React.FC<CardProps> = ({
                 minW="40%"
               />
             ) : (
-              <div style={{margin: 'auto'}}>
-                <Text color='white'>Seems that poster is missing, you can provide link to it manually</Text>
-                <Input color='white' onChange={(e) => {userTitle.title.posterLink = e.target.value}}></Input>
-                <Button minW="30%"  marginLeft='5%' marginRight='5%' onClick={() => upsertTitle(userTitle, 'PUT')}>
+              <div style={{ margin: "auto" }}>
+                <Text color="white">
+                  Seems that poster is missing, you can provide link to it
+                  manually
+                </Text>
+                <Input
+                  color="white"
+                  onChange={(e) => {
+                    userTitle.title.posterLink = e.target.value;
+                  }}
+                ></Input>
+                <Button
+                  minW="30%"
+                  marginLeft="5%"
+                  marginRight="5%"
+                  onClick={() => upsertTitle(userTitle, "PUT")}
+                >
                   Set poster
                 </Button>
               </div>
@@ -117,12 +153,41 @@ const TitleCard: React.FC<CardProps> = ({
                   </Text>
                 </GridItem>
               </Grid>
+              <Link fontSize="lg" color="white" href={`https://imdb.com/title/${userTitle.title.ids.imdb}`}>Imdb</Link>
               <Text fontSize="xl" color="white">
                 {userTitle.title.description.length > 0
                   ? userTitle.title.description.substring(0, 100)
                   : "No description provided"}
               </Text>
-              <Flex flexDir="row" justifyContent="space-between" w="100%" mt="3vh">
+              <Flex flexDir="row" justifyContent="" w="100%" mt="3vh">
+                <Text fontSize="sm" color="white" pr={5}>
+                  Available on:{" "}
+                </Text>
+                {userTitle.title.watchProviders === null ? (
+                  <div />
+                ) : (
+                  userTitle.title.watchProviders
+                    .filter((wp) => isAllowedProvider(wp))
+                    .map((wp) => (
+                      <Image
+                        key={wp}
+                        src={logoForWP(wp)}
+                        alt="provider_logo"
+                        h="30px"
+                        w="70px"
+                        pb={2}
+                        mr={4}
+                      />
+                    ))
+                )}
+              </Flex>
+              <Text fontSize="sm" color="white" pt={5}>Powered by JustWatch</Text>
+              <Flex
+                flexDir="row"
+                justifyContent="space-between"
+                w="100%"
+                mt="3vh"
+              >
                 <Button
                   onClick={refreshTitle}
                   colorScheme="teal"
@@ -133,7 +198,7 @@ const TitleCard: React.FC<CardProps> = ({
                   Refresh info
                 </Button>
                 <Button
-                  onClick={() => upsertTitle(userTitle, 'DELETE')}
+                  onClick={() => upsertTitle(userTitle, "DELETE")}
                   ml="1vw"
                   colorScheme="red"
                   variant="outline"
@@ -162,23 +227,23 @@ const TitleCard: React.FC<CardProps> = ({
                 ) : (
                   <div></div>
                 )}
-                  <FormControl ml="1vw" display="flex" alignItems="center">
-                    <FormLabel
-                      htmlFor="is-finished"
-                      mb="0"
-                      fontSize="20px"
-                      color="gray"
-                    >
-                      <b>Is started?</b>
-                    </FormLabel>
-                    <Switch
-                      id="is-finished"
-                      defaultChecked={userTitle.isStarted}
-                      onChange={() =>
-                        (userTitle.isStarted = !userTitle.isStarted)
-                      }
-                    />
-                  </FormControl>
+                <FormControl ml="1vw" display="flex" alignItems="center">
+                  <FormLabel
+                    htmlFor="is-finished"
+                    mb="0"
+                    fontSize="20px"
+                    color="gray"
+                  >
+                    <b>Is started?</b>
+                  </FormLabel>
+                  <Switch
+                    id="is-finished"
+                    defaultChecked={userTitle.isStarted}
+                    onChange={() =>
+                      (userTitle.isStarted = !userTitle.isStarted)
+                    }
+                  />
+                </FormControl>
               </Flex>
               <Flex
                 flexDir="row"
@@ -307,7 +372,11 @@ const TitleCard: React.FC<CardProps> = ({
                   <Text align="center">10</Text>
                 </Box>
               </Flex>
-              <Button onClick={() => upsertTitle(userTitle, userTitle.isAdded ? "PUT" : "POST")}>
+              <Button
+                onClick={() =>
+                  upsertTitle(userTitle, userTitle.isAdded ? "PUT" : "POST")
+                }
+              >
                 {userTitle.isAdded ? "Update" : "Add"}
               </Button>
             </Flex>

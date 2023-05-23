@@ -1,5 +1,6 @@
 import useSWR from "swr";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from 'next/router';
 
 import  { UserTitle } from "../../src/components/title";
 import UserTitles from "../../src/components/user_titles";
@@ -13,8 +14,17 @@ const UserBooks = () => {
   const [books, setBooks] = useState<UserTitle[]>([]);
   const {data, error} = useSWR("seenBooks", booksFetcher);
 
+  const router = useRouter();
+
+  useEffect(() => {
+      if (error) {
+        router.push("/")
+      }
+    [router]
+  });
+    
   if (error) {
-    return <div>failed to load</div>
+    return <div>Redirecting...</div>;
   }
 
   if (data && data.length !== 0 && books.length === 0) {
@@ -39,10 +49,10 @@ const UserBooks = () => {
         </TabList>
         <TabPanels>
           <TabPanel>
-            <UserTitles titles={[]} endpoint="book" />
+            <UserTitles titles={[]} endpoint="book" isDiscovery={false}/>
           </TabPanel>
           <TabPanel>
-            <UserTitles titles={books.filter(b => !b.isFinished)} endpoint="book" />
+            <UserTitles titles={books.filter(b => !b.isFinished)} endpoint="book" isDiscovery={false}/>
           </TabPanel>
           <TabPanel>
             <Tabs>
@@ -51,7 +61,7 @@ const UserBooks = () => {
               </TabList>
               <TabPanels>
                 <TabPanel>
-                  <UserTitles titles={books.filter(b => b.isFinished && new Date(b.dateFinished).getFullYear() === 2023)} endpoint="book" />
+                  <UserTitles titles={books.filter(b => b.isFinished && new Date(b.dateFinished).getFullYear() === 2023)} endpoint="book" isDiscovery={false}/>
                 </TabPanel>
               </TabPanels>
             </Tabs>

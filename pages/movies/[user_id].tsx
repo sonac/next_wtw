@@ -1,8 +1,7 @@
 import useSWR from "swr";
-import { useState } from "react";
-import UserTitles from "../../src/components/user_titles";
-import { UserTitle } from "../../src/components/title";
-import Header from "../../src/sections/header";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+
 import {
   Tab,
   TabList,
@@ -11,6 +10,10 @@ import {
   Tabs,
   VStack,
 } from "@chakra-ui/react";
+
+import UserTitles from "../../src/components/user_titles";
+import { UserTitle } from "../../src/components/title";
+import Header from "../../src/sections/header";
 
 //@ts-ignore
 const moviesFetcher = () =>
@@ -21,10 +24,14 @@ const moviesFetcher = () =>
 function UserMovies() {
   const [movies, setMovies] = useState<UserTitle[]>([]);
   const { data, error } = useSWR("seenMovies", moviesFetcher);
+  const router = useRouter();
 
-  if (error) {
-    return <div>failed to load</div>;
-  }
+  useEffect(() => {
+    if (error) {
+      router.push("/");
+    }
+    [router];
+  });
 
   if (data && movies.length === 0) {
     setMovies(data);
@@ -42,12 +49,16 @@ function UserMovies() {
       <Header />
       <Tabs defaultIndex={1} variant="soft-rounded" colorScheme="green">
         <TabList justifyContent={"space-evenly"}>
-            <Tab fontSize="2em">Plan to Watch</Tab>
-            <Tab fontSize="2em">Finished</Tab>
+          <Tab fontSize="2em">Plan to Watch</Tab>
+          <Tab fontSize="2em">Finished</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>
-            <UserTitles titles={movies.filter(m => !m.isStarted)} endpoint="movie" />
+            <UserTitles
+              titles={movies.filter((m) => !m.isStarted)}
+              endpoint="movie"
+              isDiscovery={false}
+            />
           </TabPanel>
           <TabPanel>
             <Tabs>
@@ -64,6 +75,7 @@ function UserMovies() {
                         new Date(m.dateFinished).getFullYear() === 2023
                     )}
                     endpoint="movie"
+                    isDiscovery={false}
                   />
                 </TabPanel>
                 <TabPanel>
@@ -74,6 +86,7 @@ function UserMovies() {
                         new Date(m.dateFinished).getFullYear() === 2022
                     )}
                     endpoint="movie"
+                    isDiscovery={false}
                   />
                 </TabPanel>
               </TabPanels>

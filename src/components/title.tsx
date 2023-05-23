@@ -11,6 +11,7 @@ export enum MediaType {
 export interface Ids {
   titleId: string;
   coverId: number;
+  imdb: string;
 }
 
 export interface TitleInterface {
@@ -24,6 +25,7 @@ export interface TitleInterface {
   ids: Ids;
   type: MediaType;
   isFinished: boolean;
+  watchProviders: string[];
 }
 
 export interface UserTitle {
@@ -44,6 +46,19 @@ export interface UserResponse {
 interface MovieProps {
   st: UserTitle;
   clickTitle: (title: UserTitle) => void;
+}
+
+export const wrapToDefaultTitle = (title: TitleInterface): UserTitle => {
+  return {
+    title: title,
+    rating: 0,
+    comment: "",
+    dateAdded: new Date(),
+    dateFinished: new Date(),
+    isFinished: false,
+    isAdded: false,
+    isStarted: false,
+  }
 }
 
 const Title: React.FC<MovieProps> = ({ st, clickTitle}: MovieProps) => {
@@ -67,7 +82,7 @@ const Title: React.FC<MovieProps> = ({ st, clickTitle}: MovieProps) => {
           <Text paddingRight={5}>{st.title.year}</Text>
           <Text >{st.title.rating}</Text>
         </Flex>
-        <Flex justifyContent="space-between" flexDirection="row">
+        <Flex visibility={st.rating === 0 ? "hidden" : undefined} justifyContent="space-between" flexDirection="row">
           <Text>Your rating: </Text>
           <Text fontWeight="bold" color="blue" fontSize="sm">{st.rating}</Text>
         </Flex>

@@ -1,5 +1,6 @@
 import useSWR from "swr";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from 'next/router';
 
 import  { UserTitle } from "../../src/components/title";
 import UserTitles from "../../src/components/user_titles";
@@ -12,9 +13,17 @@ const animesFetcher = () =>
 const UserAnimes = () => {
   const [animes, setAnimes] = useState<UserTitle[]>([]);
   const {data, error} = useSWR("seenAnimes", animesFetcher);
+  const router = useRouter();
 
+  useEffect(() => {
+      if (error) {
+        router.push("/")
+      }
+    [router]
+  });
+    
   if (error) {
-    return <div>failed to load</div>
+    return <div>Redirecting...</div>;
   }
 
   if (data && data.length !== 0 && animes.length === 0) {
@@ -39,10 +48,10 @@ const UserAnimes = () => {
         </TabList>
         <TabPanels>
           <TabPanel>
-            <UserTitles titles={[]} endpoint="anime" />
+            <UserTitles titles={[]} endpoint="anime"  isDiscovery={false}/>
           </TabPanel>
           <TabPanel>
-            <UserTitles titles={animes.filter(a => !a.isFinished)} endpoint="anime" />
+            <UserTitles titles={animes.filter(a => !a.isFinished)} endpoint="anime"  isDiscovery={false}/>
           </TabPanel>
           <TabPanel>
             <Tabs>
@@ -51,7 +60,7 @@ const UserAnimes = () => {
               </TabList>
               <TabPanels>
                 <TabPanel>
-                  <UserTitles titles={animes.filter(a => a.isFinished && new Date(a.dateFinished).getFullYear() === 2023)} endpoint="anime" />
+                  <UserTitles titles={animes.filter(a => a.isFinished && new Date(a.dateFinished).getFullYear() === 2023)} endpoint="anime"  isDiscovery={false}/>
                 </TabPanel>
               </TabPanels>
             </Tabs>

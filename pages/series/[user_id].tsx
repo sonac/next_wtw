@@ -1,5 +1,6 @@
 import useSWR from "swr";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from 'next/router';
 
 import { UserTitle } from "../../src/components/title";
 import UserTitles from "../../src/components/user_titles";
@@ -23,10 +24,14 @@ const seriesFetcher = () =>
 function UserSeries() {
   const [series, setSeries] = useState<UserTitle[]>([]);
   const { data, error } = useSWR("seenSeries", seriesFetcher);
+  const router = useRouter();
 
-  if (error) {
-    return <div>failed to load</div>;
-  }
+  useEffect(() => {
+      if (error) {
+        router.push("/")
+      }
+    [router]
+  });
 
   if (data && series.length === 0) {
     setSeries(data);
@@ -50,10 +55,10 @@ function UserSeries() {
         </TabList>
         <TabPanels>
           <TabPanel>
-            <UserTitles titles={[]} endpoint="serie" />
+            <UserTitles titles={[]} endpoint="serie"  isDiscovery={false}/>
           </TabPanel>
           <TabPanel>
-            <UserTitles titles={series.filter(s => !s.isFinished)} endpoint="serie" />
+            <UserTitles titles={series.filter(s => !s.isFinished)} endpoint="serie"  isDiscovery={false}/>
           </TabPanel>
           <TabPanel>
             <Tabs>
@@ -63,10 +68,10 @@ function UserSeries() {
               </TabList>
               <TabPanels>
                 <TabPanel>
-                  <UserTitles titles={series.filter(s => s.isFinished && new Date(s.dateFinished).getFullYear() === 2023)} endpoint="serie" />
+                  <UserTitles titles={series.filter(s => s.isFinished && new Date(s.dateFinished).getFullYear() === 2023)} endpoint="serie"  isDiscovery={false}/>
                 </TabPanel>
                 <TabPanel>
-                  <UserTitles titles={series.filter(s => s.isFinished && new Date(s.dateFinished).getFullYear() === 2022)} endpoint="serie" />
+                  <UserTitles titles={series.filter(s => s.isFinished && new Date(s.dateFinished).getFullYear() === 2022)} endpoint="serie"  isDiscovery={false}/>
                 </TabPanel>
               </TabPanels>
             </Tabs>
