@@ -33,7 +33,7 @@ function UserMovies() {
     [router];
   });
 
-  if (data && movies.length === 0) {
+  if (movies !== data) {
     setMovies(data);
   }
 
@@ -55,7 +55,7 @@ function UserMovies() {
         <TabPanels>
           <TabPanel>
             <UserTitles
-              titles={movies.filter((m) => !m.isStarted)}
+              titles={movies ? movies.filter((m) => !m.isStarted) : []}
               endpoint="movie"
               isDiscovery={false}
             />
@@ -69,22 +69,22 @@ function UserMovies() {
               <TabPanels>
                 <TabPanel>
                   <UserTitles
-                    titles={movies.filter(
+                    titles={movies ? movies.filter(
                       (m) =>
                         m.isFinished &&
                         new Date(m.dateFinished).getFullYear() === 2023
-                    )}
+                    ) : []}
                     endpoint="movie"
                     isDiscovery={false}
                   />
                 </TabPanel>
                 <TabPanel>
                   <UserTitles
-                    titles={movies.filter(
+                    titles={movies ? movies.filter(
                       (m) =>
                         m.isFinished &&
                         new Date(m.dateFinished).getFullYear() === 2022
-                    )}
+                    ) : []}
                     endpoint="movie"
                     isDiscovery={false}
                   />
