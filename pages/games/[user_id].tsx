@@ -37,7 +37,7 @@ function UserGames() {
     return <div>Redirecting...</div>;
   }
 
-  if (data && games.length === 0) {
+  if (games !== data) {
     setGames(data);
   }
 
@@ -64,7 +64,7 @@ function UserGames() {
           </TabPanel>
           <TabPanel>
             <UserTitles
-              titles={games.filter((g) => !g.isFinished)}
+              titles={games ? games.filter((g) => !g.isFinished) : []}
               endpoint="game"
               isDiscovery={false}
             />
@@ -78,22 +78,22 @@ function UserGames() {
               <TabPanels>
                 <TabPanel>
                   <UserTitles
-                    titles={games.filter(
+                    titles={games ? games.filter(
                       (g) =>
                         g.isFinished &&
                         new Date(g.dateFinished).getFullYear() === 2023
-                    )}
+                    ) : []}
                     endpoint="game"
                     isDiscovery={false}
                   />
                 </TabPanel>
                 <TabPanel>
                   <UserTitles
-                    titles={games.filter(
+                    titles={games ? games.filter(
                       (g) =>
                         g.isFinished &&
                         new Date(g.dateFinished).getFullYear() === 2022
-                    )}
+                    ) : []}
                     endpoint="game"
                     isDiscovery={false}
                   />

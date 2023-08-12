@@ -32,11 +32,11 @@ const Discover = () => {
     return <div>Redirecting...</div>;
   }
 
-  if (data && data.length !== 0 && titles.length === 0) {
+  if (titles != data) {
     setTitles(data);
   }
 
-  const sortedTitles = titles.sort ((t1, t2) => t2.rating - t1.rating)
+  const sortedTitles = titles ? titles.sort ((t1, t2) => t2.rating - t1.rating) : []
 
   return (
     <VStack 

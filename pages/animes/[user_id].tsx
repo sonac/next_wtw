@@ -26,7 +26,7 @@ const UserAnimes = () => {
     return <div>Redirecting...</div>;
   }
 
-  if (data && data.length !== 0 && animes.length === 0) {
+  if (animes !== data) {
     setAnimes(data);
   }
 
@@ -51,7 +51,7 @@ const UserAnimes = () => {
             <UserTitles titles={[]} endpoint="anime"  isDiscovery={false}/>
           </TabPanel>
           <TabPanel>
-            <UserTitles titles={animes.filter(a => !a.isFinished)} endpoint="anime"  isDiscovery={false}/>
+            <UserTitles titles={animes ? animes.filter(a => !a.isFinished) : []} endpoint="anime"  isDiscovery={false}/>
           </TabPanel>
           <TabPanel>
             <Tabs>
@@ -60,7 +60,7 @@ const UserAnimes = () => {
               </TabList>
               <TabPanels>
                 <TabPanel>
-                  <UserTitles titles={animes.filter(a => a.isFinished && new Date(a.dateFinished).getFullYear() === 2023)} endpoint="anime"  isDiscovery={false}/>
+                  <UserTitles titles={animes ? animes.filter(a => a.isFinished && new Date(a.dateFinished).getFullYear() === 2023) : []} endpoint="anime"  isDiscovery={false}/>
                 </TabPanel>
               </TabPanels>
             </Tabs>

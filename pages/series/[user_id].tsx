@@ -33,7 +33,7 @@ function UserSeries() {
     [router]
   });
 
-  if (data && series.length === 0) {
+  if (data !== series) {
     setSeries(data);
   }
 
@@ -58,7 +58,7 @@ function UserSeries() {
             <UserTitles titles={[]} endpoint="serie"  isDiscovery={false}/>
           </TabPanel>
           <TabPanel>
-            <UserTitles titles={series.filter(s => !s.isFinished)} endpoint="serie"  isDiscovery={false}/>
+            <UserTitles titles={series ? series.filter(s => !s.isFinished) : []} endpoint="serie"  isDiscovery={false}/>
           </TabPanel>
           <TabPanel>
             <Tabs>
@@ -68,10 +68,10 @@ function UserSeries() {
               </TabList>
               <TabPanels>
                 <TabPanel>
-                  <UserTitles titles={series.filter(s => s.isFinished && new Date(s.dateFinished).getFullYear() === 2023)} endpoint="serie"  isDiscovery={false}/>
+                  <UserTitles titles={series ? series.filter(s => s.isFinished && new Date(s.dateFinished).getFullYear() === 2023) : []} endpoint="serie"  isDiscovery={false}/>
                 </TabPanel>
                 <TabPanel>
-                  <UserTitles titles={series.filter(s => s.isFinished && new Date(s.dateFinished).getFullYear() === 2022)} endpoint="serie"  isDiscovery={false}/>
+                  <UserTitles titles={series ? series.filter(s => s.isFinished && new Date(s.dateFinished).getFullYear() === 2022) : []} endpoint="serie"  isDiscovery={false}/>
                 </TabPanel>
               </TabPanels>
             </Tabs>

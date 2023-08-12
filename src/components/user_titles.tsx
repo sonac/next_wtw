@@ -44,8 +44,6 @@ const UserTitles: React.FC<UserGameProps> = ({
     onTitleOpen();
   };
 
-  console.log(titles);
-
   switch (sortBy) {
     case "dateAdded":
       titles = titles.sort(

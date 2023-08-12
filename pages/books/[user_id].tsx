@@ -27,7 +27,7 @@ const UserBooks = () => {
     return <div>Redirecting...</div>;
   }
 
-  if (data && data.length !== 0 && books.length === 0) {
+  if (books !== data) {
     setBooks(data);
   }
 
@@ -52,7 +52,7 @@ const UserBooks = () => {
             <UserTitles titles={[]} endpoint="book" isDiscovery={false}/>
           </TabPanel>
           <TabPanel>
-            <UserTitles titles={books.filter(b => !b.isFinished)} endpoint="book" isDiscovery={false}/>
+            <UserTitles titles={books ? books.filter(b => !b.isFinished) : []} endpoint="book" isDiscovery={false}/>
           </TabPanel>
           <TabPanel>
             <Tabs>
@@ -61,7 +61,7 @@ const UserBooks = () => {
               </TabList>
               <TabPanels>
                 <TabPanel>
-                  <UserTitles titles={books.filter(b => b.isFinished && new Date(b.dateFinished).getFullYear() === 2023)} endpoint="book" isDiscovery={false}/>
+                  <UserTitles titles={books ? books.filter(b => b.isFinished && new Date(b.dateFinished).getFullYear() === 2023) : []} endpoint="book" isDiscovery={false}/>
                 </TabPanel>
               </TabPanels>
             </Tabs>
