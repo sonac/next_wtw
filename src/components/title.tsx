@@ -1,12 +1,12 @@
-import { Image } from '@chakra-ui/image';
-import { Flex, Box, Heading, Text, useDisclosure } from '@chakra-ui/react';
-import React from 'react';
+import { Image } from "@chakra-ui/image";
+import { Flex, Box, Heading, Text, useDisclosure } from "@chakra-ui/react";
+import React from "react";
 
 export enum MediaType {
   Movie = "Movie",
   Series = "Series",
-  Game = "Game"
-} 
+  Game = "Game",
+}
 
 export interface Ids {
   titleId: string;
@@ -26,6 +26,12 @@ export interface TitleInterface {
   type: MediaType;
   isFinished: boolean;
   watchProviders: string[];
+  seasons: Season[];
+}
+
+export interface Season {
+  seasonNumber: number;
+  episodeCount: number;
 }
 
 export interface UserTitle {
@@ -58,10 +64,10 @@ export const wrapToDefaultTitle = (title: TitleInterface): UserTitle => {
     isFinished: false,
     isAdded: false,
     isStarted: false,
-  }
-}
+  };
+};
 
-const Title: React.FC<MovieProps> = ({ st, clickTitle}: MovieProps) => {
+const Title: React.FC<MovieProps> = ({ st, clickTitle }: MovieProps) => {
   return (
     <Box w={"15em"}>
       <Image
@@ -70,7 +76,7 @@ const Title: React.FC<MovieProps> = ({ st, clickTitle}: MovieProps) => {
         h={"20em"}
         w={"100%"}
         _hover={{
-          cursor: "pointer"
+          cursor: "pointer",
         }}
         onClick={() => clickTitle(st)}
       />
@@ -80,11 +86,17 @@ const Title: React.FC<MovieProps> = ({ st, clickTitle}: MovieProps) => {
             {st.title.name}
           </Heading>
           <Text paddingRight={5}>{st.title.year}</Text>
-          <Text >{st.title.rating}</Text>
+          <Text>{st.title.rating}</Text>
         </Flex>
-        <Flex visibility={st.rating === 0 ? "hidden" : undefined} justifyContent="space-between" flexDirection="row">
+        <Flex
+          visibility={st.rating === 0 ? "hidden" : undefined}
+          justifyContent="space-between"
+          flexDirection="row"
+        >
           <Text>Your rating: </Text>
-          <Text fontWeight="bold" color="blue" fontSize="sm">{st.rating}</Text>
+          <Text fontWeight="bold" color="blue" fontSize="sm">
+            {st.rating}
+          </Text>
         </Flex>
       </Flex>
     </Box>

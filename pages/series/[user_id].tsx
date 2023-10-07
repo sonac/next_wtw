@@ -11,7 +11,6 @@ import {
   TabPanels,
   TabPanel,
   VStack,
-  Flex,
 } from "@chakra-ui/react";
 import Header from "../../src/sections/header";
 

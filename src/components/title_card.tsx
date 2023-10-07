@@ -15,9 +15,10 @@ import {
   FormLabel,
   Switch,
   Input,
-  Link
+  Link,
+  Select,
 } from "@chakra-ui/react";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { MediaType, UserTitle } from "./title";
 
 interface CardProps {
@@ -65,6 +66,7 @@ const TitleCard: React.FC<CardProps> = ({
     }
     return "transparent";
   };
+  const [season, setSeason] = useState(1);
 
   return (
     <Modal
@@ -153,7 +155,13 @@ const TitleCard: React.FC<CardProps> = ({
                   </Text>
                 </GridItem>
               </Grid>
-              <Link fontSize="lg" color="white" href={`https://imdb.com/title/${userTitle.title.ids.imdb}`}>Imdb</Link>
+              <Link
+                fontSize="lg"
+                color="white"
+                href={`https://imdb.com/title/${userTitle.title.ids.imdb}`}
+              >
+                Imdb
+              </Link>
               <Text fontSize="xl" color="white">
                 {userTitle.title.description.length > 0
                   ? userTitle.title.description.substring(0, 100)
@@ -181,7 +189,41 @@ const TitleCard: React.FC<CardProps> = ({
                     ))
                 )}
               </Flex>
-              <Text fontSize="sm" color="white" pt={5}>Powered by JustWatch</Text>
+              <Text fontSize="sm" color="white" pt={5}>
+                Powered by JustWatch
+              </Text>
+              {userTitle.title.seasons && userTitle.title.seasons.length > 0 ? (
+                <Flex flexDir="row" w="100%" mt="1vh">
+                  <Text pt="0.5em" fontSize="xl" color="white">
+                    Season:
+                  </Text>
+                  <Select
+                    color="white"
+                    placeholder="Season"
+                    ml="1em"
+                    mr="1em"
+                    onChange={(e) => setSeason(parseInt(e.target.value))}
+                  >
+                    {userTitle.title.seasons.map((s) => (
+                      <option value={s.seasonNumber}>{s.seasonNumber}</option>
+                    ))}
+                  </Select>
+                  <Text pt="0.5em" fontSize="xl" color="white">
+                    Episode:
+                  </Text>
+                  <Select color="white" ml="1em" mr="1em" placeholder="Episode">
+                    {Array.from(
+                      Array(
+                        userTitle.title.seasons[season - 1].episodeCount
+                      ).keys()
+                    ).map((e) => (
+                      <option value={e}>{e}</option>
+                    ))}
+                  </Select>
+                </Flex>
+              ) : (
+                <></>
+              )}
               <Flex
                 flexDir="row"
                 justifyContent="space-between"
