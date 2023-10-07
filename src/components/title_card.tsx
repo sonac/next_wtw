@@ -206,7 +206,9 @@ const TitleCard: React.FC<CardProps> = ({
                     onChange={(e) => setSeason(parseInt(e.target.value))}
                   >
                     {userTitle.title.seasons.map((s) => (
-                      <option value={s.seasonNumber}>{s.seasonNumber}</option>
+                      <option key={s.seasonNumber} value={s.seasonNumber}>
+                        {s.seasonNumber}
+                      </option>
                     ))}
                   </Select>
                   <Text pt="0.5em" fontSize="xl" color="white">
@@ -220,11 +222,12 @@ const TitleCard: React.FC<CardProps> = ({
                     onChange={(e) => setEpisode(parseInt(e.target.value))}
                   >
                     {Array.from(
-                      Array(
-                        userTitle.title.seasons[season - 1].episodeCount
-                      ).keys()
+                      Array(userTitle.title.seasons[season - 1].episodeCount),
+                      (_, i) => i + 1
                     ).map((e) => (
-                      <option value={e}>{e + 1}</option>
+                      <option key={e} value={e}>
+                        {e}
+                      </option>
                     ))}
                   </Select>
                 </Flex>
