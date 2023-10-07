@@ -1,6 +1,6 @@
 import useSWR from "swr";
 import { useState, useEffect } from "react";
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 
 import { UserTitle } from "../../src/components/title";
 import UserTitles from "../../src/components/user_titles";
@@ -11,7 +11,6 @@ import {
   TabPanels,
   TabPanel,
   VStack,
-  Flex,
 } from "@chakra-ui/react";
 import Header from "../../src/sections/header";
 
@@ -27,10 +26,10 @@ function UserSeries() {
   const router = useRouter();
 
   useEffect(() => {
-      if (error) {
-        router.push("/")
-      }
-    [router]
+    if (error) {
+      router.push("/");
+    }
+    [router];
   });
 
   if (data !== series) {
@@ -49,16 +48,26 @@ function UserSeries() {
       <Header />
       <Tabs defaultIndex={1} variant="soft-rounded" colorScheme="green">
         <TabList justifyContent={"space-evenly"}>
-            <Tab fontSize="2em">Plan to Watch</Tab>
-            <Tab fontSize="2em">In Progress</Tab>
-            <Tab fontSize="2em">Finished</Tab>
+          <Tab fontSize="2em">Plan to Watch</Tab>
+          <Tab fontSize="2em">In Progress</Tab>
+          <Tab fontSize="2em">Finished</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>
-            <UserTitles titles={[]} endpoint="serie"  isDiscovery={false}/>
+            <UserTitles
+              titles={series ? series.filter((s) => !s.isStarted) : []}
+              endpoint="serie"
+              isDiscovery={false}
+            />
           </TabPanel>
           <TabPanel>
-            <UserTitles titles={series ? series.filter(s => !s.isFinished) : []} endpoint="serie"  isDiscovery={false}/>
+            <UserTitles
+              titles={
+                series ? series.filter((s) => s.isStarted && !s.isFinished) : []
+              }
+              endpoint="serie"
+              isDiscovery={false}
+            />
           </TabPanel>
           <TabPanel>
             <Tabs>
@@ -68,10 +77,34 @@ function UserSeries() {
               </TabList>
               <TabPanels>
                 <TabPanel>
-                  <UserTitles titles={series ? series.filter(s => s.isFinished && new Date(s.dateFinished).getFullYear() === 2023) : []} endpoint="serie"  isDiscovery={false}/>
+                  <UserTitles
+                    titles={
+                      series
+                        ? series.filter(
+                            (s) =>
+                              s.isFinished &&
+                              new Date(s.dateFinished).getFullYear() === 2023
+                          )
+                        : []
+                    }
+                    endpoint="serie"
+                    isDiscovery={false}
+                  />
                 </TabPanel>
                 <TabPanel>
-                  <UserTitles titles={series ? series.filter(s => s.isFinished && new Date(s.dateFinished).getFullYear() === 2022) : []} endpoint="serie"  isDiscovery={false}/>
+                  <UserTitles
+                    titles={
+                      series
+                        ? series.filter(
+                            (s) =>
+                              s.isFinished &&
+                              new Date(s.dateFinished).getFullYear() === 2022
+                          )
+                        : []
+                    }
+                    endpoint="serie"
+                    isDiscovery={false}
+                  />
                 </TabPanel>
               </TabPanels>
             </Tabs>
