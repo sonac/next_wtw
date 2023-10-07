@@ -36,6 +36,7 @@ export interface Season {
 
 export interface UserTitle {
   title: TitleInterface;
+  currentSeason: Season;
   rating: number;
   comment: string;
   dateAdded: Date;
@@ -57,6 +58,7 @@ interface MovieProps {
 export const wrapToDefaultTitle = (title: TitleInterface): UserTitle => {
   return {
     title: title,
+    currentSeason: { seasonNumber: 1, episodeCount: 1 },
     rating: 0,
     comment: "",
     dateAdded: new Date(),

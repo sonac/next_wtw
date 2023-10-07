@@ -67,6 +67,7 @@ const TitleCard: React.FC<CardProps> = ({
     return "transparent";
   };
   const [season, setSeason] = useState(1);
+  const [episode, setEpisode] = useState(1);
 
   return (
     <Modal
@@ -199,7 +200,7 @@ const TitleCard: React.FC<CardProps> = ({
                   </Text>
                   <Select
                     color="white"
-                    placeholder="Season"
+                    defaultValue={userTitle.currentSeason.seasonNumber || 1}
                     ml="1em"
                     mr="1em"
                     onChange={(e) => setSeason(parseInt(e.target.value))}
@@ -211,13 +212,19 @@ const TitleCard: React.FC<CardProps> = ({
                   <Text pt="0.5em" fontSize="xl" color="white">
                     Episode:
                   </Text>
-                  <Select color="white" ml="1em" mr="1em" placeholder="Episode">
+                  <Select
+                    color="white"
+                    ml="1em"
+                    mr="1em"
+                    defaultValue={userTitle.currentSeason.episodeCount || 0}
+                    onChange={(e) => setEpisode(parseInt(e.target.value))}
+                  >
                     {Array.from(
                       Array(
                         userTitle.title.seasons[season - 1].episodeCount
                       ).keys()
                     ).map((e) => (
-                      <option value={e}>{e}</option>
+                      <option value={e}>{e + 1}</option>
                     ))}
                   </Select>
                 </Flex>
@@ -415,9 +422,16 @@ const TitleCard: React.FC<CardProps> = ({
                 </Box>
               </Flex>
               <Button
-                onClick={() =>
-                  upsertTitle(userTitle, userTitle.isAdded ? "PUT" : "POST")
-                }
+                onClick={() => {
+                  userTitle.currentSeason = {
+                    seasonNumber: season,
+                    episodeCount: episode,
+                  };
+                  return upsertTitle(
+                    userTitle,
+                    userTitle.isAdded ? "PUT" : "POST"
+                  );
+                }}
               >
                 {userTitle.isAdded ? "Update" : "Add"}
               </Button>
