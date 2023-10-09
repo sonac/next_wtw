@@ -117,7 +117,9 @@ const TitleCard: React.FC<CardProps> = ({
                 size="2xl"
                 color="white"
               >
-                {userTitle.title.name}
+                <Link href={`/title/${userTitle.title.id}?type=movie`}>
+                  {userTitle.title.name}
+                </Link>
               </Heading>
               <Grid
                 p={25}

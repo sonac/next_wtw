@@ -15,6 +15,7 @@ export interface Ids {
 }
 
 export interface TitleInterface {
+  id: string;
   name: string;
   posterLink: string;
   year: number;
@@ -81,6 +82,7 @@ const Title: React.FC<MovieProps> = ({ st, clickTitle }: MovieProps) => {
           cursor: "pointer",
         }}
         onClick={() => clickTitle(st)}
+        borderRadius="5%"
       />
       <Flex justify="space-between" p={2} flexDir="column">
         <Flex justifyContent="space-between" flexDirection="row">
