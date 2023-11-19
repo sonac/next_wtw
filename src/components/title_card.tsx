@@ -67,7 +67,18 @@ const TitleCard: React.FC<CardProps> = ({
     return "transparent";
   };
   const [season, setSeason] = useState(1);
-  const [episode, setEpisode] = useState(1);
+  const [episode, setEpisode] = useState(userTitle.episodesWatched);
+
+  console.log(userTitle);
+
+  const updateEpisode = (v: string) => {
+    const n = Number.parseInt(v);
+    if (isNaN(n) || n === undefined) {
+      setEpisode(episode);
+      return;
+    }
+    setEpisode(n);
+  };
 
   return (
     <Modal
@@ -195,6 +206,49 @@ const TitleCard: React.FC<CardProps> = ({
               <Text fontSize="sm" color="white" pt={5}>
                 Powered by JustWatch
               </Text>
+              <Flex pt={10} flexDir="row">
+                <Text fontSize="md" color="white">
+                  Watched
+                </Text>
+                <Text
+                  ml={5}
+                  mr={3}
+                  fontSize="2xl"
+                  color="white"
+                  onClick={() => setEpisode(episode - 1)}
+                  _hover={{
+                    cursor: "pointer", // Changes the cursor to a pointer
+                    color: "gray.300", // Change the color on hover (example)
+                    textDecoration: "underline", // Example of another style change on hover
+                  }}
+                >
+                  -
+                </Text>
+                <Input
+                  size="sm"
+                  w="10%"
+                  color="white"
+                  value={episode}
+                  onChange={(e) => updateEpisode(e.target.value)}
+                ></Input>
+                <Text
+                  ml={5}
+                  mr={3}
+                  fontSize="2xl"
+                  color="white"
+                  onClick={() => setEpisode(episode + 1)}
+                  _hover={{
+                    cursor: "pointer", // Changes the cursor to a pointer
+                    color: "gray.300", // Change the color on hover (example)
+                    textDecoration: "underline", // Example of another style change on hover
+                  }}
+                >
+                  +
+                </Text>
+                <Text fontSize="md" color="white">
+                  episode from {userTitle.title.numEpisodes}
+                </Text>
+              </Flex>
               {userTitle.title.seasons && userTitle.title.seasons.length > 0 ? (
                 <Flex flexDir="row" w="100%" mt="1vh">
                   <Text pt="0.5em" fontSize="xl" color="white">
@@ -432,6 +486,10 @@ const TitleCard: React.FC<CardProps> = ({
                     seasonNumber: season,
                     episodeCount: episode,
                   };
+                  console.log(userTitle);
+                  if (userTitle.title.type === MediaType.Anime) {
+                    userTitle.episodesWatched = episode;
+                  }
                   return upsertTitle(
                     userTitle,
                     userTitle.isAdded ? "PUT" : "POST"

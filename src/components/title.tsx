@@ -6,6 +6,7 @@ export enum MediaType {
   Movie = "Movie",
   Series = "Series",
   Game = "Game",
+  Anime = "Anime",
 }
 
 export interface Ids {
@@ -28,6 +29,7 @@ export interface TitleInterface {
   isFinished: boolean;
   watchProviders: string[];
   seasons: Season[];
+  numEpisodes: number;
 }
 
 export interface Season {
@@ -39,6 +41,7 @@ export interface UserTitle {
   title: TitleInterface;
   currentSeason: Season;
   rating: number;
+  episodesWatched: number;
   comment: string;
   dateAdded: Date;
   dateFinished: Date;
@@ -61,6 +64,7 @@ export const wrapToDefaultTitle = (title: TitleInterface): UserTitle => {
     title: title,
     currentSeason: { seasonNumber: 1, episodeCount: 1 },
     rating: 0,
+    episodesWatched: 0,
     comment: "",
     dateAdded: new Date(),
     dateFinished: new Date(),
