@@ -60,6 +60,7 @@ const TitlesSearch: React.FC<SearchProps> = ({
       title: m,
       currentSeason: { seasonNumber: 1, episodeCount: 1 },
       rating: 0,
+      episodesWatched: 0,
       comment: "",
       dateAdded: new Date(),
       dateFinished: new Date(),
