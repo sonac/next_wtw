@@ -4,13 +4,13 @@ const theme = extendTheme({
   styles: {
     global: {
       'html, body': {
-        backgroundImage: 'radial-gradient(#C9D4EA, #F0D9CC)',
+        backgroundImage: 'linear-gradient(#C9D4EA, #F0D9CC)',
       }
     }
   },
   fonts: {
-    heading: `Gilroy, ${base.fonts?.heading}`,
-    body: `Gilroy, ${base.fonts?.body}`,
+    heading: `Gilroy, ${base.fonts?.heading}, Roboto`,
+    body: `Gilroy, ${base.fonts?.body}, Roboto`,
   },
   components: {
     Drawer: {

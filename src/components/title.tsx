@@ -6,6 +6,7 @@ export enum MediaType {
   Movie = "Movie",
   Series = "Series",
   Game = "Game",
+  Anime = "Anime",
 }
 
 export interface Ids {
@@ -15,6 +16,7 @@ export interface Ids {
 }
 
 export interface TitleInterface {
+  id: string;
   name: string;
   posterLink: string;
   year: number;
@@ -27,6 +29,7 @@ export interface TitleInterface {
   isFinished: boolean;
   watchProviders: string[];
   seasons: Season[];
+  numEpisodes: number;
 }
 
 export interface Season {
@@ -38,6 +41,7 @@ export interface UserTitle {
   title: TitleInterface;
   currentSeason: Season;
   rating: number;
+  episodesWatched: number;
   comment: string;
   dateAdded: Date;
   dateFinished: Date;
@@ -60,6 +64,7 @@ export const wrapToDefaultTitle = (title: TitleInterface): UserTitle => {
     title: title,
     currentSeason: { seasonNumber: 1, episodeCount: 1 },
     rating: 0,
+    episodesWatched: 0,
     comment: "",
     dateAdded: new Date(),
     dateFinished: new Date(),
@@ -81,6 +86,7 @@ const Title: React.FC<MovieProps> = ({ st, clickTitle }: MovieProps) => {
           cursor: "pointer",
         }}
         onClick={() => clickTitle(st)}
+        borderRadius="5%"
       />
       <Flex justify="space-between" p={2} flexDir="column">
         <Flex justifyContent="space-between" flexDirection="row">
