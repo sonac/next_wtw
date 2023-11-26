@@ -18,7 +18,7 @@ import {
   Link,
   Select,
 } from "@chakra-ui/react";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { MediaType, UserTitle } from "./title";
 
 interface CardProps {
@@ -70,6 +70,10 @@ const TitleCard: React.FC<CardProps> = ({
   const [episode, setEpisode] = useState(userTitle.episodesWatched);
 
   console.log(userTitle);
+
+  useEffect(() => {
+    setEpisode(userTitle.episodesWatched);
+  }, [userTitle.episodesWatched]);
 
   const updateEpisode = (v: string) => {
     const n = Number.parseInt(v);
