@@ -103,8 +103,8 @@ const UserTitles: React.FC<UserGameProps> = ({
         <Image
           src={"/plus_icon.png"}
           alt="plus"
-          h="340px"
-          w="240px"
+          h={["220", "280", "340px"]}
+          w={["150px", "200px", "240px"]}
           _hover={{
             cursor: "pointer",
           }}
@@ -159,11 +159,13 @@ const UserTitles: React.FC<UserGameProps> = ({
         <></>
       )}
       <SimpleGrid
-        paddingLeft="40px"
-        paddingRight="40px"
-        minChildWidth="240px"
-        spacing="3vw"
-        gridTemplateColumns={"repeat(auto-fill, minmax(240px, 1fr))"}
+        paddingLeft={{ lg: "30px", "2xl": "40px" }}
+        paddingRight={{ lg: "30px", "2xl": "40px" }}
+        spacing={{ lg: "2.5vw", "2xl": "3vw" }}
+        gridTemplateColumns={{
+          lg: "repeat(auto-fill, minmax(200px, 1fr))",
+          "2xl": "repeat(auto-fill, minmax(240px, 1fr))",
+        }}
       >
         {gridItems}
       </SimpleGrid>

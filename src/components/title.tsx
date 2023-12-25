@@ -80,20 +80,29 @@ const Title: React.FC<MovieProps> = ({ st, clickTitle }: MovieProps) => {
       <Image
         src={`${st.title.posterLink}`}
         alt={st.title.name}
-        h={"20em"}
-        w={"100%"}
+        h={{ sm: "10em", lg: "270px", "2xl": "320px" }}
+        w={{ sm: "150px", lg: "200px", "2xl": "240px" }}
         _hover={{
           cursor: "pointer",
         }}
         onClick={() => clickTitle(st)}
         borderRadius="5%"
       />
-      <Flex justify="space-between" p={2} flexDir="column">
+      <Flex
+        justify="space-between"
+        p={2}
+        flexDir="column"
+        maxW={{ lg: "200px", "2xl": "240px" }}
+      >
         <Flex justifyContent="space-between" flexDirection="row">
-          <Heading as="h3" size="md">
+          {/* @ts-ignore */}
+          <Heading as="h3" size={{ lg: "sm", "2xl": "md" }}>
             {st.title.name}
           </Heading>
-          <Text paddingRight={5}>{st.title.year}</Text>
+          {/* @ts-ignore */}
+          <Text paddingRight={5} pl={1} size={{ lg: "sm", "2xl": "md" }}>
+            {st.title.year}
+          </Text>
           <Text>{st.title.rating}</Text>
         </Flex>
         <Flex
