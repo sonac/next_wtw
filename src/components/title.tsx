@@ -75,7 +75,6 @@ export const wrapToDefaultTitle = (title: TitleInterface): UserTitle => {
 };
 
 const Title: React.FC<MovieProps> = ({ st, clickTitle }: MovieProps) => {
-  //@ts-ignore
   return (
     <Box w={"15em"}>
       <Image
