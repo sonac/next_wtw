@@ -46,7 +46,13 @@ function UserSeries() {
       spacing={8}
     >
       <Header />
-      <Tabs defaultIndex={1} variant="soft-rounded" colorScheme="green">
+      <Tabs
+        defaultIndex={1}
+        variant="soft-rounded"
+        colorScheme="green"
+        id="tabs"
+        isLazy
+      >
         <TabList justifyContent={"space-evenly"}>
           <Tab fontSize="2em">Plan to Watch</Tab>
           <Tab fontSize="2em">In Progress</Tab>

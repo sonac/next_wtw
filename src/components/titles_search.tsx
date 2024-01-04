@@ -16,7 +16,6 @@ interface SearchProps {
   isOpen: boolean;
   onClose: any;
   setClickedTitle: Dispatch<SetStateAction<UserTitle | undefined>>;
-  setClickedRating: Dispatch<SetStateAction<number>>;
   onTitleOpen: any;
   endpoint: string;
 }
@@ -25,7 +24,6 @@ const TitlesSearch: React.FC<SearchProps> = ({
   isOpen,
   onClose,
   setClickedTitle,
-  setClickedRating,
   onTitleOpen,
   endpoint,
 }: SearchProps) => {
@@ -58,7 +56,6 @@ const TitlesSearch: React.FC<SearchProps> = ({
   const clickTitle = async (m: TitleInterface): Promise<void> => {
     const userTitle: UserTitle = {
       title: m,
-      currentSeason: { seasonNumber: 1, episodeCount: 1 },
       rating: 0,
       episodesWatched: 0,
       comment: "",
@@ -77,10 +74,12 @@ const TitlesSearch: React.FC<SearchProps> = ({
       const title: TitleInterface = await resp.json();
       userTitle.title = title;
     }
+    console.log(m.name);
     setClickedTitle(userTitle);
-    setClickedRating(0);
     onTitleOpen();
   };
+
+  console.log(titles);
 
   return (
     <Modal

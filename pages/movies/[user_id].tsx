@@ -63,28 +63,36 @@ function UserMovies() {
           <TabPanel>
             <Tabs>
               <TabList justifyContent="space-evenly">
+                <Tab fontSize="2em">2024</Tab>
                 <Tab fontSize="2em">2023</Tab>
-                <Tab fontSize="2em">2022</Tab>
               </TabList>
               <TabPanels>
                 <TabPanel>
                   <UserTitles
-                    titles={movies ? movies.filter(
-                      (m) =>
-                        m.isFinished &&
-                        new Date(m.dateFinished).getFullYear() === 2023
-                    ) : []}
+                    titles={
+                      movies
+                        ? movies.filter(
+                            (m) =>
+                              m.isFinished &&
+                              new Date(m.dateFinished).getFullYear() === 2024
+                          )
+                        : []
+                    }
                     endpoint="movie"
                     isDiscovery={false}
                   />
                 </TabPanel>
                 <TabPanel>
                   <UserTitles
-                    titles={movies ? movies.filter(
-                      (m) =>
-                        m.isFinished &&
-                        new Date(m.dateFinished).getFullYear() === 2022
-                    ) : []}
+                    titles={
+                      movies
+                        ? movies.filter(
+                            (m) =>
+                              m.isFinished &&
+                              new Date(m.dateFinished).getFullYear() === 2023
+                          )
+                        : []
+                    }
                     endpoint="movie"
                     isDiscovery={false}
                   />
