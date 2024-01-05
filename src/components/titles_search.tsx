@@ -16,7 +16,6 @@ interface SearchProps {
   isOpen: boolean;
   onClose: any;
   setClickedTitle: Dispatch<SetStateAction<UserTitle | undefined>>;
-  setClickedRating: Dispatch<SetStateAction<number>>;
   onTitleOpen: any;
   endpoint: string;
 }
@@ -25,7 +24,6 @@ const TitlesSearch: React.FC<SearchProps> = ({
   isOpen,
   onClose,
   setClickedTitle,
-  setClickedRating,
   onTitleOpen,
   endpoint,
 }: SearchProps) => {
@@ -57,8 +55,7 @@ const TitlesSearch: React.FC<SearchProps> = ({
 
   const clickTitle = async (m: TitleInterface): Promise<void> => {
     const userTitle: UserTitle = {
-      title: m,
-      currentSeason: { seasonNumber: 1, episodeCount: 1 },
+      title: { ...m },
       rating: 0,
       episodesWatched: 0,
       comment: "",
@@ -68,6 +65,7 @@ const TitlesSearch: React.FC<SearchProps> = ({
       isStarted: true,
       isAdded: false,
     };
+    console.log(userTitle);
     if (endpoint === "game") {
       // for game we need to separately fetch poster url
       const resp = await fetch(`/api/${endpoint}-details`, {
@@ -77,10 +75,12 @@ const TitlesSearch: React.FC<SearchProps> = ({
       const title: TitleInterface = await resp.json();
       userTitle.title = title;
     }
-    setClickedTitle(userTitle);
-    setClickedRating(0);
-    onTitleOpen();
+    console.log(m);
+    await setClickedTitle(userTitle);
+    await onTitleOpen();
   };
+
+  console.log(titles);
 
   return (
     <Modal

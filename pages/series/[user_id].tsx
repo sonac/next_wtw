@@ -46,7 +46,13 @@ function UserSeries() {
       spacing={8}
     >
       <Header />
-      <Tabs defaultIndex={1} variant="soft-rounded" colorScheme="green">
+      <Tabs
+        defaultIndex={1}
+        variant="soft-rounded"
+        colorScheme="green"
+        id="tabs"
+        isLazy
+      >
         <TabList justifyContent={"space-evenly"}>
           <Tab fontSize="2em">Plan to Watch</Tab>
           <Tab fontSize="2em">In Progress</Tab>
@@ -72,8 +78,8 @@ function UserSeries() {
           <TabPanel>
             <Tabs>
               <TabList justifyContent="space-evenly">
+                <Tab fontSize="2em">2024</Tab>
                 <Tab fontSize="2em">2023</Tab>
-                <Tab fontSize="2em">2022</Tab>
               </TabList>
               <TabPanels>
                 <TabPanel>
@@ -83,7 +89,7 @@ function UserSeries() {
                         ? series.filter(
                             (s) =>
                               s.isFinished &&
-                              new Date(s.dateFinished).getFullYear() === 2023
+                              new Date(s.dateFinished).getFullYear() === 2024
                           )
                         : []
                     }
@@ -98,7 +104,7 @@ function UserSeries() {
                         ? series.filter(
                             (s) =>
                               s.isFinished &&
-                              new Date(s.dateFinished).getFullYear() === 2022
+                              new Date(s.dateFinished).getFullYear() === 2023
                           )
                         : []
                     }

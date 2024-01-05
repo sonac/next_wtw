@@ -15,7 +15,7 @@ import React, { useState } from "react";
 import Title, { UserTitle } from "./title";
 import TitleCard from "./title_card";
 import TitlesSearch from "./titles_search";
-import Header from "../sections/header";
+import SeasonCard from "./seasons_card";
 
 interface UserGameProps {
   titles: Array<UserTitle>;
@@ -35,12 +35,10 @@ const UserTitles: React.FC<UserGameProps> = ({
     onClose: onTitleClose,
   } = useDisclosure();
   const [clickedTitle, setClickedTitle] = useState<UserTitle>();
-  const [clickedRating, setClickedRating] = useState<number>(0);
   const [sortBy, setSorting] = useState<string>("");
 
-  const clickTitle = (m: UserTitle) => {
+  const clickTitle = (m: UserTitle): void => {
     setClickedTitle(m);
-    setClickedRating(m.rating);
     onTitleOpen();
   };
 
@@ -89,9 +87,9 @@ const UserTitles: React.FC<UserGameProps> = ({
     }
   };
 
-  const gridTitles = titles.map((st: UserTitle) => (
-    <GridItem key={st.title.name}>
-      <Title st={st} clickTitle={clickTitle} />
+  const gridTitles = titles.map((ut: UserTitle) => (
+    <GridItem key={ut.title.name}>
+      <Title st={ut} clickTitle={clickTitle} />
     </GridItem>
   ));
 
@@ -121,7 +119,7 @@ const UserTitles: React.FC<UserGameProps> = ({
       {!isDiscovery ? (
         <div>
           <div style={{ paddingLeft: 40 }}>
-            <Menu>
+            <Menu id="menu" isLazy>
               <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
                 Sort
               </MenuButton>
@@ -138,7 +136,6 @@ const UserTitles: React.FC<UserGameProps> = ({
             isOpen={isOpen}
             onClose={onClose}
             setClickedTitle={setClickedTitle}
-            setClickedRating={setClickedRating}
             onTitleOpen={onTitleOpen}
             endpoint={endpoint}
           />{" "}
@@ -147,14 +144,23 @@ const UserTitles: React.FC<UserGameProps> = ({
         <div></div>
       )}
       {clickedTitle !== undefined ? (
-        <TitleCard
-          isOpen={titleOpen}
-          onClose={onTitleClose}
-          userTitle={clickedTitle}
-          setClickedTitle={setClickedTitle}
-          upsertTitle={upsertTitle}
-          refreshTitle={refreshTitle}
-        />
+        clickedTitle.title.seasons && clickedTitle.title.seasons.length > 0 ? (
+          <SeasonCard
+            isOpen={titleOpen}
+            onClose={onTitleClose}
+            userTitle={clickedTitle}
+            clickTitle={clickTitle}
+          />
+        ) : (
+          <TitleCard
+            isOpen={titleOpen}
+            onClose={onTitleClose}
+            userTitle={clickedTitle}
+            setClickedTitle={setClickedTitle}
+            upsertTitle={upsertTitle}
+            refreshTitle={refreshTitle}
+          />
+        )
       ) : (
         <></>
       )}
