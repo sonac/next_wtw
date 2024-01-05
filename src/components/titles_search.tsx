@@ -55,7 +55,7 @@ const TitlesSearch: React.FC<SearchProps> = ({
 
   const clickTitle = async (m: TitleInterface): Promise<void> => {
     const userTitle: UserTitle = {
-      title: m,
+      title: { ...m },
       rating: 0,
       episodesWatched: 0,
       comment: "",
@@ -65,6 +65,7 @@ const TitlesSearch: React.FC<SearchProps> = ({
       isStarted: true,
       isAdded: false,
     };
+    console.log(userTitle);
     if (endpoint === "game") {
       // for game we need to separately fetch poster url
       const resp = await fetch(`/api/${endpoint}-details`, {
@@ -74,9 +75,9 @@ const TitlesSearch: React.FC<SearchProps> = ({
       const title: TitleInterface = await resp.json();
       userTitle.title = title;
     }
-    console.log(m.name);
-    setClickedTitle(userTitle);
-    onTitleOpen();
+    console.log(m);
+    await setClickedTitle(userTitle);
+    await onTitleOpen();
   };
 
   console.log(titles);

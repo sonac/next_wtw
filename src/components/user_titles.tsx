@@ -37,7 +37,7 @@ const UserTitles: React.FC<UserGameProps> = ({
   const [clickedTitle, setClickedTitle] = useState<UserTitle>();
   const [sortBy, setSorting] = useState<string>("");
 
-  const clickTitle = (m: UserTitle) => {
+  const clickTitle = (m: UserTitle): void => {
     setClickedTitle(m);
     onTitleOpen();
   };
@@ -149,7 +149,7 @@ const UserTitles: React.FC<UserGameProps> = ({
             isOpen={titleOpen}
             onClose={onTitleClose}
             userTitle={clickedTitle}
-            setClickedTitle={setClickedTitle}
+            clickTitle={clickTitle}
           />
         ) : (
           <TitleCard

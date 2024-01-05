@@ -78,8 +78,8 @@ function UserSeries() {
           <TabPanel>
             <Tabs>
               <TabList justifyContent="space-evenly">
+                <Tab fontSize="2em">2024</Tab>
                 <Tab fontSize="2em">2023</Tab>
-                <Tab fontSize="2em">2022</Tab>
               </TabList>
               <TabPanels>
                 <TabPanel>
@@ -89,7 +89,7 @@ function UserSeries() {
                         ? series.filter(
                             (s) =>
                               s.isFinished &&
-                              new Date(s.dateFinished).getFullYear() === 2023
+                              new Date(s.dateFinished).getFullYear() === 2024
                           )
                         : []
                     }
@@ -104,7 +104,7 @@ function UserSeries() {
                         ? series.filter(
                             (s) =>
                               s.isFinished &&
-                              new Date(s.dateFinished).getFullYear() === 2022
+                              new Date(s.dateFinished).getFullYear() === 2023
                           )
                         : []
                     }
