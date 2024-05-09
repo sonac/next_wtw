@@ -184,31 +184,37 @@ const TitleCard: React.FC<CardProps> = ({
                   ? userTitle.title.description.substring(0, 100)
                   : "No description provided"}
               </Text>
-              <Flex flexDir="row" justifyContent="" w="100%" mt="3vh">
-                <Text fontSize="sm" color="white" pr={5}>
-                  Available on:{" "}
-                </Text>
-                {userTitle.title.watchProviders === null ? (
-                  <div />
-                ) : (
-                  userTitle.title.watchProviders
-                    .filter((wp) => isAllowedProvider(wp))
-                    .map((wp) => (
-                      <Image
-                        key={wp}
-                        src={logoForWP(wp)}
-                        alt="provider_logo"
-                        h="30px"
-                        w="70px"
-                        pb={2}
-                        mr={4}
-                      />
-                    ))
-                )}
-              </Flex>
-              <Text fontSize="sm" color="white" pt={5}>
-                Powered by JustWatch
-              </Text>
+              {userTitle.title.type === MediaType.Movie ? (
+                <div>
+                  <Flex flexDir="row" justifyContent="" w="100%" mt="3vh">
+                    <Text fontSize="sm" color="white" pr={5}>
+                      Available on:{" "}
+                    </Text>
+                    {userTitle.title.watchProviders === null ? (
+                      <div />
+                    ) : (
+                      userTitle.title.watchProviders
+                        .filter((wp) => isAllowedProvider(wp))
+                        .map((wp) => (
+                          <Image
+                            key={wp}
+                            src={logoForWP(wp)}
+                            alt="provider_logo"
+                            h="30px"
+                            w="70px"
+                            pb={2}
+                            mr={4}
+                          />
+                        ))
+                    )}
+                  </Flex>
+                  <Text fontSize="sm" color="white" pt={5}>
+                    Powered by JustWatch
+                  </Text>
+                </div>
+              ) : (
+                <></>
+              )}
               {userTitle.title.type === MediaType.Anime ? (
                 <Flex pt={10} flexDir="row">
                   <Text fontSize="md" color="white">
