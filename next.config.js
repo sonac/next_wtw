@@ -1,8 +1,8 @@
 const ContentSecurityPolicy = `
-  default-src https://m.media-amazon.com/images/M/ http://assets.fanart.tv/ https://images.igdb.com/ https://api-cdn.myanimelist.net/ 'self';
+  default-src https://m.media-amazon.com/images/M/ http://assets.fanart.tv/ https://images.igdb.com/ https://api-cdn.myanimelist.net/ https://images-na.ssl-images-amazon.com/ 'self';
   script-src 'self' 'unsafe-inline' 'unsafe-eval';
   style-src 'self' https://fonts.googleapis.com 'unsafe-inline' 'unsafe-eval';
-  img-src 'self' blob: data: https://m.media-amazon.com http://assets.fanart.tv/ https://images.igdb.com/ https://global-uploads.webflow.com/ http://books.google.com/ https://api-cdn.myanimelist.net/ https://cdn.myanimelist.net/ https://image.tmdb.org/;
+  img-src 'self' blob: data: https://m.media-amazon.com http://assets.fanart.tv/ https://images.igdb.com/ https://global-uploads.webflow.com/ http://books.google.com/ https://api-cdn.myanimelist.net/ https://cdn.myanimelist.net/ https://image.tmdb.org/ https://images-na.ssl-images-amazon.com/;
 `; 
 
 const securityHeaders = [

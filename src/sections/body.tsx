@@ -1,9 +1,5 @@
 import { VStack, Heading, Text } from "@chakra-ui/react";
 
-const imgLoader = ({ src, ...props }: any) => {
-  return src;
-};
-
 const body = () => {
   return (
     <VStack pt={"40%"}>

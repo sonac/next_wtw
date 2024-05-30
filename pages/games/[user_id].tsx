@@ -72,28 +72,36 @@ function UserGames() {
           <TabPanel>
             <Tabs>
               <TabList justifyContent="space-evenly">
+                <Tab fontSize="2em">2024</Tab>
                 <Tab fontSize="2em">2023</Tab>
-                <Tab fontSize="2em">2022</Tab>
               </TabList>
               <TabPanels>
                 <TabPanel>
                   <UserTitles
-                    titles={games ? games.filter(
-                      (g) =>
-                        g.isFinished &&
-                        new Date(g.dateFinished).getFullYear() === 2023
-                    ) : []}
+                    titles={
+                      games
+                        ? games.filter(
+                            (g) =>
+                              g.isFinished &&
+                              new Date(g.dateFinished).getFullYear() === 2024
+                          )
+                        : []
+                    }
                     endpoint="game"
                     isDiscovery={false}
                   />
                 </TabPanel>
                 <TabPanel>
                   <UserTitles
-                    titles={games ? games.filter(
-                      (g) =>
-                        g.isFinished &&
-                        new Date(g.dateFinished).getFullYear() === 2022
-                    ) : []}
+                    titles={
+                      games
+                        ? games.filter(
+                            (g) =>
+                              g.isFinished &&
+                              new Date(g.dateFinished).getFullYear() === 2023
+                          )
+                        : []
+                    }
                     endpoint="game"
                     isDiscovery={false}
                   />

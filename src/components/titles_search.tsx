@@ -10,7 +10,7 @@ import {
   Text,
   Spinner,
 } from "@chakra-ui/react";
-import { MediaType, UserTitle, TitleInterface } from "./title";
+import { UserTitle, TitleInterface } from "./title";
 
 interface SearchProps {
   isOpen: boolean;
