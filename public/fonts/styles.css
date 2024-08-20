@@ -11,3 +11,24 @@
     font-weight: normal;
     font-style: normal;
 }
+
+@font-face {
+    font-family: 'PortLligatSans';
+    src: url('PortLligatSans-Regular.ttf') format('ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'GildaDisplay';
+    src: url('GildaDisplay-Regular.ttf') format('ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Marvel';
+    src: url('Marvel-Regular.ttf') format('ttf');
+    font-weight: normal;
+    font-style: normal;
+}

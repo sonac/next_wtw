@@ -77,7 +77,7 @@ export const wrapToDefaultTitle = (title: TitleInterface): UserTitle => {
 
 const Title: React.FC<MovieProps> = ({ st, clickTitle }: MovieProps) => {
   return (
-    <Box w={"15em"}>
+    <Box w={"15em"} className="title-image">
       <Image
         src={`${st.title.posterLink}`}
         alt={st.title.name}
@@ -85,9 +85,14 @@ const Title: React.FC<MovieProps> = ({ st, clickTitle }: MovieProps) => {
         w={{ sm: "150px", lg: "200px", "2xl": "240px" }}
         _hover={{
           cursor: "pointer",
+          transform: "scale(1.1)",
+          boxShadow: "0px 0px 20px rgba(255, 255, 255, 0.7)",
+          border: "5px solid white",
         }}
-        onClick={() => clickTitle(st)}
+        transition="transform 0.3s ease, box-shadow 0.3s ease"
         borderRadius="5%"
+        fontFamily={"Roboto"}
+        onClick={() => clickTitle(st)}
       />
       <Flex
         justify="space-between"

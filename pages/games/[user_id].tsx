@@ -56,7 +56,7 @@ function UserGames() {
           <Tab fontSize="2em">Plan to Play</Tab>
           <Tab fontSize="2em">In Progress</Tab>
           <Tab fontSize="2em">Finished</Tab>
-          <Tab fontSize="2em">Infinite trash</Tab>
+          <Tab fontSize="2em">Dropped</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>
@@ -81,10 +81,10 @@ function UserGames() {
                     titles={
                       games
                         ? games.filter(
-                            (g) =>
-                              g.isFinished &&
-                              new Date(g.dateFinished).getFullYear() === 2024
-                          )
+                          (g) =>
+                            g.isFinished &&
+                            new Date(g.dateFinished).getFullYear() === 2024
+                        )
                         : []
                     }
                     endpoint="game"
@@ -96,10 +96,10 @@ function UserGames() {
                     titles={
                       games
                         ? games.filter(
-                            (g) =>
-                              g.isFinished &&
-                              new Date(g.dateFinished).getFullYear() === 2023
-                          )
+                          (g) =>
+                            g.isFinished &&
+                            new Date(g.dateFinished).getFullYear() === 2023
+                        )
                         : []
                     }
                     endpoint="game"
@@ -108,6 +108,13 @@ function UserGames() {
                 </TabPanel>
               </TabPanels>
             </Tabs>
+          </TabPanel>
+          <TabPanel>
+            <UserTitles
+              titles={games ? games : []}
+              endpoint="game"
+              isDiscovery={false}
+            />
           </TabPanel>
         </TabPanels>
       </Tabs>
