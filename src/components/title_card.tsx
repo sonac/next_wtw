@@ -264,7 +264,7 @@ const TitleCard: React.FC<CardProps> = ({
               )}
               <Flex
                 flexDir="row"
-                justifyContent="space-between"
+                justifyContent="space-around"
                 w="100%"
                 mt="3vh"
               >
@@ -273,7 +273,7 @@ const TitleCard: React.FC<CardProps> = ({
                   colorScheme="teal"
                   variant="outline"
                   fontSize="14px"
-                  w="35%"
+                  w="20%"
                 >
                   Refresh info
                 </Button>
@@ -287,11 +287,11 @@ const TitleCard: React.FC<CardProps> = ({
                   Delete
                 </Button>
                 {userTitle.title.type !== MediaType.Movie ? (
-                  <FormControl ml="1vw" display="flex" alignItems="center">
+                  <FormControl w="25%" ml="1vw" display="flex" alignItems="center">
                     <FormLabel
                       htmlFor="is-finished"
                       mb="0"
-                      fontSize="20px"
+                      fontSize="1rem"
                       color="gray"
                     >
                       <b>Is finished?</b>
@@ -311,7 +311,7 @@ const TitleCard: React.FC<CardProps> = ({
                   <FormLabel
                     htmlFor="is-finished"
                     mb="0"
-                    fontSize="20px"
+                    fontSize="1rem"
                     color="gray"
                   >
                     <b>Is started?</b>
@@ -323,6 +323,27 @@ const TitleCard: React.FC<CardProps> = ({
                       (userTitle.isStarted = !userTitle.isStarted)
                     }
                   />
+                  {userTitle.title.type === MediaType.Game ? (
+                    <FormControl ml="1vw" display="flex" alignItems="center">
+                      <FormLabel
+                        htmlFor="is-finished"
+                        mb="0"
+                        fontSize="1rem"
+                        color="gray"
+                      >
+                        <b>Is dropped?</b>
+                      </FormLabel>
+                      <Switch
+                        id="is-finished"
+                        defaultChecked={userTitle.isFinished}
+                        onChange={() =>
+                          (userTitle.isFinished = !userTitle.isFinished)
+                        }
+                      />
+                    </FormControl>
+                  ) : (
+                    <div></div>
+                  )}
                 </FormControl>
               </Flex>
               <Flex

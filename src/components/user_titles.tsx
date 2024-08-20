@@ -9,7 +9,6 @@ import {
   MenuList,
   SimpleGrid,
   useDisclosure,
-  VStack,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import Title, { UserTitle } from "./title";
