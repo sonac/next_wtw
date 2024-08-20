@@ -14,3 +14,19 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.title-image {
+  font-family: 'Roboto', sans-serif;
+}
+
+.title-description {
+  font-family: 'GildaDisplay', sans-serif;
+}
+
+.title-main {
+  font-family: 'Marvel', sans-serif;
+}
+
+.score {
+  font-family: 'PortLligatSans', sans-serif;
+}

@@ -131,7 +131,12 @@ const TitleCard: React.FC<CardProps> = ({
                 size="2xl"
                 color="white"
               >
-                <Link href={`/title/${userTitle.title.id}?type=movie`}>
+                <Link
+                  href={`/title/${userTitle.title.id}?type=movie`}
+                  className="title-main"
+                  fontStyle={"normal"}
+                  fontWeight={"normal"}
+                >
                   {userTitle.title.name}
                 </Link>
               </Heading>
@@ -140,6 +145,7 @@ const TitleCard: React.FC<CardProps> = ({
                 templateColumns="repeat(3, 1fr)"
                 justifyContent="space-between"
                 templateRows="repeat(2,1fr)"
+                className="title-main"
               >
                 <GridItem>
                   <Text fontSize="lg" color="white" fontWeight="bold">
@@ -172,14 +178,7 @@ const TitleCard: React.FC<CardProps> = ({
                   </Text>
                 </GridItem>
               </Grid>
-              <Link
-                fontSize="lg"
-                color="white"
-                href={`https://imdb.com/title/${userTitle.title.ids.imdb}`}
-              >
-                Imdb
-              </Link>
-              <Text fontSize="xl" color="white">
+              <Text fontSize="xl" color="white" className="title-description">
                 {userTitle.title.description.length > 0
                   ? userTitle.title.description.substring(0, 100)
                   : "No description provided"}
@@ -287,7 +286,12 @@ const TitleCard: React.FC<CardProps> = ({
                   Delete
                 </Button>
                 {userTitle.title.type !== MediaType.Movie ? (
-                  <FormControl w="25%" ml="1vw" display="flex" alignItems="center">
+                  <FormControl
+                    w="25%"
+                    ml="1vw"
+                    display="flex"
+                    alignItems="center"
+                  >
                     <FormLabel
                       htmlFor="is-finished"
                       mb="0"
@@ -350,7 +354,7 @@ const TitleCard: React.FC<CardProps> = ({
                 flexDir="row"
                 paddingTop={10}
                 paddingBottom={10}
-                justifyContent="space-between"
+                justifyContent="space-around"
               >
                 <Box
                   bg={getBg(1)}
@@ -362,7 +366,9 @@ const TitleCard: React.FC<CardProps> = ({
                   w="1.5em"
                   onClick={() => setClickedTitle({ ...userTitle, rating: 1 })}
                 >
-                  <Text align="center">1</Text>
+                  <Text align="center" className="score">
+                    1
+                  </Text>
                 </Box>
                 <Box
                   bg={getBg(2)}
@@ -374,7 +380,9 @@ const TitleCard: React.FC<CardProps> = ({
                   w="1.5em"
                   onClick={() => setClickedTitle({ ...userTitle, rating: 2 })}
                 >
-                  <Text align="center">2</Text>
+                  <Text align="center" className="score">
+                    2
+                  </Text>
                 </Box>
                 <Box
                   bg={getBg(3)}
@@ -386,7 +394,9 @@ const TitleCard: React.FC<CardProps> = ({
                   w="1.5em"
                   onClick={() => setClickedTitle({ ...userTitle, rating: 3 })}
                 >
-                  <Text align="center">3</Text>
+                  <Text align="center" className="score">
+                    3
+                  </Text>
                 </Box>
                 <Box
                   bg={getBg(4)}
@@ -398,7 +408,9 @@ const TitleCard: React.FC<CardProps> = ({
                   w="1.5em"
                   onClick={() => setClickedTitle({ ...userTitle, rating: 4 })}
                 >
-                  <Text align="center">4</Text>
+                  <Text align="center" className="score">
+                    4
+                  </Text>
                 </Box>
                 <Box
                   bg={getBg(5)}
@@ -410,7 +422,9 @@ const TitleCard: React.FC<CardProps> = ({
                   w="1.5em"
                   onClick={() => setClickedTitle({ ...userTitle, rating: 5 })}
                 >
-                  <Text align="center">5</Text>
+                  <Text align="center" className="score">
+                    5
+                  </Text>
                 </Box>
                 <Box
                   bg={getBg(6)}
@@ -422,7 +436,9 @@ const TitleCard: React.FC<CardProps> = ({
                   w="1.5em"
                   onClick={() => setClickedTitle({ ...userTitle, rating: 6 })}
                 >
-                  <Text align="center">6</Text>
+                  <Text align="center" className="score">
+                    6
+                  </Text>
                 </Box>
                 <Box
                   bg={getBg(7)}
@@ -434,7 +450,9 @@ const TitleCard: React.FC<CardProps> = ({
                   w="1.5em"
                   onClick={() => setClickedTitle({ ...userTitle, rating: 7 })}
                 >
-                  <Text align="center">7</Text>
+                  <Text align="center" className="score">
+                    7
+                  </Text>
                 </Box>
                 <Box
                   bg={getBg(8)}
@@ -446,7 +464,9 @@ const TitleCard: React.FC<CardProps> = ({
                   w="1.5em"
                   onClick={() => setClickedTitle({ ...userTitle, rating: 8 })}
                 >
-                  <Text align="center">8</Text>
+                  <Text align="center" className="score">
+                    8
+                  </Text>
                 </Box>
                 <Box
                   bg={getBg(9)}
@@ -458,7 +478,9 @@ const TitleCard: React.FC<CardProps> = ({
                   w="1.5em"
                   onClick={() => setClickedTitle({ ...userTitle, rating: 9 })}
                 >
-                  <Text align="center">9</Text>
+                  <Text align="center" className="score">
+                    9
+                  </Text>
                 </Box>
                 <Box
                   bg={getBg(10)}
@@ -470,7 +492,9 @@ const TitleCard: React.FC<CardProps> = ({
                   w="1.5em"
                   onClick={() => setClickedTitle({ ...userTitle, rating: 10 })}
                 >
-                  <Text align="center">10</Text>
+                  <Text align="center" className="score">
+                    10
+                  </Text>
                 </Box>
               </Flex>
               <Button
