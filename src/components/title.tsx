@@ -42,14 +42,14 @@ export interface Season {
 
 export interface UserTitle {
   title: TitleInterface;
-  rating: number;
-  episodesWatched: number;
-  comment: string;
-  dateAdded: Date;
-  dateFinished: Date;
-  isFinished: boolean;
-  isStarted: boolean;
-  isAdded: boolean;
+  rating?: number;
+  episodesWatched?: number;
+  comment?: string;
+  dateAdded?: Date;
+  dateFinished?: Date;
+  isFinished?: boolean;
+  isStarted?: boolean;
+  isAdded?: boolean;
 }
 
 export interface UserResponse {

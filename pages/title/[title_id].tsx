@@ -13,18 +13,33 @@ import {
   Spinner,
   Center,
 } from "@chakra-ui/react";
-import { TitleInterface } from "../../src/components/title";
+import { TitleInterface, UserTitle } from "../../src/components/title";
 
 const fetcher = (url: string) =>
   fetch(url, { credentials: "include" }).then((res) => res.json());
+
+const upsertTitle = async (
+  userTitle: UserTitle,
+  method: string
+): Promise<void> => {
+  userTitle.isAdded = true;
+  const resp = await fetch(`/api/movie`, {
+    method: method,
+    body: JSON.stringify(userTitle),
+    credentials: "include",
+  });
+  if (resp.status === 200) {
+    location.reload();
+  } else {
+    console.error(resp);
+  }
+};
 
 const Title: React.FC = ({}) => {
   const router = useRouter();
   const { title_id } = router.query;
 
-  console.log(title_id);
-
-  const { data: title, error } = useSWR(
+  const { data: title, error } = useSWR<TitleInterface>(
     title_id ? `/api/movie/${title_id}` : null,
     fetcher
   );
@@ -41,9 +56,8 @@ const Title: React.FC = ({}) => {
         <Spinner />
       </Center>
     );
-  else {
-    console.log(title);
-  }
+
+  const userTitle: UserTitle = { title: title };
 
   return (
     <Box p={5}>
@@ -51,27 +65,36 @@ const Title: React.FC = ({}) => {
         <Image
           src={title.posterLink || "/placeholder_poster.png"}
           alt={title.name}
-          boxSize="300px"
+          boxSize="600px"
           objectFit="cover"
         />
         <VStack align="start" spacing={3}>
           <Heading>{title.name}</Heading>
-          {title.releaseDate && <Text>Release Date: {title.releaseDate}</Text>}
-          {title.genre && <Text>Genre: {title.genre}</Text>}
-          {title.director && <Text>Director: {title.director}</Text>}
           {/* Add more info as needed */}
           <HStack spacing={3}>
             <Button colorScheme="teal">Add to Wishlist</Button>
-            <Button colorScheme="blue">Mark as Watched</Button>
+            <Button
+              colorScheme="blue"
+              onClick={() => upsertTitle(userTitle, "POST")}
+            >
+              Mark as Watched
+            </Button>
           </HStack>
+          <VStack>
+            <Heading size="md" mt={5}>
+              IMDB rating: {title.rating}
+            </Heading>
+          </VStack>
+          {title.description && (
+            <Box mt={5}>
+              <Heading size="md">Description</Heading>
+              <Text fontSize="xl" mt={2}>
+                {title.description}
+              </Text>
+            </Box>
+          )}
         </VStack>
       </HStack>
-      {title.description && (
-        <Box mt={5}>
-          <Heading size="md">Description</Heading>
-          <Text mt={2}>{title.description}</Text>
-        </Box>
-      )}
     </Box>
   );
 };
