@@ -115,20 +115,24 @@ const Title: React.FC = ({}) => {
               <Heading size="md">Directing</Heading>
               <Text fontSize="xl" mt={2}>
                 {title.people
-                  .filter((p) => p.job === "Director")
-                  .slice(0, 10)
-                  .map((p) => p.name)
-                  .join(", ")}
+                  ? title.people
+                      .filter((p) => p.job === "Director")
+                      .slice(0, 10)
+                      .map((p) => p.name)
+                      .join(", ")
+                  : ""}
               </Text>
             </Box>
             <Box mt={5}>
               <Heading size="md">Cast</Heading>
               <Text fontSize="xl" mt={2}>
                 {title.people
-                  .filter((p) => p.knownForDepartment === "Acting")
-                  .slice(0, 10)
-                  .map((p) => p.name)
-                  .join(", ")}
+                  ? title.people
+                      .filter((p) => p.knownForDepartment === "Acting")
+                      .slice(0, 10)
+                      .map((p) => p.name)
+                      .join(", ")
+                  : ""}
               </Text>
             </Box>
           </VStack>
