@@ -15,6 +15,15 @@ export interface Ids {
   imdb: string;
 }
 
+export interface Person {
+  character: string;
+  gender: number;
+  knownForDepartment: string;
+  name: string;
+  profilePath: string;
+  job: string;
+}
+
 export interface TitleInterface {
   id: string;
   name: string;
@@ -30,6 +39,7 @@ export interface TitleInterface {
   watchProviders: string[];
   seasons: Season[];
   numEpisodes: number;
+  people: Person[];
 }
 
 export interface Season {

@@ -74,7 +74,9 @@ function UserMovies() {
                         ? movies.filter(
                             (m) =>
                               m.isFinished &&
-                              new Date(m.dateFinished).getFullYear() === 2024
+                              new Date(
+                                m.dateFinished || "0000"
+                              ).getFullYear() === 2024
                           )
                         : []
                     }
@@ -89,7 +91,9 @@ function UserMovies() {
                         ? movies.filter(
                             (m) =>
                               m.isFinished &&
-                              new Date(m.dateFinished).getFullYear() === 2023
+                              new Date(
+                                m.dateFinished || "0000"
+                              ).getFullYear() === 2023
                           )
                         : []
                     }
