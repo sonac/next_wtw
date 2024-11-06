@@ -81,7 +81,9 @@ const UserBooks = () => {
                         ? books.filter(
                             (b) =>
                               b.isFinished &&
-                              new Date(b.dateFinished).getFullYear() === 2024
+                              new Date(
+                                b.dateFinished || "0000"
+                              ).getFullYear() === 2024
                           )
                         : []
                     }
@@ -96,7 +98,9 @@ const UserBooks = () => {
                         ? books.filter(
                             (b) =>
                               b.isFinished &&
-                              new Date(b.dateFinished).getFullYear() === 2023
+                              new Date(
+                                b.dateFinished || "0000"
+                              ).getFullYear() === 2023
                           )
                         : []
                     }

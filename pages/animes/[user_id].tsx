@@ -80,7 +80,9 @@ const UserAnimes = () => {
                         ? animes.filter(
                             (a) =>
                               a.isFinished &&
-                              new Date(a.dateFinished).getFullYear() === 2024
+                              new Date(
+                                a.dateFinished || "0000"
+                              ).getFullYear() === 2024
                           )
                         : []
                     }
@@ -95,7 +97,9 @@ const UserAnimes = () => {
                         ? animes.filter(
                             (a) =>
                               a.isFinished &&
-                              new Date(a.dateFinished).getFullYear() === 2023
+                              new Date(
+                                a.dateFinished || "0000"
+                              ).getFullYear() === 2023
                           )
                         : []
                     }
