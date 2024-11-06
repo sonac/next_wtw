@@ -45,11 +45,12 @@ const UserTitles: React.FC<UserGameProps> = ({
     case "dateAdded":
       titles = titles.sort(
         (a, b) =>
-          new Date(b.dateAdded).getTime() - new Date(a.dateAdded).getTime()
+          new Date(b.dateAdded || "0000").getTime() -
+          new Date(a.dateAdded || "0000").getTime()
       );
       break;
     case "rating":
-      titles = titles.sort((a, b) => b.rating - a.rating);
+      titles = titles.sort((a, b) => (b.rating || 0) - (a.rating || 0));
       break;
     case "title":
       titles = titles.sort((a, b) => a.title.name.localeCompare(b.title.name));

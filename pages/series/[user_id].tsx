@@ -89,7 +89,9 @@ function UserSeries() {
                         ? series.filter(
                             (s) =>
                               s.isFinished &&
-                              new Date(s.dateFinished).getFullYear() === 2024
+                              new Date(
+                                s.dateFinished || new Date()
+                              ).getFullYear() === 2024
                           )
                         : []
                     }
@@ -104,7 +106,9 @@ function UserSeries() {
                         ? series.filter(
                             (s) =>
                               s.isFinished &&
-                              new Date(s.dateFinished).getFullYear() === 2023
+                              new Date(
+                                s.dateFinished || new Date()
+                              ).getFullYear() === 2023
                           )
                         : []
                     }

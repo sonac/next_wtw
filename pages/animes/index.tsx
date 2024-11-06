@@ -7,17 +7,12 @@ import UserTitles from "../../src/components/user_titles";
 import { Button, VStack } from "@chakra-ui/react";
 import Header from "../../src/sections/header";
 
-const discoveryFetcher = () =>
-  fetch(`/api/discover`, { credentials: "include" }).then((res) => res.json());
+const animesFetcher = () =>
+  fetch(`/api/animes`, { credentials: "include" }).then((res) => res.json());
 
-const clickRefreshPopular = async () => {
-  await fetch("/api/refresh-popular", { method: "POST" });
-  window.location.reload();
-};
-
-const Discover = () => {
+const Animes = () => {
   const [titles, setTitles] = useState<TitleInterface[]>([]);
-  const { data, error } = useSWR("discover", discoveryFetcher);
+  const { data, error } = useSWR("games", animesFetcher);
 
   const router = useRouter();
 
@@ -50,16 +45,13 @@ const Discover = () => {
       spacing={8}
     >
       <Header />
-      <Button w="10vw" onClick={clickRefreshPopular}>
-        Refresh popular titles
-      </Button>
       <UserTitles
         titles={sortedTitles.map((t) => wrapToDefaultTitle(t))}
-        endpoint="movie"
+        endpoint="game"
         isDiscovery={true}
       />
     </VStack>
   );
 };
 
-export default Discover;
+export default Animes;

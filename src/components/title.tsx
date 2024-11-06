@@ -15,6 +15,15 @@ export interface Ids {
   imdb: string;
 }
 
+export interface Person {
+  character: string;
+  gender: number;
+  knownForDepartment: string;
+  name: string;
+  profilePath: string;
+  job: string;
+}
+
 export interface TitleInterface {
   id: string;
   name: string;
@@ -30,6 +39,7 @@ export interface TitleInterface {
   watchProviders: string[];
   seasons: Season[];
   numEpisodes: number;
+  people: Person[];
 }
 
 export interface Season {
@@ -42,14 +52,14 @@ export interface Season {
 
 export interface UserTitle {
   title: TitleInterface;
-  rating: number;
-  episodesWatched: number;
-  comment: string;
-  dateAdded: Date;
-  dateFinished: Date;
-  isFinished: boolean;
-  isStarted: boolean;
-  isAdded: boolean;
+  rating?: number;
+  episodesWatched?: number;
+  comment?: string;
+  dateAdded?: Date;
+  dateFinished?: Date;
+  isFinished?: boolean;
+  isStarted?: boolean;
+  isAdded?: boolean;
 }
 
 export interface UserResponse {

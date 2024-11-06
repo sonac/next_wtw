@@ -81,10 +81,12 @@ function UserGames() {
                     titles={
                       games
                         ? games.filter(
-                          (g) =>
-                            g.isFinished &&
-                            new Date(g.dateFinished).getFullYear() === 2024
-                        )
+                            (g) =>
+                              g.isFinished &&
+                              new Date(
+                                g.dateFinished || "0000"
+                              ).getFullYear() === 2024
+                          )
                         : []
                     }
                     endpoint="game"
@@ -96,10 +98,12 @@ function UserGames() {
                     titles={
                       games
                         ? games.filter(
-                          (g) =>
-                            g.isFinished &&
-                            new Date(g.dateFinished).getFullYear() === 2023
-                        )
+                            (g) =>
+                              g.isFinished &&
+                              new Date(
+                                g.dateFinished || "0000"
+                              ).getFullYear() === 2023
+                          )
                         : []
                     }
                     endpoint="game"

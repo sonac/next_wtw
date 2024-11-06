@@ -66,12 +66,12 @@ const TitleCard: React.FC<CardProps> = ({
     }
     return "transparent";
   };
-  const [episode, setEpisode] = useState(userTitle.episodesWatched);
+  const [episode, setEpisode] = useState(userTitle.episodesWatched || 0);
 
   console.log(userTitle);
 
   useEffect(() => {
-    setEpisode(userTitle.episodesWatched);
+    setEpisode(userTitle.episodesWatched || 0);
   }, [userTitle.episodesWatched]);
 
   const updateEpisode = (v: string) => {
